@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: article
+# key: setup
+# --
+---
+title: "$0"
+description:
+author: Dang Quang Vu
+authorImage: https://img.upanh.tv/2022/12/01/logo.png
+coverImage:
+date: "`(format-time-string "%Y-%m-%d")`"
+---

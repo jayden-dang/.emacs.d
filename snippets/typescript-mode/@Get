@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: @Get
+# key: G
+# --
+@Get($0)

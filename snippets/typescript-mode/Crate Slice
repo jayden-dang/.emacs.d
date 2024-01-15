@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: Crate Slice
+# key: cslice
+# --
+import { createSlice } from '@reduxjs/toolkit';
+
+// Define a type for the slice state
+interface ${1:Type}State {}
+
+// Define the initial state using that type
+const initialState: $1State = {};
+
+export const ${2:Name}Slice = createSlice({
+  name: '${3:name}',
+  initialState,
+  reducers: {$0},
+});
+
+export const {} = $2Slice.actions;
+
+export default $2Slice.reducer;

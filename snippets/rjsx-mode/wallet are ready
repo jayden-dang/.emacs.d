@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: wallet are ready
+# key: checkwallet
+# --
+useEffect(() => {
+  if (!isLoading && wallet) {
+    setWalletready(true);
+  }
+}, [isLoading, wallet]);

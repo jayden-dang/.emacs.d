@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: toml block
+# key: <toml
+# --
+#+begin_src toml
+$0
+#+end_src

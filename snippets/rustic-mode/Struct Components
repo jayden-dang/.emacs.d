@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: Struct Components
+# key: sc
+# --
+pub struct ${1:ComponentName};
+
+pub enum $1Msg {}
+
+impl Component for $1 {
+     type Message = $1Msg;
+     type Properties = ();
+
+     fn create(ctx: &Context<Self>) -> Self {
+        Self
+     }
+
+     fn view(&self, ctx: &Context<Self>) -> Html {
+        html! {
+              <$2>
+                $0
+              </$2>
+        }
+     }
+}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: MoveNursery
+# key: MoveNursery
+# --
+MoveNursery = { git = "https://github.com/move-language/move.git", subdir = "language/move-stdlib/nursery", rev = "main" }

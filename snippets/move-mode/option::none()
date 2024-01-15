@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: option::none()
+# key: opn
+# --
+option::none()$0

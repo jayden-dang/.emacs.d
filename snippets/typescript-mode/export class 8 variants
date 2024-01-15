@@ -1,0 +1,43 @@
+# -*- mode: snippet -*-
+# name: export class 8 variants
+# key: excl8
+# --
+export class ${1:NameContract} {
+  ${2:variant}: ${3:types};
+  ${4:variant}: ${5:types};
+  ${6:variant}: ${7:types};
+  ${8:variant}: ${9:types};
+  ${10:variant}: ${11:types};
+  ${12:variant}: ${13:types};
+  ${14:variant}: ${15:types};
+  ${16:variant}: ${17:types};
+
+  constructor({
+    $2,
+    $4,
+    $6,
+    $8,
+    $10,
+    $12,
+    $14,
+    $16,
+  }: {
+    $2: $3,
+    $4: $5,
+    $6: $7,
+    $8: $9,
+    $10: $11,
+    $12: $13,
+    $14: $15,
+    $16: $17,
+  }) {
+    this.$2 = $2,
+    this.$4 = $4,
+    this.$6 = $6,
+    this.$8 = $8,
+    this.$10 = $10,
+    this.$12 = $12,
+    this.$14 = $14,
+    this.$16 = $16,
+  };
+}

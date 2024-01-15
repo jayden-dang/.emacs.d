@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: HashMap::with_capacity()
+# key: HMc
+# --
+HashMap::with_capacity($0)

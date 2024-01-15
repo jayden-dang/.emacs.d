@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: export const async
+# key: asc
+# --
+export const ${1:Name} = async () => {$0}

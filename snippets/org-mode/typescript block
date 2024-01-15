@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: typescript block
+# key: <ts
+# --
+#+begin_src typescript
+$0
+#+end_src

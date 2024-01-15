@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Box<T>
+# key: B
+# --
+Box<$0>

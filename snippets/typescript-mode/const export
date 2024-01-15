@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: const export
+# key: ec
+# --
+export const ${1:Name}: ${2:type} = $0

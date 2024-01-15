@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use sui::object::{Self, UID};
+# key: uoj
+# --
+use sui::object::{Self, UID};$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Result<>
+# key: R
+# --
+Result<$0>

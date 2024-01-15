@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pub async fn ..
+# key: pafn
+# --
+pub async fn $1($2) $3 {
+    $0
+}

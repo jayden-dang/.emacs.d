@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Arc
+# key: A
+# --
+Arc<$0>

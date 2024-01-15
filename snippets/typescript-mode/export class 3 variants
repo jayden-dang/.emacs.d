@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: export class 3 variants
+# key: excl3
+# --
+export class ${1:NameContract} {
+  ${2:variant}: ${3:Types};
+  ${4:variant}: ${5:Types};
+  ${6:variant}: ${7:Types};
+
+  constructor({
+    $2,
+    $6,
+  }: {
+    $2: $3,
+    $6: $7,
+  }) {
+    this.$2 = $2,
+    this.$6 = $6,
+  };
+}

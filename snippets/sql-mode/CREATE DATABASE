@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: CREATE DATABASE
+# key: cd
+# --
+CREATE DATABASE $1;

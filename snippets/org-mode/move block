@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: move block
+# key: <move
+# --
+#+begin_src move
+$0
+#+end_src

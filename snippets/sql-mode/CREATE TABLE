@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: CREATE TABLE
+# key: ct
+# --
+CREATE TABLE $1 (
+       $0
+);

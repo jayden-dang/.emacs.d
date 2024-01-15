@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: <main></main>
+# key: main
+# --
+<main>$0</main>

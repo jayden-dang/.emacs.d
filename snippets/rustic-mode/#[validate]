@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: #[validate]
+# key: #v
+# --
+#[validate]$0

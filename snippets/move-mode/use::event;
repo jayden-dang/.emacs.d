@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use::event;
+# key: uev
+# --
+use sui::event;$0

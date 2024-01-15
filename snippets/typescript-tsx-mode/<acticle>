@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: <acticle>
+# key: acticle
+# --
+<acticle>$0</acticle>

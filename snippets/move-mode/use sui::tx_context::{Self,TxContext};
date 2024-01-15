@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use sui::tx_context::{Self,TxContext};
+# key: utx
+# --
+use sui::tx_context::{Self,TxContext};

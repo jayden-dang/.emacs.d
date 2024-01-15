@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: nest module
+# key: nmod
+# --
+@Module({
+  imports: [$0],
+  controllers: [],
+  providers: [],
+})
+export class ${1:Name}Module {}

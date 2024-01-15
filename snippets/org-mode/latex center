@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: latex center
+# key: \c
+# --
+\begin{center}
+$0
+\end{center}

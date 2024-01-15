@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: export const
+# key: exc
+# --
+const ${1:Name} = () => {
+      return (
+             $0
+      )
+}
+
+export default $1

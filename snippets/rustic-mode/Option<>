@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Option<>
+# key: O
+# --
+Option<$0>

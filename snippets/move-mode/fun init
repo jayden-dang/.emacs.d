@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fun init
+# key: init
+# --
+fun init(ctx: &mut TxContext) {
+    $0
+}

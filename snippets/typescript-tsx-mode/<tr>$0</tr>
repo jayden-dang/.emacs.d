@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: <tr>$0</tr>
+# key: tr
+# --
+<tr>
+  <th scope="col">
+      $0
+  </th>
+</tr>

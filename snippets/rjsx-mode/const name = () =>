@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: const name = () =>
+# key: con
+# --
+const ${1:name} = ($2) => {
+      $0
+}

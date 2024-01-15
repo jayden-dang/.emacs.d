@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: async const
+# key: ac
+# --
+const ${1:variable} = async () => {
+  $0
+}

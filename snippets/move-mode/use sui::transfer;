@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use sui::transfer;
+# key: utf
+# --
+use sui::transfer;$0

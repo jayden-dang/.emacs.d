@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: #[post("..")]
+# key: #p
+# --
+#[post("$0")]

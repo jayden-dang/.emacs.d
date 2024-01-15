@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: yew function component
+# key: fnc
+# --
+#[derive(PartialEq, Properties)]
+pub struct ${1:ComponentName}Props {}
+
+#[function_component]
+pub fn $1(props: &$1Props) -> Html {
+    let $1Props {} = props;
+    html! {
+          <$2>
+            $0
+          </$2>
+    }
+}

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: block solitidy
+# key: <sol
+# --
+#+begin_src solidity
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+
+contract $1 {
+         $0
+}
+#+end_src

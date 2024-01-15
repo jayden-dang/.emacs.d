@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: INSERT INTO ... VALUES
+# key: ins
+# --
+INSERT INTO $1 VALUES $0

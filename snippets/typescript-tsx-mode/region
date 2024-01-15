@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: region
+# key: reg
+# --
+{/* $1 Start */}
+$0
+{/* $1 End */}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: HashMap::New()
+# key: HMn
+# --
+HashMap::new()$0

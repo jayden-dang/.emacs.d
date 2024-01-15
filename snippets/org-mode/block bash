@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: block bash
+# key: <sh
+# --
+#+begin_src sh :results output :session share :async true
+$0
+#+end_src

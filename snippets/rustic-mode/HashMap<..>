@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: HashMap<..>
+# key: HM
+# --
+HashMap<$0>

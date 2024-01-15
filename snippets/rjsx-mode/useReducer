@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: useReducer
+# key: ure
+# --
+const [state, dispatch] = useReducer($0)

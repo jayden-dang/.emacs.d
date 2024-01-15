@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: org theme
+# key: theme
+# --
+#+SETUPFILE: ~/theme-readtheorg.setup
+#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>
+#+EXPORT_FILE_NAME: index.html
+$0

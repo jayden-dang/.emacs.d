@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: export function
+# key: exfn
+# --
+function ${1:Name}() {
+         return (
+                <$2>
+                $0
+                </$2>
+         );
+}
+
+export default $1;

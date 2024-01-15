@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ctx: &mut TxContext
+# key: ctx
+# --
+ctx: &mut TxContext$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: has
+# key: has
+# --
+has ${2:$$(yas-choose-value '("key" "copy" "drop" "store"))} $0

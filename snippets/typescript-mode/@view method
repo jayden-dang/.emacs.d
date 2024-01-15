@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: @view method
+# key: @v
+# --
+@view({$0})

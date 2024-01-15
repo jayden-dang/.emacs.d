@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pub enum $0
+# key: pe
+# --
+pub enum $1 {
+    $0
+}

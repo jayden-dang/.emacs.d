@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Region Code
+# key: <r
+# --
+// Region:     --- $1
+$0
+// End-Region: --- $1

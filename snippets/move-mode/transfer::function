@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: transfer::function
+# key: transfer
+# --
+transfer::${1:$$(yas-choose-value '("transfer" "public_transfer" "freeze_object" "public_freeze_object" "share_object" "public_share_object" "freeze_object_impl" "share_object_impl" "transfer_impl"))}($0)

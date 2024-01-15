@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: near viewfn
+# key: viewfn
+# --
+useEffect(() => {
+  const fetchData = async () => {
+    if (wallet) {
+      try {
+        await wallet.viewMethod({
+          contractId: process.env.NEXT_PUBLIC_CONTRACT_NAME,
+          method: "$0",
+          args: {}
+        });
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+  fetchData()
+}, [walletReady])

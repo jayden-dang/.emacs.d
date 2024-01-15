@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use sui::clock;
+# key: uclock
+# --
+use sui::clock::{Self, Clock};$0

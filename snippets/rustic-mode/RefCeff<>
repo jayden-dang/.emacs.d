@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: RefCeff<>
+# key: RC
+# --
+RefCell<$0>

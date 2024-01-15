@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: @call method
+# key: @c
+# --
+@call({$0})

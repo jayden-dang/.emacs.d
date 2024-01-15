@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: module #test
+# key: #test
+# --
+#[test_only]
+module $1_test {
+       use sui::test_scenario;
+       use $1;
+
+       $0
+}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Balance<$0>
+# key: B
+# --
+Balance<$0>

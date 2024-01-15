@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Table<>
+# key: T
+# --
+Table<$0>

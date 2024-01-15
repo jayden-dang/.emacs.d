@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: solution leetcode
+# key: leet
+# --
+struct Solution;
+
+impl Solution {
+     $0
+}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: object
+# key: sui::object
+# --
+sui::object::{Self, ${1:$$(yas-choose-value '("ID" "UID"))}}

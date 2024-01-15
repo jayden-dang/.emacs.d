@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Arc::new($0)
+# key: An
+# --
+Arc::new($0)

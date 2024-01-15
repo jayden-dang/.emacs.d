@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: master node
+# key: master
+# --
+kubeadm init --apiserver-advertise-address=$1 --pod-network-cidr=${2:127.16.0.0/16}

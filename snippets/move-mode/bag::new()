@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bag::new()
+# key: bn
+# --
+bag::new();

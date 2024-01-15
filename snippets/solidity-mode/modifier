@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: modifier
+# key: mod
+# --
+modifier $1() {
+         $0
+         _;
+}

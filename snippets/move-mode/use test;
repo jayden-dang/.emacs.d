@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use test;
+# key: utest
+# --
+use sui::${1:$$(yas-choose-value '("test_scenario" "test_utils"))};$0

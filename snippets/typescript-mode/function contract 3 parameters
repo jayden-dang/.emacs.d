@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: function contract 3 parameters
+# key: nfcs
+# --
+${1:nameFunction}({${2:variants}, ${4:variants2}, ${6:variants3}}: {
+  $2: ${3:type}, $4: ${5:type2}, $6: ${7:type3}
+}) {
+   $0
+}

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: todolist today
+# key: todo
+# --
+
+* TODO Research
+* TODO Education
+* TODO Community
+
+* MUST Work $0
+
+* SHOULD Learn English
+
+* COULD Read

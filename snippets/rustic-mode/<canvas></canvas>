@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: <canvas></canvas>
+# key: canvas
+# --
+<canvas id="$1">$0</canvas>

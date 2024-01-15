@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pub function return self
+# key: pfns
+# --
+pub fn $1($2) -> Self {
+    $0
+}

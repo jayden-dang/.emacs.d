@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Mutex::new()
+# key: Mtn
+# --
+Mutex::new($0)

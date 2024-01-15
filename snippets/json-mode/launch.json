@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: launch.json
+# key: launch
+# --
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Run Part A Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/${1:name}",
+            "args": ["a", "inputs/input.txt"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "dap-compilation": "cargo build",
+            "dap-compilation-dir": "${workspaceFolder}"
+        },
+    ]
+}

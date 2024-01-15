@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: public fun ..
+# key: pfn
+# --
+public fun ${1:name}($0) {}

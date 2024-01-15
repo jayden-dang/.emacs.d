@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ex const ...
+# key: excn
+# --
+export const ${1:Name} = () => {$0}

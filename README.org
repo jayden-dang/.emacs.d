@@ -1,0 +1,18 @@
+#+title: Emacs Configuration
+#+AUTHOR: =Dang Quang Vu=
+#+EMAIL: vugomars@gmail.com
+#+SUBTITLE: Emacs configuration for work and life
+#+setupfile: headers
+#+startup: fold noindent
+#+OPTIONS: toc:nil h:4
+#+STARTUP: showeverything
+#+latex_compiler: xelatex
+
+* Introduction
++ After a couple year using =Doom Emacs=, i'm finally switching back to a vanilla configuration! Because i got tired some framework getting in my way when i wanted to do stuff. I'm sure this is more applicable to =Doom Emacs= since the letter has nice macros written so easily add new packages and configure them.
+
+#+begin_quote
+Emacs is everything i need for a Good =text editor=.
+#+end_quote
+
++ My Configuration is inspired by some people, some configuration different. So sometimes you can see this code somewhere on the internet. But I have edited a lot to suit my preferences, if you want to use them you should be reconfigure according to your personal preferences.

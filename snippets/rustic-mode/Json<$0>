@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Json<$0>
+# key: J
+# --
+Json<$0>

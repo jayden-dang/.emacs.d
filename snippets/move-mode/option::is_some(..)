@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: option::is_some(..)
+# key: opis
+# --
+option::is_some($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Box::new(..)
+# key: Bn
+# --
+Box::new($0)

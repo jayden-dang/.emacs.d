@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use sui::dynamic_object_field as dof;
+# key: udof
+# --
+use sui::dynamic_object_field as dof;$0
