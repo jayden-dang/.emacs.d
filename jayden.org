@@ -1,6 +1,6 @@
 #+title: My Emacs Configuration
 #+AUTHOR: =Dang Quang Vu=
-#+EMAIL: vugomars@gmail.com
+#+EMAIL: jayden.dangvu@gmail.com
 #+SUBTITLE: Emacs configuration for work and life
 #+property: header-args:emacs-lisp :mkdirp yes :lexical t :exports code
 #+property: header-args:emacs-lisp+ :tangle ./init.el
