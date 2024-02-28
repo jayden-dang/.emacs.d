@@ -114,6 +114,7 @@
 ;;   (visual-fill-column-mode 1))
 
 ;; (use-package visual-fill-column
+;;   :straight (:build t)
 ;;   :hook (org-mode . dqv/org-mode-visual-fill))
 
 (setq user-full-name       "Dang Quang Vu"
@@ -129,11 +130,9 @@
 (with-eval-after-load 'mule-util
  (setq truncate-string-ellipsis "…"))
 
-
-
-(require 'time)
-(setq display-time-format "%Y-%m-%d %H:%M")
-(display-time-mode 1) ; display time in modeline
+;; (require 'time)
+;; (setq display-time-format "%Y-%m-%d %H:%M")
+;; (display-time-mode 1) ; display time in modeline
 
 (let ((battery-str (battery)))
   (unless (or (equal "Battery status not available" battery-str)
@@ -443,7 +442,7 @@ The return value of `csetq' is the value of the last VAL.
   (split-window-right)
   (windmove-right))
 
-(defun eldoc-and-focus ()
+(defun jayden/eldoc-and-focus ()
   "Spawn a new window right of the current one and focus it."
   (interactive)
   (eldoc-doc-buffer)
@@ -642,10 +641,10 @@ With a prefix argument, TRASH is nil."
     :after evil
     :straight (:build t)
     :config
-    ;; eamon conversion
-    ;; (defun my/eamon-rotate-evil-collection (_mode mode-keymaps &rest _rest)
+    ;; jayden conversion
+    ;; (defun my/jayden-rotate-evil-collection (_mode mode-keymaps &rest _rest)
     ;;   (evil-collection-translate-key 'normal mode-keymaps
-    ;;     ;; eamon ctsr is qwerty hjkl
+    ;;     ;; jayden ctsr is qwerty hjkl
     ;;     "c" "h"
     ;;     "t" "j"
     ;;     "s" "k"
@@ -655,7 +654,7 @@ With a prefix argument, TRASH is nil."
     ;;     "j" "t"
     ;;     "k" "s"
     ;;     "l" "r"))
-    ;; (add-hook 'evil-collection-setup-hook #'my/eamon-rotate-evil-collection)
+    ;; (add-hook 'evil-collection-setup-hook #'my/jayden-rotate-evil-collection)
     (evil-collection-init))
 
 (use-package undo-tree
@@ -1415,7 +1414,7 @@ the value `split-window-right', then it will be changed to
 
 (setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
       org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("eamondang@gmail.com" .  "~/Dropbox/Org/Personal.org")
+      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
                                   ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
                                   ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
                                   ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
@@ -1457,30 +1456,32 @@ the value `split-window-right', then it will be changed to
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: eamondang@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
       :unnarrowed t)
      ("l" "programming language" plain
       "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: eamondang@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
       :unnarrowed t)
      ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: eamondang@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
       :unnarrowed t)))
   :config
   (org-roam-setup))
 
 (require 'appt)
 
+;; Agenda-to-appointent hooks
+(org-agenda-to-appt)             ;; generate the appt list from org agenda files on emacs launch
+(run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
+(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
+(appt-activate 1)                ;; activate appointment notification
 (setq appt-time-msg-list nil)    ;; clear existing appt list
-(setq appt-display-interval '5)  ;; warn every 5 minutes from t - appt-message-warning-time
-(setq appt-display-interval '1)  ;; warn every 5 minutes from t - appt-message-warning-time
+(setq appt-display-interval '10)  ;; warn every 10 minutes from t - appt-message-warning-time
 (setq
   appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
-  appt-display-mode-line nil     ;; don't show in the modeline
+  appt-display-mode-line t     ;; don't show in the modeline
   appt-display-format 'window)   ;; pass warnings to the designated window function
 
-(appt-activate 1)                ;; activate appointment notification
-(display-time) ;; Clock in modeline
 
 (defun dqv/send-notification (title msg)
   (let ((notifier-path (executable-find "terminal-notifier")))
@@ -1499,318 +1500,6 @@ the value `split-window-right', then it will be changed to
     (format "%s" msg)))                             ; Message/detail text
 
 (setq appt-disp-window-function (function dqv/appt-display-native))
-
-;; Agenda-to-appointent hooks
-(org-agenda-to-appt)             ;; generate the appt list from org agenda files on emacs launch
-(run-at-time "24:01" 3600 'org-agenda-to-appt)           ;; update appt list hourly
-(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
-
-  (dqv/evil
-    ;;:packages '(counsel)
-    "s" '(window-configuration-to-register :wk "Register Window")
-    "f" '(jump-to-register :wk "Jump Register")
-    "K"   #'eldoc-and-focus
-    "U"   #'evil-redo
-    "C-a" #'my-smarter-move-beginning-of-line
-    "C-e" #'end-of-line
-    "*"   #'dired-create-empty-file
-    "C-y" #'yank
-    "C-M-s-p"    #'scroll-half-page-up
-    "C-M-s-n"    #'scroll-half-page-down
-    "M-y" #'counsel-yank-pop)
-
-(dqv/leader-key
-  "SPC" '(counsel-M-x :which-key "M-x")
-  "."  '(dirvish-dwim :which-key "Dirvish")
-  "J"  '(dired-jump :which-key "Dired Jump")
-  "'"   '(shell-pop :which-key "shell-pop")
-  ","  '(magit-status :which-key "Magit Status")
-  "j" '(bufler-switch-buffer :which-key "Switch Buffer")
-  "k" '(dqv/switch-to-previous-buffer :which-key "Switch to previous buffer")
-  "oa" '(org-agenda :color blue :which-key "Agenda")
-  "ol" '(my/avy-open-url :color blue :which-key "Open Url")
-  "of" '(browse-file-directory :which-key "Open File in Directory")
-  "1" '(treemacs :which-key "Open Treemacs")
-
-  "a" '(:ignore t :which-key "Application")
-  "ac" '(calendar :which-key "Calendar")
-
-  "s" '(:ignore t :which-key "Set Timer")
-  "st" '(org-timer :which-key "Timer")
-  "si" '(org-timer-item :which-key "Timer")
-  "ss" '(org-timer-set-timer :which-key "Set Timer")
-  "sp" '(org-timer-pause-or-continue :which-key "Pause / Continue")
-  "s1" '(org-timer-start :which-key "Start")
-  "s2" '(org-timer-stop :which-key "Stop")
-  "wr" '(writeroom-mode :which-key "Write Room")
-
-  "d" '(:ignore t :which-key "Dirvish")
-  "os" '(dirvish-side :which-key "Side")
-  "il" '(org-insert-last-stored-link :which-key "Insert Stored Link")
-  "is" '(org-store-link :which-key "Store Link"))
-
-(dqv/leader-key
-  :packages '(bufler)
-  "b" '(:ignore t :which-key "Buffers")
-  "bb" '(bufler-switch-buffer :which-key "Switch Buffer")
-  "bB" '(bury-buffer :which-key "Bury Buffer")
-  "bc" '(clone-indirect-buffer :which-key "Clone Indirect")
-  "bC" '(clone-indirect-buffer-other-window :which-key "Clone Indirect Other Window")
-  "bl" '(bufler :which-key "Bufler")
-  "bk" '(kill-this-buffer :which-key "Kill This Buffer")
-  "bD" '(kill-buffer :which-key "Kill Buffer")
-  "bh" '(dashboard-refresh-buffer :which-key "Dashboard Refresh Buffer")
-  "bm" '(switch-to-message-buffer :which-key "Switch to message buffer")
-  "bn" '(next-buffer :which-key "Next Buffer")
-  "bp" '(previous-buffer :which-key "Next Buffer")
-  "br" '(counsel-buffer-or-recentf :which-key "Recentf Buffer")
-  "bs" '(switch-to-scratch-buffer :which-key "Scratch Buffer"))
-
-(dqv/leader-key
-  :packages '(treemacs)
-  "t" '(:ignore t :wk "Treemacs")
-  "tc" '(:ignore t :wk "Create")
-  "tcd" '(treemacs-create-dir :which-key "Create Dir")
-  "tcf" '(treemacs-create-file :which-key "Create File")
-  "tci" '(treemacs-create-icon :which-key "Create Icon")
-  "tct" '(treemacs-create-theme :which-key "Create Theme")
-  "td" '(treemacs-delete-file :which-key "delete")
-  "tw" '(:ignore t :wk "Workspace")
-  "tws" '(treemacs-switch-workspace :which-key "Switch Workspace")
-  "twc" '(treemacs-create-workspace :which-key "Create Workspace")
-  "twr" '(treemacs-remove-workspace :which-key "Remove Workspace")
-  "tf" '(:ignore t :wk "Files")
-  "tff" '(treemacs-find-file :which-key "Find File")
-  "tft" '(treemacs-find-tag :which-key "Find Tag")
-  "tl" '(:ignore t :wk "LSP")
-  "tls" '(treemacs-expand-lsp-symbol :which-key "Lsp Symbol")
-  "tt" '(typescript-tsx-mode :which-key "TSX Mode")
-
-  "tld" '(treemacs-expand-lsp-treemacs-deps :which-key "Lsp treemacs deps")
-  "tlD" '(treemacs-collapse-lsp-treemacs-deps :which-key "Collapse lsp Deps")
-  "tlS" '(treemacs-collapse-lsp-symbol :which-key "Collapse Lsp Symbol")
-  "tp" '(:ignore t :wk "Projcets")
-  "tpa" '(treemacs-add-project :which-key "Add project")
-  "tpf" '(treemacs-project-follow-mode :which-key "Follow mode")
-  "tpn" '(treemacs-project-of-node :which-key "Of Node")
-  "tpp" '(treemacs-project-at-point :which-key "At Point")
-  "tpr" '(treemacs-remove-project-from-workspace :which-key "Remove project")
-  "tpt" '(treemacs-move-project-down :which-key "Project Down")
-  "tps" '(treemacs-move-project-up :which-key "Project Up")
-  "tr" '(:ignore t :wk "Rename")
-  "trf" '(treemacs-rename-file :which-key "Rename File")
-  "trp" '(treemacs-rename-project :which-key "Rename project")
-  "trr" '(treemacs-rename :which-key "Rename")
-  "trw" '(treemacs-rename-workspace :which-key "Rename Workspace")
-  "tT" '(:ignore t :wk "Toggle")
-  "tTd" '(treemacs-toggle-show-dotfiles :which-key "Toggle show Dotfiles")
-  "tTn" '(treemacs-toggle-node :which-key "Toggle Node")
-  "tv" '(:ignore t :wk "Visit Node")
-  "tva" '(treemacs-visit-node-ace :which-key "Visit Ace")
-  "tvc" '(treemacs-visit-node-close-treemacs :which-key "Visit Node Close")
-  "tvn" '(treemacs-visit-node-default :which-key "Visit Node")
-  "ty" '(:ignore t :wk "Yank")
-  "tya" '(treemacs-copy-absolute-path-at-point :which-key "Absolute")
-  "typ" '(treemacs-copy-project-path-at-point :which-key "Project")
-  "tyr" '(treemacs-copy-relative-path-at-point :which-key "Relative")
-  "tyr" '(treemacs-copy-file :which-key "file"))
-
-(dqv/leader-key
-  "c"   '(:ignore t :wk "code")
-  "cl"  #'evilnc-comment-or-uncomment-lines
-
-  "e"  '(:ignore t :which-key "errors")
-  "e." '(hydra-flycheck/body :wk "hydra")
-  "el" '(counsel-flycheck :wk "Flycheck")
-  "eF" #'flyspell-hydra/body
-
-  "f"   '(:ignore t :wk "Files")
-  "ff" '(counsel-find-file :wk "Find Files")
-  "fD" '(dqv/delete-this-file :wk "Delete Files")
-  "fr" '(counsel-recentf :wk "Recentf Files"))
-
-(dqv/leader-key
-  "h"   '(:ignore t :wk "Help")
-  "hi" '(info :wk "Info")
-  "hI" '(info-display-manual :wk "Info Display")
-  "hd"   '(:ignore t :wk "Describe")
-  "hdk" '(helpful-key :wk "Key")
-  "hdm" '(helpful-macro :wk "Macro")
-  "hds" '(helpful-symbol :wk "Symbol")
-  "hdv" '(helpful-variable :wk "Variable")
-
-  "i"   '(:ignore t :wk "insert")
-  "iu"  #'counsel-unicode-char
-
-  "t"   '(:ignore t :wk "Insert")
-  "tT"  #'counsel-load-theme
-  "tml"  #'modus-themes-load-operandi
-  "tmd"  #'modus-themes-load-vivendi
-  "td"  '(:ignore t :wk "Debug")
-  "tde"  #'toggle-debug-on-error
-  "tdq"  #'toggle-debug-on-quit
-  "ti"   '(:ignore t :wk "Input")
-  "tit"  #'toggle-input-method
-  "tis"  #'set-input-method
-
-  "T"   '(:ignore t :wk "Input")
-  "Te"  #'string-edit-at-point
-  "Tu"  #'downcase-region
-  "TU"  #'upcase-region
-  "Tz"  #'hydra-zoom/body
-
-  "w"   '(:ignore t :wk "Windows")
-  "wh" '(evil-window-left :wk "Left")
-  "wj" '(evil-window-down :wk "Down")
-  "wk" '(evil-window-up :wk "Up")
-  "wl" '(evil-window-right :wk "Right")
-  "ws" '(split-window-below-and-focus :wk "Split")
-  "wv" '(split-window-right-and-focus :wk "Verticle Split")
-  "wi" '(windows-adjust-size/body :wk "Window Size")
-  "w1" #'winum-select-window-1
-  "w2" #'winum-select-window-2
-  "w3" #'winum-select-window-3
-  "w4" #'winum-select-window-4
-  "wc" '(kill-buffer-and-delete-window :wk "Kill & Delete")
-  "wO" '(dqv/kill-other-buffers :wk "Kill other window")
-  "wd" '(delete-window :wk "Delete window")
-  "wo" '(delete-other-windows :wk "delete others window")
-
-  "ag"   '(:ignore t :wk "Gcal")
-  "agp"  #'org-gcal-post-at-point
-  "agR"  #'org-gcal-reload-client-id-secret
-  "ags"  #'org-gcal-sync
-  "agS"  #'org-gcal-sync-buffer
-  "agf"  #'org-gcal-fetch
-  "agF"  #'org-gcal-fetch-buffer
-  "agd"  #'org-gcal-delete-at-point
-  "agr"  #'org-gcal-request-token
-  "agt"  #'org-gcal-toggle-debug
-
-  "n"   '(:ignore t :wk "Gcal")
-  "nn"  #'org-roam-node-find
-  "naa"  #'org-roam-alias-add
-  "nar"  #'org-roam-alias-remove
-  "ni"  #'org-roam-node-insert
-  "nl"  #'org-roam-buffer-toggle
-  "nct"  #'org-roam-dailies-capture-today
-  "ncT"  #'org-roam-dailies-capture-tomorrow
-  "nfd"  #'org-roam-dailies-find-date
-  "nft"  #'org-roam-dailies-find-today
-  "nfy"  #'org-roam-dailies-find-yesterday
-  "nfT"  #'org-roam-dailies-find-tomorrow
-  "ng"  #'org-roam-graph
-  "nbs"  #'bookmark-set
-  "nbj"  #'bookmark-jump
-  "nbi"  #'bookmark-insert
-  "nbl"  #'bookmark-bmenu-list
-
-  "l"   '(:ignore t :wk "Lsp")
-  "ll"  #'lsp
-  "lm"  #'lsp-ui-imenu
-  "lR"  #'lsp-workspace-restart
-  "ls"  #'lsp-treemacs-symbols
-  "le"  #'lsp-treemacs-errors-list
-  "ld"  #'xref-find-definitions-other-window
-  "lD"  #'xref-find-definitions
-  "lr"  #'lsp-rename
-
-  "all" #'leetcode
-  "ald" #'leetcode-daily
-  "alo" #'leetcode-show-problem-in-browser
-  "alO" #'leetcode-show-problem-by-slub
-  "alS" #'leetcode-submit
-  "als" #'leetcode-show-problem
-
-  "p" '(:ignore t :wk "Projectile")
-  "p!" #'projectile-run-shell-command-in-root
-  "p&" #'projectile-run-async-shell-command-in-root
-  "pb" #'counsel-projectile-switch-to-buffer
-  "pc" #'counsel-projectile
-  "pr" #'projectile-remove-known-project
-  "pd" #'counsel-projectile-find-dir
-  "pe" #'projectile-edit-dir-locals
-  "pf" #'counsel-projectile-find-file
-  "pg" #'projectile-find-tag
-  "pk" #'project-kill-buffers
-  "pp" #'counsel-projectile-switch-project
-  "pt" #'ivy-magit-todos
-  "pv" #'projectile-vc
-
-  "u"   #'universal-argument
-  "U"   #'undo-tree-visualize
-
-  "f1"  '((lambda ()
-            (interactive)
-            (find-file "~/ED/"))
-          :which-key "EAMONDANG")
-
-  "fd"  '((lambda ()
-            (interactive)
-            (find-file "~/Dropbox/Roam/"))
-          :which-key "Roam")
-
-  "fo"  '((lambda ()
-            (interactive)
-            (find-file "~/Dropbox/Roam/README.org"))
-          :which-key "init.el")
-
-
-  "fc"  '((lambda ()
-            (interactive)
-            (find-file "~/.emacs.d/eamon.org"))
-          :which-key "emacs.org")
-
-  "fi"  '((lambda ()
-            (interactive)
-            (find-file (concat user-emacs-directory "init.el")))
-          :which-key "init.el")
-
-  "fR"  '((lambda ()
-            (interactive)
-            (counsel-find-file ""
-                               (concat user-emacs-directory
-                                       (file-name-as-directory "straight")
-                                       (file-name-as-directory "repos"))))
-          :which-key "straight package")
-
-  "owgp"  '((lambda ()
-             (interactive)
-             (browse-url "https://github.com/jayden_dangvu"))
-           :wk "My Github")
-
-  "owgw"  '((lambda ()
-             (interactive)
-             (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
-           :wk "Work Github")
-
-  "owe"  '((lambda ()
-             (interactive)
-             (browse-url "https://remix.ethereum.org/"))
-           :wk "Remix IDE")
-
-  "owr"  '((lambda ()
-             (interactive)
-             (browse-url "https://reddit.com/"))
-           :wk "Reddit")
-
-  "owc"  '((lambda ()
-             (interactive)
-             (browse-url "https://calendar.google.com/calendar/u/0/r?pli=1"))
-           :wk "My Calender")
-
-  "owwc"  '((lambda ()
-              (interactive)
-              (browse-url "https://chat.openai.com"))
-              :wk "Chat GPT"))
-
-(dqv/leader-key
-  "dd" '(docker :which-key "Docker")
-  "dI" '(docker-images :which-key "Docker Images")
-  "dV" '(docker-volumes :which-key "Docker Volumes")
-  "dC" '(docker-containers :which-key "Docker Containers")
-  "dN" '(docker-networks :which-key "Docker Networks")
-)
 
 (use-package company
   :straight (:build t)
@@ -2266,7 +1955,7 @@ deactivate `magit-todos-mode', otherwise enable it."
   :defer t
   :straight (:build t)
   :custom
-  (shell-pop-default-directory "/Users/eamon")
+  (shell-pop-default-directory "/Users/dangeamon")
   (shell-pop-shell-type (quote ("eshell" "*eshell*" (lambda () (eshell shell-pop-term-shell)))))
   (shell-pop-window-size 30)
   (shell-pop-full-span nil)
@@ -2981,7 +2670,7 @@ deactivate `magit-todos-mode', otherwise enable it."
   :init (winum-mode))
 
 (use-package copilot
-  :straight (:build t :host github :repo "eamondang/copilot.el" :files ("dist" "*.el"))
+  :straight (:build t :host github :repo "jayden-dang/copilot.el" :files ("dist" "*.el"))
   :ensure t)
 
 ;; you can utilize :map :hook and :config to customize copilot
@@ -3142,7 +2831,7 @@ Spell Commands^^           Add To Dictionary^^              Other
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
          (zig-mode            . lsp-deferred)
-         (typescript-mode     . lsp-deferred)
+         ;; (typescript-mode     . lsp-deferred)
          (typescript-tsx-mode . lsp-deferred)
          (lsp-mode            . lsp-enable-which-key-integration)
          (lsp-mode            . lsp-ui-mode))
@@ -3152,6 +2841,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
+  (lsp-inlay-hint-enable nil)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
@@ -3159,6 +2849,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-rust-analyzer-display-parameter-hints nil)
   (lsp-rust-analyzer-display-reborrow-hints nil)
   :config
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-tramp-connection "shellcheck")
                     :major-modes '(sh-mode)
@@ -3174,7 +2865,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   :straight (:build t)
   :commands lsp-ui-mode
   :custom
-  (lsp-ui-peek-always-show nil)
+  (lsp-ui-peek-always-show t)
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable nil)
   :general
@@ -3228,26 +2919,30 @@ Spell Commands^^           Add To Dictionary^^              Other
     :keymaps 'lsp-mode-map
     [remap xref-find-apropos] #'consult-lsp-symbols))
 
-;; (use-package dap-mode
-;;   :straight (:build t)
-;;   :ensure
-;;   :config
-;;   (dap-ui-mode 1)
-;;   (dap-ui-controls-mode 1)
-;;   (dap-tooltip-mode 1)
+(use-package dap-mode
+  :straight (:build t)
+  :ensure
+  :config
+  (dap-ui-mode 1)
+  (dap-ui-controls-mode 1)
+  (dap-tooltip-mode 1)
 
-;;   (require 'dap-lldb)
-;;   (require 'dap-gdb-lldb)
-;;   ;; installs .extension/vscode
-;;   (dap-gdb-lldb-setup))
-;; (setq dap-auto-configure-features '(sessions locals controls breakpoints expressions repl tooltip))
-;; (dap-register-debug-template "Rust::LLDB Run Configuration"
-;;                              (list :type "lldb-mi"
-;;                                    :request "launch"
-;;                                    :name "LLDB::Run"
-;;                                    :gdbpath "rust-lldb"
-;;                                    :target nil
-;;                                    :cwd nil))
+  (require 'dap-lldb)
+  (require 'dap-gdb-lldb)
+  ;; installs .extension/vscode
+  (dap-gdb-lldb-setup)
+  (dap-register-debug-template "Rust::LLDB Run Configuration"
+                               (list :type "lldb-mi"
+                                     :request "launch"
+                                     :name "LLDB::Run"
+                                     :gdbpath "rust-lldb"
+                                     :target nil
+                                     :cwd nil)))
+(setq dap-auto-configure-features '(sessions locals controls breakpoints expressions repl tooltip))
+
+(use-package exec-path-from-shell
+  :ensure
+  :init (exec-path-from-shell-initialize))
 
 (use-package cc-mode
   :straight (:type built-in)
@@ -3290,25 +2985,26 @@ Spell Commands^^           Add To Dictionary^^              Other
   (put 'defcommand 'lisp-indent-function 'defun)
   (setq inferior-lisp-program "/usr/bin/sbcl --noinform"))
 
-(use-package eldoc
-  :defer t
-  :after company
-  :preface
-  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-  (add-to-list 'display-buffer-alist
-            '("^\\*eldoc for" display-buffer-at-bottom
-              (window-height . 4)))
-  ;; :hook ((eglot-managed-mode . mp-eglot-eldoc))
-  :init
-  (eldoc-add-command 'company-complete-selection
-                     'company-complete-common
-                     'company-capf
-                     'company-abort)
-  :config
-  (setq eldoc-echo-area-prefer-doc-buffer t)
-  (eldoc-add-command-completions "paredit-")
-  (eldoc-add-command-completions "combobulate-")
-  (setq eldoc-echo-area-use-multiline-p nil))
+;; (use-package eldoc
+;;   :straight t
+;;   :defer t
+;;   :after company
+;;   :preface
+;;   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+;;   (add-to-list 'display-buffer-alist
+;;             '("^\\*eldoc for" display-buffer-at-bottom
+;;               (window-height . 4)))
+;;   :hook ((eglot-managed-mode . mp-eglot-eldoc))
+;;   :init
+;;   (eldoc-add-command 'company-complete-selection
+;;                      'company-complete-common
+;;                      'company-capf
+;;                      'company-abort)
+;;   :config
+;;   (setq eldoc-echo-area-prefer-doc-buffer t)
+;;   (eldoc-add-command-completions "paredit-")
+;;   (eldoc-add-command-completions "combobulate-")
+;;   (setq eldoc-echo-area-use-multiline-p nil))
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (smartparens-mode -1)))
 
@@ -3554,7 +3250,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   :mode ("\\.rs\\'" . rustic-mode)
   :hook (rustic-mode-local-vars . rustic-setup-lsp)
   :hook (rustic-mode . lsp-deferred)
-  ;; :hook (rustic-mode . eglot-ensure)
+  :hook (rustic-mode . eglot-ensure)
   :init
   (with-eval-after-load 'org
     (defalias 'org-babel-execute:rust #'org-babel-execute:rustic)
@@ -3839,8 +3535,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   :commands typescript-tsx-mode
   :after flycheck
   :init
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-tsx-mode))
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-tsx-mode))
   :general
   (dqv/major-leader-key
     :packages 'lsp
@@ -4005,11 +3701,307 @@ Spell Commands^^           Add To Dictionary^^              Other
  :config
  (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer")))
 
-(add-hook 'sql-mode-hook 'lsp)
-(setq lsp-sqls-workspace-config-path nil)
-(setq lsp-sqls-connections
-    '(((driver . "mysql") (dataSourceName . "yyoncho:local@tcp(localhost:3306)/eamon"))
-      ((driver . "postgresql") (dataSourceName . "host=127.0.0.1 port=5432 user=postgres password=password dbname=postgres sslmode=disable"))))
+  (dqv/evil
+    ;;:packages '(counsel)
+    "s" '(window-configuration-to-register :wk "Register Window")
+    "f" '(jump-to-register :wk "Jump Register")
+    "K"   #'lsp-ui-doc-glance
+    "U"   #'evil-redo
+    "C-a" #'my-smarter-move-beginning-of-line
+    "C-e" #'end-of-line
+    "*"   #'dired-create-empty-file
+    "C-y" #'yank
+    "C-M-s-p"    #'scroll-half-page-up
+    "C-M-s-n"    #'scroll-half-page-down
+    "M-y" #'counsel-yank-pop)
+
+(dqv/leader-key
+  "SPC" '(counsel-M-x :which-key "M-x")
+  "."  '(dirvish-dwim :which-key "Dirvish")
+  "J"  '(dired-jump :which-key "Dired Jump")
+  "'"   '(shell-pop :which-key "shell-pop")
+  ","  '(magit-status :which-key "Magit Status")
+  "j" '(bufler-switch-buffer :which-key "Switch Buffer")
+  "k" '(dqv/switch-to-previous-buffer :which-key "Switch to previous buffer")
+  "oa" '(org-agenda :color blue :which-key "Agenda")
+  "ol" '(my/avy-open-url :color blue :which-key "Open Url")
+  "of" '(browse-file-directory :which-key "Open File in Directory")
+  "1" '(treemacs :which-key "Open Treemacs")
+
+  "a" '(:ignore t :which-key "Application")
+  "ac" '(calendar :which-key "Calendar")
+
+  "s" '(:ignore t :which-key "Set Timer")
+  "st" '(org-timer :which-key "Timer")
+  "si" '(org-timer-item :which-key "Timer")
+  "ss" '(org-timer-set-timer :which-key "Set Timer")
+  "sp" '(org-timer-pause-or-continue :which-key "Pause / Continue")
+  "s1" '(org-timer-start :which-key "Start")
+  "s2" '(org-timer-stop :which-key "Stop")
+  "wr" '(writeroom-mode :which-key "Write Room")
+
+  "d" '(:ignore t :which-key "Dirvish")
+  "os" '(dirvish-side :which-key "Side")
+  "il" '(org-insert-last-stored-link :which-key "Insert Stored Link")
+  "is" '(org-store-link :which-key "Store Link"))
+
+(dqv/leader-key
+  :packages '(bufler)
+  "b" '(:ignore t :which-key "Buffers")
+  "bb" '(bufler-switch-buffer :which-key "Switch Buffer")
+  "bB" '(bury-buffer :which-key "Bury Buffer")
+  "bc" '(clone-indirect-buffer :which-key "Clone Indirect")
+  "bC" '(clone-indirect-buffer-other-window :which-key "Clone Indirect Other Window")
+  "bl" '(bufler :which-key "Bufler")
+  "bk" '(kill-this-buffer :which-key "Kill This Buffer")
+  "bD" '(kill-buffer :which-key "Kill Buffer")
+  "bh" '(dashboard-refresh-buffer :which-key "Dashboard Refresh Buffer")
+  "bm" '(switch-to-message-buffer :which-key "Switch to message buffer")
+  "bn" '(next-buffer :which-key "Next Buffer")
+  "bp" '(previous-buffer :which-key "Next Buffer")
+  "br" '(counsel-buffer-or-recentf :which-key "Recentf Buffer")
+  "bs" '(switch-to-scratch-buffer :which-key "Scratch Buffer"))
+
+(dqv/leader-key
+  :packages '(treemacs)
+  "t" '(:ignore t :wk "Treemacs")
+  "tc" '(:ignore t :wk "Create")
+  "tcd" '(treemacs-create-dir :which-key "Create Dir")
+  "tcf" '(treemacs-create-file :which-key "Create File")
+  "tci" '(treemacs-create-icon :which-key "Create Icon")
+  "tct" '(treemacs-create-theme :which-key "Create Theme")
+  "td" '(treemacs-delete-file :which-key "delete")
+  "tw" '(:ignore t :wk "Workspace")
+  "tws" '(treemacs-switch-workspace :which-key "Switch Workspace")
+  "twc" '(treemacs-create-workspace :which-key "Create Workspace")
+  "twr" '(treemacs-remove-workspace :which-key "Remove Workspace")
+  "tf" '(:ignore t :wk "Files")
+  "tff" '(treemacs-find-file :which-key "Find File")
+  "tft" '(treemacs-find-tag :which-key "Find Tag")
+  "tl" '(:ignore t :wk "LSP")
+  "tls" '(treemacs-expand-lsp-symbol :which-key "Lsp Symbol")
+  "tt" '(typescript-tsx-mode :which-key "TSX Mode")
+
+  "tld" '(treemacs-expand-lsp-treemacs-deps :which-key "Lsp treemacs deps")
+  "tlD" '(treemacs-collapse-lsp-treemacs-deps :which-key "Collapse lsp Deps")
+  "tlS" '(treemacs-collapse-lsp-symbol :which-key "Collapse Lsp Symbol")
+  "tp" '(:ignore t :wk "Projcets")
+  "tpa" '(treemacs-add-project :which-key "Add project")
+  "tpf" '(treemacs-project-follow-mode :which-key "Follow mode")
+  "tpn" '(treemacs-project-of-node :which-key "Of Node")
+  "tpp" '(treemacs-project-at-point :which-key "At Point")
+  "tpr" '(treemacs-remove-project-from-workspace :which-key "Remove project")
+  "tpt" '(treemacs-move-project-down :which-key "Project Down")
+  "tps" '(treemacs-move-project-up :which-key "Project Up")
+  "tr" '(:ignore t :wk "Rename")
+  "trf" '(treemacs-rename-file :which-key "Rename File")
+  "trp" '(treemacs-rename-project :which-key "Rename project")
+  "trr" '(treemacs-rename :which-key "Rename")
+  "trw" '(treemacs-rename-workspace :which-key "Rename Workspace")
+  "tT" '(:ignore t :wk "Toggle")
+  "tTd" '(treemacs-toggle-show-dotfiles :which-key "Toggle show Dotfiles")
+  "tTn" '(treemacs-toggle-node :which-key "Toggle Node")
+  "tv" '(:ignore t :wk "Visit Node")
+  "tva" '(treemacs-visit-node-ace :which-key "Visit Ace")
+  "tvc" '(treemacs-visit-node-close-treemacs :which-key "Visit Node Close")
+  "tvn" '(treemacs-visit-node-default :which-key "Visit Node")
+  "ty" '(:ignore t :wk "Yank")
+  "tya" '(treemacs-copy-absolute-path-at-point :which-key "Absolute")
+  "typ" '(treemacs-copy-project-path-at-point :which-key "Project")
+  "tyr" '(treemacs-copy-relative-path-at-point :which-key "Relative")
+  "tyr" '(treemacs-copy-file :which-key "file"))
+
+(dqv/leader-key
+  "c"   '(:ignore t :wk "code")
+  "cl"  #'evilnc-comment-or-uncomment-lines
+
+  "e"  '(:ignore t :which-key "errors")
+  "e." '(hydra-flycheck/body :wk "hydra")
+  "el" '(counsel-flycheck :wk "Flycheck")
+  "eF" #'flyspell-hydra/body
+
+  "f"   '(:ignore t :wk "Files")
+  "ff" '(counsel-find-file :wk "Find Files")
+  "fD" '(dqv/delete-this-file :wk "Delete Files")
+  "fr" '(counsel-recentf :wk "Recentf Files"))
+
+(dqv/leader-key
+  "h"   '(:ignore t :wk "Help")
+  "hi" '(info :wk "Info")
+  "hI" '(info-display-manual :wk "Info Display")
+  "hd"   '(:ignore t :wk "Describe")
+  "hdk" '(helpful-key :wk "Key")
+  "hdm" '(helpful-macro :wk "Macro")
+  "hds" '(helpful-symbol :wk "Symbol")
+  "hdv" '(helpful-variable :wk "Variable")
+
+  "i"   '(:ignore t :wk "insert")
+  "iu"  #'counsel-unicode-char
+
+  "t"   '(:ignore t :wk "Insert")
+  "tT"  #'counsel-load-theme
+  "tml"  #'modus-themes-load-operandi
+  "tmd"  #'modus-themes-load-vivendi
+  "td"  '(:ignore t :wk "Debug")
+  "tde"  #'toggle-debug-on-error
+  "tdq"  #'toggle-debug-on-quit
+  "ti"   '(:ignore t :wk "Input")
+  "tit"  #'toggle-input-method
+  "tis"  #'set-input-method
+
+  "T"   '(:ignore t :wk "Input")
+  "Te"  #'string-edit-at-point
+  "Tu"  #'downcase-region
+  "TU"  #'upcase-region
+  "Tz"  #'hydra-zoom/body
+
+  "w"   '(:ignore t :wk "Windows")
+  "wh" '(evil-window-left :wk "Left")
+  "wj" '(evil-window-down :wk "Down")
+  "wk" '(evil-window-up :wk "Up")
+  "wl" '(evil-window-right :wk "Right")
+  "ws" '(split-window-below-and-focus :wk "Split")
+  "wv" '(split-window-right-and-focus :wk "Verticle Split")
+  "wi" '(windows-adjust-size/body :wk "Window Size")
+  "w1" #'winum-select-window-1
+  "w2" #'winum-select-window-2
+  "w3" #'winum-select-window-3
+  "w4" #'winum-select-window-4
+  "wc" '(kill-buffer-and-delete-window :wk "Kill & Delete")
+  "wO" '(dqv/kill-other-buffers :wk "Kill other window")
+  "wd" '(delete-window :wk "Delete window")
+  "wo" '(delete-other-windows :wk "delete others window")
+
+  "ag"   '(:ignore t :wk "Gcal")
+  "agp"  #'org-gcal-post-at-point
+  "agR"  #'org-gcal-reload-client-id-secret
+  "ags"  #'org-gcal-sync
+  "agS"  #'org-gcal-sync-buffer
+  "agf"  #'org-gcal-fetch
+  "agF"  #'org-gcal-fetch-buffer
+  "agd"  #'org-gcal-delete-at-point
+  "agr"  #'org-gcal-request-token
+  "agt"  #'org-gcal-toggle-debug
+
+  "n"   '(:ignore t :wk "Gcal")
+  "nn"  #'org-roam-node-find
+  "naa"  #'org-roam-alias-add
+  "nar"  #'org-roam-alias-remove
+  "ni"  #'org-roam-node-insert
+  "nl"  #'org-roam-buffer-toggle
+  "nct"  #'org-roam-dailies-capture-today
+  "ncT"  #'org-roam-dailies-capture-tomorrow
+  "nfd"  #'org-roam-dailies-find-date
+  "nft"  #'org-roam-dailies-find-today
+  "nfy"  #'org-roam-dailies-find-yesterday
+  "nfT"  #'org-roam-dailies-find-tomorrow
+  "ng"  #'org-roam-graph
+  "nbs"  #'bookmark-set
+  "nbj"  #'bookmark-jump
+  "nbi"  #'bookmark-insert
+  "nbl"  #'bookmark-bmenu-list
+
+  "l"   '(:ignore t :wk "Lsp")
+  "ll"  #'lsp
+  "lm"  #'lsp-ui-imenu
+  "lR"  #'lsp-workspace-restart
+  "ls"  #'lsp-treemacs-symbols
+  "le"  #'lsp-treemacs-errors-list
+  "ld"  #'xref-find-definitions-other-window
+  "lD"  #'xref-find-definitions
+  "lr"  #'lsp-rename
+
+  "all" #'leetcode
+  "ald" #'leetcode-daily
+  "alo" #'leetcode-show-problem-in-browser
+  "alO" #'leetcode-show-problem-by-slub
+  "alS" #'leetcode-submit
+  "als" #'leetcode-show-problem
+
+  "p" '(:ignore t :wk "Projectile")
+  "p!" #'projectile-run-shell-command-in-root
+  "p&" #'projectile-run-async-shell-command-in-root
+  "pb" #'counsel-projectile-switch-to-buffer
+  "pc" #'counsel-projectile
+  "pr" #'projectile-remove-known-project
+  "pd" #'counsel-projectile-find-dir
+  "pe" #'projectile-edit-dir-locals
+  "pf" #'counsel-projectile-find-file
+  "pg" #'projectile-find-tag
+  "pk" #'project-kill-buffers
+  "pp" #'counsel-projectile-switch-project
+  "pt" #'ivy-magit-todos
+  "pv" #'projectile-vc
+
+  "u"   #'universal-argument
+  "U"   #'undo-tree-visualize
+
+  "fd"  '((lambda ()
+            (interactive)
+            (find-file "~/Dropbox/Roam/"))
+          :which-key "Roam")
+
+  "fo"  '((lambda ()
+            (interactive)
+            (find-file "~/Dropbox/Roam/README.org"))
+          :which-key "init.el")
+
+
+  "fc"  '((lambda ()
+            (interactive)
+            (find-file "~/.emacs.d/jayden.org"))
+          :which-key "jayden.org")
+
+  "fi"  '((lambda ()
+            (interactive)
+            (find-file (concat user-emacs-directory "init.el")))
+          :which-key "init.el")
+
+  "fR"  '((lambda ()
+            (interactive)
+            (counsel-find-file ""
+                               (concat user-emacs-directory
+                                       (file-name-as-directory "straight")
+                                       (file-name-as-directory "repos"))))
+          :which-key "straight package")
+
+  "owgp"  '((lambda ()
+             (interactive)
+             (browse-url "https://github.com/jayden_dangvu"))
+           :wk "My Github")
+
+  "owgw"  '((lambda ()
+             (interactive)
+             (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
+           :wk "Work Github")
+
+  "owe"  '((lambda ()
+             (interactive)
+             (browse-url "https://remix.ethereum.org/"))
+           :wk "Remix IDE")
+
+  "owr"  '((lambda ()
+             (interactive)
+             (browse-url "https://reddit.com/"))
+           :wk "Reddit")
+
+  "owc"  '((lambda ()
+             (interactive)
+             (browse-url "https://calendar.google.com/calendar/u/0/r?pli=1"))
+           :wk "My Calender")
+
+  "owwc"  '((lambda ()
+              (interactive)
+              (browse-url "https://chat.openai.com"))
+              :wk "Chat GPT"))
+
+(dqv/leader-key
+  "dd" '(docker :which-key "Docker")
+  "dI" '(docker-images :which-key "Docker Images")
+  "dV" '(docker-volumes :which-key "Docker Volumes")
+  "dC" '(docker-containers :which-key "Docker Containers")
+  "dN" '(docker-networks :which-key "Docker Networks")
+)
 
 (use-package lsp-grammarly
   :straight (:build t))
@@ -4017,66 +4009,3 @@ Spell Commands^^           Add To Dictionary^^              Other
   ;; :hook (text-mode . (lambda ()
   ;;                      (require 'lsp-grammarly)
   ;;                      (lsp-deferred))))  ; or lsp-deferred
-
-;; (add-to-list 'load-path "~/.emacs.d/codeium.el")
-;; we recommend using use-package to organize your init.el
-(use-package codeium
-    ;; if you use straight
-    :straight '(:build t :type git :host github :repo "Exafunction/codeium.el")
-    ;; otherwise, make sure that the codeium.el file is on load-path
-
-    :init
-    ;; use globally
-    (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
-    ;; or on a hook
-    (add-hook 'rustic-mode-hook
-        (lambda ()
-            (setq-local completion-at-point-functions '(codeium-completion-at-point))))
-
-    ;; if you want multiple completion backends, use cape (https://github.com/minad/cape):
-    ;; (add-hook 'python-mode-hook
-    ;;     (lambda ()
-    ;;         (setq-local completion-at-point-functions
-    ;;             (list (cape-super-capf #'codeium-completion-at-point #'lsp-completion-at-point)))))
-    ;; an async company-backend is coming soon!
-
-    ;; codeium-completion-at-point is autoloaded, but you can
-    ;; optionally set a timer, which might speed up things as the
-    ;; codeium local language server takes ~0.2s to start up
-    (add-hook 'emacs-startup-hook
-     (lambda () (run-with-timer 0.1 nil #'codeium-init)))
-
-    :defer t ;; lazy loading, if you want
-    :config
-    (setq use-dialog-box nil) ;; do not use popup boxes
-
-    ;; if you don't want to use customize to save the api-key
-    ;; (setq codeium/metadata/api_key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
-
-    ;; get codeium status in the modeline
-    (setq codeium-mode-line-enable
-        (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
-    (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
-    ;; alternatively for a more extensive mode-line
-    ;; (add-to-list 'mode-line-format '(-50 "" codeium-mode-line) t)
-
-    ;; use M-x codeium-diagnose to see apis/fields that would be sent to the local language server
-    (setq codeium-api-enabled
-        (lambda (api)
-            (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
-    ;; you can also set a config for a single buffer like this:
-    ;; (add-hook 'python-mode-hook
-    ;;     (lambda ()
-    ;;         (setq-local codeium/editor_options/tab_size 4)))
-
-    ;; You can overwrite all the codeium configs!
-    ;; for example, we recommend limiting the string sent to codeium for better performance
-    (defun my-codeium/document/text ()
-        (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
-    ;; if you change the text, you should also change the cursor_offset
-    ;; warning: this is measured by UTF-8 encoded bytes
-    (defun my-codeium/document/cursor_offset ()
-        (codeium-utf8-byte-length
-            (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
-    (setq codeium/document/text 'my-codeium/document/text)
-    (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: coin::...
+# key: coin::
+# --
+coin::${1:$$(yas-choose-value '("total_supply" "value" "balance" "put" "take" "join" "split" "zero" "mint" "mint_balance" "mint_and_transfer" "balance_mut" "from_balance" "into_balance" "treasury_into_supply" "supply_immut" "supply_mut"))}($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: url::new_unsafe_from_bytes()
+# key: url::
+# --
+url::${1:$$(yas-choose-value '("new_unsafe_from_bytes" "new_unsafe" "inner_url" "update"))}($0)
