@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: groth
+# key: groth
+# --
+groth16::${1:$$(yas-choose-value '("bls12381" "bn254" "pvk_from_bytes" "pvk_to_bytes" "public_proof_inputs_from_bytes" "proof_points_from_bytes" "prepare_verifying_key" "prepare_verifying_key_internal" "verify_groth16_proof" "verify_groth16_proof_internal"))}($0)

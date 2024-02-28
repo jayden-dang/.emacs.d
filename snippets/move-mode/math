@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: math
+# key: math
+# --
+math::${1:$$(yas-choose-value '("max" "min" "diff" "pow" "sqrt" "sqrt_u128" "divide_and_round_up"))}($0)

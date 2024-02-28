@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: string::utf8
+# key: string
+# --
+string::utf8($0)

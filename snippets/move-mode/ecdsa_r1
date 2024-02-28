@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ecdsa_r1
+# key: er
+# --
+ecdsa_r1::${1:$$(yas-choose-value '("secp256r1_ecrecover" "secp256r1_verify"))}($0)

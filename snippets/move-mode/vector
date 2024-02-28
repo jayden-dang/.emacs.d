@@ -2,4 +2,4 @@
 # name: vector
 # key: v
 # --
-vector<$0>
+vector<${1:u8}>$0

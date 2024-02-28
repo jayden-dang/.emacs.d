@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: object::new()
-# key: obn
-# --
-object::new(${1:ctx})$0

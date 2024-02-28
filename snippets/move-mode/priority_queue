@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: priority_queue
+# key: pq
+# --
+priority_queue::${1:$$(yas-choose-value '("new" "pop_max" "insert" "new_entry" "create_entries" "restore_heap_recursive" "max_heapify_recursive" "priorities"))}($0)

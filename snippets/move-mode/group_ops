@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: group_ops
+# key: go
+# --
+group_ops::${1:$$(yas-choose-value '("bytes" "equal" "from_bytes" "add" "sub" "mul" "div" "hash_to" "multi_scalar_multiplication" "pairing" "internal_validate" "internal_add" "internal_sub" "internal_mul" "internal_div" "internal_hash_to" "internal_multi_scalar_mul" "internal_pairing" "set_as_prefix"))}($0)

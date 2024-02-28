@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: random
+# key: random
+# --
+random::${1:$$(yas-choose-value '("create" "load_inner_mut" "load_inner" "update_randomness_state"))}($0)

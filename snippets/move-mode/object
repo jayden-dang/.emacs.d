@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: object
-# key: sui::object
+# name: object::
+# key: oj
 # --
-sui::object::{Self, ${1:$$(yas-choose-value '("ID" "UID"))}}
+object::${1:$$(yas-choose-value '("new" "id" "borrow_id" "id_address" "delete" "id_bytes" "borrow_uid" "new_uid_from_hash" "delete_impl" "record_new_uid" "id_to_bytes" "id_to_address" "id_from_bytes" "sui_system_state" "clock" "authenticator_state" "randomness_state" "sui_deny_list_object_id"  "uid_as_inner" "uid_to_inner" "uid_to_bytes" "uid_to_address"))}($0)

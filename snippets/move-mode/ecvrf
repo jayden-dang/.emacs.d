@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ecvrf
+# key: ev
+# --
+ecvrf::ecvrf_verify($0)

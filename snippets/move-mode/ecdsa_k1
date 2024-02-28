@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ecdsa_k1
+# key: ek
+# --
+ecdsa_k1::${1:$$(yas-choose-value '("secp256k1_ecrecover" "decompress_pubkey" "secp256k1_verify"))}($0)

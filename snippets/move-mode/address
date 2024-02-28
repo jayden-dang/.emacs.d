@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: address
-# key: ad
+# key: address
 # --
-address$0
+address::${1:$$(yas-choose-value '("to_u256" "from_u256" "to_bytes" "from_bytes" "to_ascii_string" "to_string" "from_ascii_bytes" "hex_char_value" "length" "max"))}($0)

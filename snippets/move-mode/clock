@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: clock
+# key: clock
+# --
+clock::${1:$$(yas-choose-value '("timestamp_ms" "create" "consensus_commit_prologue"))}($0)

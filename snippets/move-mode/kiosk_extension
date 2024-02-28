@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: kiosk_extension
+# key: ke
+# --
+kiosk_extension::${1:$$(yas-choose-value '("add" "disabled" "enable" "remove" "storage" "strorage_mut" "place" "lock" "is_installed" "is_enabled" "can_place" "can_lock" "extension" "extension_mut"))}($0)

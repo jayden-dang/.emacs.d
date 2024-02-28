@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pay
+# key: pay
+# --
+pay::${1:$$(yas-choose-value '("keep" "split" "split_vec" "split_and_transfer" "divide_and_keep" "join" "join_vec" "join_vec_and_transfer"))}($0)

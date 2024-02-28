@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: authenticator_state::
+# key: as
+# --
+authenticator_state::${1:$$(yas-choose-value '("active_jwk_equal" "jwk_equal" "jwk_id_equal" "string_bytes_lt" "jwk_lt" "create" "load_inner_mut" "load_inner" "check_sorted" "update_authenticator_state" "deduplicate" "expire_jwks" "get_active_jwks"))}($0)

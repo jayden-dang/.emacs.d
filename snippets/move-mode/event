@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: event
+# key: emit
+# --
+event::emit($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bcs::..
+# key: bcs
+# --
+bcs::${1:$$(yas-choose-value '("to_bytes" "new" "into_remainder_bytes" "peel_address" "peel_bool" "peel_u8" "peel_u64" "peel_u128" "peel_256" "peel_vec_length" "peel_vec_address" "peel_vec_bool" "peel_vec_u8" "peel_vec_vec_u8" "peel_vec_u64" "peel_vec_u128" "peel_option_address" "peel_option_bool" "peel_option_u8" "peel_option_u64" "peel_option_u128"))}($0)

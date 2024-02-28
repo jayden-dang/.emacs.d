@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dof
+# key: dof
+# --
+dynamic_object_field::${1:$$(yas-choose-value '("add" "borrow" "borrow_mut" "remove" "exists_" "exists_with_type" "id"))}($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ed25519
+# key: ed
+# --
+ed25519::ed25519_verify($0)

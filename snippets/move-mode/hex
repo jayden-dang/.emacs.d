@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hex
+# key: hex
+# --
+hex::${1:$$(yas-choose-value '("encode" "decode" "decode_byte"))}($0)

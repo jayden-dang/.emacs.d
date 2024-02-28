@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: use table
-# key: utb
-# --
-use sui::table::{Self, Table};$0

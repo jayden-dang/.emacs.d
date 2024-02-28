@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hmac
+# key: hmac
+# --
+hmac::hmac_sha3_256($0)

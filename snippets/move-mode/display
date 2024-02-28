@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: display
+# key: display
+# --
+display::${1:$$(yas-choose-value '("new" "new_with_fields" "create_and_keep" "update_version" "add" "add_multiple" "edit" "remove" "is_authorized" "version" "fields" "create_internal" "add_internal"))}($0)

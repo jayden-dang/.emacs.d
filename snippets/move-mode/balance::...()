@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: balance::...()
-# key: balance::
+# key: bl
 # --
 balance::${1:$$(yas-choose-value '("value" "supply_value" "create_supply" "increase_supply" "decrease_supply" "zero" "join" "split" "withdraw_all" "destroy_zero" "create_staking_rewards" "destroy_storage_rebates" "destroy_supply"))}($0)

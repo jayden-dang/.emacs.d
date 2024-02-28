@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: object::delete($0)
-# key: od
-# --
-object::delete($0)

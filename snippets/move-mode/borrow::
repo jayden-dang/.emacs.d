@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: borrow::
+# key: borrow
+# --
+borrow::${1:$$(yas-choose-value '("new" "borrow" "put_back" "destroy"))}($0)

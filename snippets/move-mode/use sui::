@@ -2,4 +2,4 @@
 # name: use sui::
 # key: sui::
 # --
-sui::${1:$$(yas-choose-value '("tx_context" "transfer" "sui" "coin" "object" "url" "event" "table" "address" "balance" "bag" "bcs" "dynamic_field" "dynamic_object_field" "kiosk" "kiosk_extension" "object_bag" "object_table" "pay" "random" "table_vec" "token" "transfer_policy" "types" "vec_map" "vec_set" "versioned"))}$0
+sui::${1:$$(yas-choose-value '("tx_context" "transfer" "sui" "coin" "object" "url" "event" "table" "address" "balance" "bag" "bcs" "dynamic_field" "dynamic_object_field" "kiosk" "kiosk_extension" "object_bag" "object_table" "pay" "random" "table_vec" "token" "transfer_policy" "types" "vec_map" "vec_set" "versioned" "test_scenario"))}$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hash
+# key: hash
+# --
+hash::${1:$$(yas-choose-value '("blake2b256" "keccak256"))}($0)

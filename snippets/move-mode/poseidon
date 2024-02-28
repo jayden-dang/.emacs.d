@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: poseidon
+# key: poseidon
+# --
+poseidon::${1:$$(yas-choose-value '("poseidon_bn254" "poseidon_bn254_internal"))}($0)

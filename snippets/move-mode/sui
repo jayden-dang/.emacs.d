@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sui
+# key: sui
+# --
+sui::${1:$$(yas-choose-value '("new" "transfer"))}($0)
