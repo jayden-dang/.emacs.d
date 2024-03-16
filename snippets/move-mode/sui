@@ -2,4 +2,4 @@
 # name: sui
 # key: sui
 # --
-sui::${1:$$(yas-choose-value '("new" "transfer"))}($0)
+sui::${1:$$(yas-choose-value '("new" "transfer" "SUI"))}($0)

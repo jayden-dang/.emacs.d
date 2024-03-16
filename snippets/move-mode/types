@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: types
+# key: types
+# --
+types::is_one_time_witness($0)

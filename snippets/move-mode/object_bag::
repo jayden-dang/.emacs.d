@@ -2,4 +2,4 @@
 # name: object_bag::
 # key: ojb
 # --
-object_bag::${1:$$(yas-choose-value '("new" "add" "borrow" "borrow_mut" "remove" "contains" "contains_with_type" "length" "is_empty" "destroy_empty" "value_id"))}($0)
+object_bag::${1:$$(yas-choose-value '("new" "add" "borrow" "borrow_mut" "remove" "contains" "contains_with_type" "length" "is_empty" "destroy_empty" "value_id" "ObjectBag"))}($0)

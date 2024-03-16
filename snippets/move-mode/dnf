@@ -2,4 +2,4 @@
 # name: dnf
 # key: dnf
 # --
-dynamic_field::${1:$$(yas-choose-value '("add" "borrow" "borrow_mut" "remove" "exists_" "remove_if_exists" "field_info" "field_info_mut" "hash_type_and_key" "add_child_object" "borrow_child_object" "borrow_child_object_mut" "remove_child_object" "has_child_object" "has_child_object_with_ty"))}($0)
+dynamic_field::${1:$$(yas-choose-value '("add" "borrow" "borrow_mut" "remove" "exists_" "remove_if_exists" "field_info" "field_info_mut" "hash_type_and_key" "add_child_object" "borrow_child_object" "borrow_child_object_mut" "remove_child_object" "has_child_object" "has_child_object_with_ty" "Field"))}($0)

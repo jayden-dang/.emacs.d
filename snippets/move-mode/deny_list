@@ -2,4 +2,4 @@
 # name: deny_list
 # key: deny_list
 # --
-deny_list::${1:$$(yas-choose-value '("add" "per_type_list_add" "remove" "per_type_list_remove" "contains" "per_type_list_contains" "create" "per_type_list"))}($0)
+deny_list::${1:$$(yas-choose-value '("add" "per_type_list_add" "remove" "per_type_list_remove" "contains" "per_type_list_contains" "create" "per_type_list" "DenyList" "PerTypeList"))}($0)

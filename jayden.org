@@ -825,7 +825,7 @@ focus the new window immediately.
   (split-window-right)
   (windmove-right))
 
-(defun jayden/eldoc-and-focus ()
+(defun jd/eldoc-and-focus ()
   "Spawn a new window right of the current one and focus it."
   (interactive)
   (eldoc-doc-buffer)
@@ -1081,9 +1081,9 @@ This package enables and integrates Evil into a lot of different modes, such as 
     :straight (:build t)
     :config
     ;; jayden conversion
-    ;; (defun my/jayden-rotate-evil-collection (_mode mode-keymaps &rest _rest)
+    ;; (defun my/jd-rotate-evil-collection (_mode mode-keymaps &rest _rest)
     ;;   (evil-collection-translate-key 'normal mode-keymaps
-    ;;     ;; jayden ctsr is qwerty hjkl
+    ;;     ;; jd ctsr is qwerty hjkl
     ;;     "c" "h"
     ;;     "t" "j"
     ;;     "s" "k"
@@ -1093,7 +1093,7 @@ This package enables and integrates Evil into a lot of different modes, such as 
     ;;     "j" "t"
     ;;     "k" "s"
     ;;     "l" "r"))
-    ;; (add-hook 'evil-collection-setup-hook #'my/jayden-rotate-evil-collection)
+    ;; (add-hook 'evil-collection-setup-hook #'my/jd-rotate-evil-collection)
     (evil-collection-init))
 #+end_src
 
@@ -1351,7 +1351,7 @@ Org is the main reason I am using Emacs. It is an extremely powerfu tool when yo
 #+end_src
 
 *** Evil Org
-The main feature from ~evil-org~ that I love is how easy it is to modify some keybindings for keyboards layouts that do not have ~hjkl~, such as the jayden layout (or Dvorak or Colemak if you are into that). But it also adds a ton of default keybindings which are just much more comfortable than the default ones you get with evil and org naked.
+The main feature from ~evil-org~ that I love is how easy it is to modify some keybindings for keyboards layouts that do not have ~hjkl~, such as the jd layout (or Dvorak or Colemak if you are into that). But it also adds a ton of default keybindings which are just much more comfortable than the default ones you get with evil and org naked.
 #+begin_src emacs-lisp
   (use-package evil-org
     :straight (:build t)
@@ -1383,7 +1383,7 @@ Since very recently, the ~contrib/lisp/~ directory of org moved out of the main 
 *** Agenda
 #+name: org-agenda-files
 #+begin_src emacs-lisp :tangle no :exports code :results silent
-(setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/"))
+(setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
 #+end_src
 
 *** Babel
@@ -2441,6 +2441,33 @@ Company is, in my opinion, the best autocompleting engine for Emacs, and it is o
         company-dabbrev-other-buffers nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase    nil))
+
+(defun company-yasnippet-or-completion ()
+  (interactive)
+  (or (do-yas-expand)
+      (company-complete-common)))
+
+(defun check-expansion ()
+  (save-excursion
+    (if (looking-at "\\_>") t
+      (backward-char 1)
+      (if (looking-at "\\.") t
+        (backward-char 1)
+        (if (looking-at "::") t nil)))))
+
+(defun do-yas-expand ()
+  (let ((yas/fallback-behavior 'return-nil))
+    (yas/expand)))
+
+(defun tab-indent-or-complete ()
+  (interactive)
+  (if (minibufferp)
+      (minibuffer-complete)
+    (if (or (not yas/minor-mode)
+            (null (do-yas-expand)))
+        (if (check-expansion)
+            (company-complete-common)
+          (indent-for-tab-command)))))
 #+end_src
 
 This package is a backend for company. It emulates ~ac-source-dictionary~ by proposing text related to the current major-mode.
@@ -4110,13 +4137,15 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable nil)
+  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hints-mode t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
   (lsp-rust-analyzer-display-closure-return-type-hints t)
   (lsp-rust-analyzer-display-parameter-hints nil)
   (lsp-rust-analyzer-display-reborrow-hints nil)
+  ;; (lsp-rust-analyzer-store-path "~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer")
   :config
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   (lsp-register-client
@@ -4635,12 +4664,12 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
   :mode ("\\.rs\\'" . rustic-mode)
   :hook (rustic-mode-local-vars . rustic-setup-lsp)
   :hook (rustic-mode . lsp-deferred)
-  :hook (rustic-mode . eglot-ensure)
+  ;; :hook (rustic-mode . eglot-ensure)
   :init
   (with-eval-after-load 'org
     (defalias 'org-babel-execute:rust #'org-babel-execute:rustic)
     (add-to-list 'org-src-lang-modes '("rust" . rustic)))
-  (setq rustic-lsp-client 'eglot)
+  ;; (setq rustic-lsp-client 'eglot)
   (add-hook 'rustic-mode-hook #'tree-sitter-hl-mode)
   (add-hook 'rustic-mode-hook
           (lambda ()
@@ -4656,7 +4685,7 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
   (dqv/major-leader-key
     :keymaps 'rustic-mode-map
     :packages 'rustic
-    "b"  '(:ignore t :which-key "build")
+    "b"  '(:ignore t :which-key "Build")
     "bB" #'rustic-cargo-build
     "bB" #'rustic-cargo-bench
     "bc" #'rustic-cargo-check
@@ -4677,21 +4706,25 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
     "f" #'rustic-cargo-fmt
     "a" #'rustic-cargo-add
     "r" #'rustic-cargo-run
+    "c" '(:ignore t :which-key "clippy")
     "cf" #'rustic-cargo-clippy-fix
     "cr" #'rustic-cargo-clippy-run
     "cc" #'rustic-cargo-clippy
-    "l"  '(:ignore t :which-key "lsp")
-    "la" #'lsp-execute-code-action
+    "i" #'lsp-execute-code-action ;; auto import
+    "l"  '(:ignore t :which-key "Lsp")
     "lr" #'lsp-rename
     "lq" #'lsp-workspace-restart
     "lQ" #'lsp-workspace-shutdown
     "ls" #'lsp-rust-analyzer-status
-    "lt" #'lsp-rust-analyzer-related-tests
+    "o" '(:ignore t :which-key "Lsp Open")
+    "od" #'lsp-rust-analyzer-open-external-docs
     "ot" #'lsp-rust-analyzer-open-cargo-toml
-    "t" #'rustic-cargo-current-test
+    "t" '(:ignore t :which-key "Testing")
+    "tc" #'rustic-cargo-current-test
+    "tt" #'rustic-cargo-run-nextest
+    "tr" #'lsp-rust-analyzer-related-tests
     "e" #'lsp-rust-analyzer-expand-macro
-    "E" #'rustic-cargo-expand-rerun
-    "T" #'rustic-cargo-run-nextest)
+    "E" #'rustic-cargo-expand-rerun)
   :config
   (setq rustic-indent-method-chain    t
         rustic-babel-format-src-block nil
@@ -4708,6 +4741,13 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
 (setq rustic-lsp-client nil)
 (setq rustic-rustfmt-bin (executable-find "rustfmt"))
 (setq rustic-rustfmt-config "~/.rustfmt.toml")
+#+end_src
+
+#+begin_src emacs-lisp
+(defun jd/rustic-mode-hook ()
+  (when buffer-file-name
+    (setq-local buffer-save-without-query t))
+  (add-hook 'before-save-hook 'lsp-format-buffer nil t))
 #+end_src
 
 **** Web programming
@@ -5187,8 +5227,8 @@ Undefining some stuff to make keybind prefixes work correctly.
 #+begin_src emacs-lisp
 (dqv/leader-key
   "SPC" '(counsel-M-x :which-key "M-x")
-  "."  '(dirvish-dwim :which-key "Dirvish")
-  "J"  '(dired-jump :which-key "Dired Jump")
+  ;; "."  '(dirvish-dwim :which-key "Dirvish")
+  "."  '(dired-jump :which-key "Dirvish")
   "'"   '(shell-pop :which-key "shell-pop")
   ","  '(magit-status :which-key "Magit Status")
   "j" '(bufler-switch-buffer :which-key "Switch Buffer")
@@ -5218,18 +5258,19 @@ Undefining some stuff to make keybind prefixes work correctly.
 (dqv/leader-key
   :packages '(bufler)
   "b" '(:ignore t :which-key "Buffers")
+  "J" '(bufler :which-key "Buflers")
   "bb" '(bufler-switch-buffer :which-key "Switch Buffer")
   "bB" '(bury-buffer :which-key "Bury Buffer")
   "bc" '(clone-indirect-buffer :which-key "Clone Indirect")
   "bC" '(clone-indirect-buffer-other-window :which-key "Clone Indirect Other Window")
   "bl" '(bufler :which-key "Bufler")
+  "br" '(rename-buffer :which-key "Rename buffer")
   "bk" '(kill-this-buffer :which-key "Kill This Buffer")
   "bD" '(kill-buffer :which-key "Kill Buffer")
   "bh" '(dashboard-refresh-buffer :which-key "Dashboard Refresh Buffer")
   "bm" '(switch-to-message-buffer :which-key "Switch to message buffer")
   "bn" '(next-buffer :which-key "Next Buffer")
   "bp" '(previous-buffer :which-key "Next Buffer")
-  "br" '(counsel-buffer-or-recentf :which-key "Recentf Buffer")
   "bs" '(switch-to-scratch-buffer :which-key "Scratch Buffer"))
 
 (dqv/leader-key
@@ -5438,12 +5479,12 @@ Undefining some stuff to make keybind prefixes work correctly.
   "owgp"  '((lambda ()
              (interactive)
              (browse-url "https://github.com/jayden_dangvu"))
-           :wk "My Github")
+            :wk "My Github")
 
   "owgw"  '((lambda ()
              (interactive)
              (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
-           :wk "Work Github")
+            :wk "Work Github")
 
   "owe"  '((lambda ()
              (interactive)
@@ -5463,7 +5504,7 @@ Undefining some stuff to make keybind prefixes work correctly.
   "owwc"  '((lambda ()
               (interactive)
               (browse-url "https://chat.openai.com"))
-              :wk "Chat GPT"))
+            :wk "Chat GPT"))
 
 #+end_src
 

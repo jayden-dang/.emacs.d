@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: vec_set
+# key: vs
+# --
+vec_set::${1:$$(yas-choose-value '("empty" "singleton" "insert" "remove" "contains" "size" "is_empty" "into_keys" "keys" "get_idx_opt" "get_idx" "VecSet"))}($0)

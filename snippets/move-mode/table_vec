@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: table_vec
+# key: tv
+# --
+table_vec::${1:$$(yas-choose-value '("empty" "singleton" "length" "is_empty" "borrow" "push_back" "pop_back" "destroy_empty" "drop" "swap" "swap_remove" "TableVec"))}($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: zklogin_verified_id
+# key: zk
+# --
+zklogin_verified_id::${1:$$(yas-choose-value '("owner" "key_claim_name" "key_claim_value" "issuer" "audience" "delete" "verify_zklogin_id" "check_zklogin_id" "check_zklogin_id_internal" "VerifiedID" "VerifiedIssuer"))}($0)

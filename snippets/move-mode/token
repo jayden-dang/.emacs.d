@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: token
+# key: token
+# --
+token::${1:$$(yas-choose-value '("transfer" "new_policy" "share_policy" "spend" "to_coin" "from_coin" "join" "split" "zero" "destroy_zero" "keep" "new_request" "confirm_request" "confirm_request_mut" "confirm_with_treasure_cap" "add_approval" "add_rule_config" "rule_config" "rule_config_mut" "remove_rule_config" "has_rule_config" "has_rule_config_with_type" "allow" "disallow" "add_rule_for_action" "remove_rule_for_action" "mint" "burn" "flush" "is_allowed" "rules" "spent_balance" "value" "transfer_action" "spend_action" "to_coin_action" "from_coin_action" "action" "amount" "sender" "recipient" "approvals" "spent" "key" "Token" "TokenPolicyCap" "TokenPolicy" "ActionRequest" "RuleKey" "TokenPolicyCreated"))}($0)

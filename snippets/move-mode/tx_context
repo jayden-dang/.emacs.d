@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tx_context
+# key: tx
+# --
+tx_context::${1:$$(yas-choose-value '("sender" "digest" "epoch" "epoch_timestamp_ms" "fresh_object_address" "ids_created" "derive_id" "TxContext"))}($0)

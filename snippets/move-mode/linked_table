@@ -2,4 +2,4 @@
 # name: linked_table
 # key: lt
 # --
-linked_table::${1:$$(yas-choose-value '("new" "front" "back" "push_front" "push_back" "borrow" "borrow_mut" "prev" "next" "remove" "pop_front" "pop_back" "contains" "length" "is_empty" "destroy_empty" "drop"))}($0)
+linked_table::${1:$$(yas-choose-value '("new" "front" "back" "push_front" "push_back" "borrow" "borrow_mut" "prev" "next" "remove" "pop_front" "pop_back" "contains" "length" "is_empty" "destroy_empty" "drop" "LinkedTable"))}($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: test_scenario::
+# key: test_scenario
+# --
+test_scenario::${1:$$(yas-choose-value '("begin" "ctx" "next_tx" "take_from_sender" "return_to_sender" "end"))}($0)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: transfer_policy
+# key: tfp
+# --
+transfer_policy::${1:$$(yas-choose-value '("new_request" "new" "default" "withdraw" "destroy_and_withdraw" "confirm_request" "add_rule" "get_rule" "add_to_balance" "add_receipt" "has_rule" "remove_rule" "uid" "uid_mut_as_owner" "rules" "item" "paid" "from" "TransferRequest" "TransferPolicy" "TransferPolicyCap" "TransferPolicyCreated" "TransferPolicyDestroyed" "RuleKey"))}($0)

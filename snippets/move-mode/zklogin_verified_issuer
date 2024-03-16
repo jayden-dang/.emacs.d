@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: zklogin_verified_issuer
+# key: zki
+# --
+zklogin_verified_issuer::${1:$$(yas-choose-value '("owner" "issuer" "delete" "verify_zklogin_issuer" "check_zklogin_issuer" "check_zklogin_issuer_internal"))}($0)

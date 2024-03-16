@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: versioned
+# key: versioned
+# --
+versioned::${1:$$(yas-choose-value '("create" "version" "load_value" "load_value_mut" "remove_value_for_upgrade" "upgrade" "destroy" "Versioned"))}($0)

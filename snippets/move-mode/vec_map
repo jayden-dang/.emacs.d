@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: vec_map
+# key: vm
+# --
+vec_map::${1:$$(yas-choose-value '("empty" "insert" "remove" "pop" "get_mut" "get" "try_get" "contains" "size" "is_empty" "destroy_empty" "into_keys_values" "keys" "get_idx_opt" "get_idx" "get_entry_by_idx" "get_entry_by_idx_mut" "remove_entry_by_idx" "VecMap" "Entry"))}($0)

@@ -2,4 +2,4 @@
 # name: package
 # key: package
 # --
-package::${1:$$(yas-choose-value '("claim" "claim_and_keep" "burn_publisher" "from_package" "from_module" "published_module" "published_package" "upgrade_package" "version" "upgrade_policy" "ticket_package" "ticket_policy" "receipt_cap" "receipt_package" "ticket_digest" "compatible_policy" "additive_policy" "dep_only_policy" "only_additive_upgrades" "only_dep_upgrades" "make_immutable" "authorize_upgrade" "commit_upgrade" "restrict"))}($0)
+package::${1:$$(yas-choose-value '("claim" "claim_and_keep" "burn_publisher" "from_package" "from_module" "published_module" "published_package" "upgrade_package" "version" "upgrade_policy" "ticket_package" "ticket_policy" "receipt_cap" "receipt_package" "ticket_digest" "compatible_policy" "additive_policy" "dep_only_policy" "only_additive_upgrades" "only_dep_upgrades" "make_immutable" "authorize_upgrade" "commit_upgrade" "restrict" "Publisher" "UpgradeCap" "UpgradeTicket" "UpgradeReceipt"))}($0)

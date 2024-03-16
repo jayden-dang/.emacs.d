@@ -2,4 +2,4 @@
 # name: object_table::
 # key: ojt
 # --
-object_table::${1:$$(yas-choose-value '("new" "add" "borrow" "borrow_mut" "remove" "contains" "length" "is_empty" "destroy_empty" "value_id"))}($0)
+object_table::${1:$$(yas-choose-value '("new" "add" "borrow" "borrow_mut" "remove" "contains" "length" "is_empty" "destroy_empty" "value_id" "ObjectTable"))}($0)
