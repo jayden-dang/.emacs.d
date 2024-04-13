@@ -2035,7 +2035,7 @@ Another great features of Org-mode is the Org projects that allow the user to ea
 #+begin_src emacs-lisp
 (use-package reftex
   :commands turn-on-reftex
-  :init (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
+  :config (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
               reftex-plug-into-AUCTeX     t))
 #+end_src
 
@@ -2920,7 +2920,7 @@ Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot
 #+begin_src emacs-lisp
 (use-package forge
   :after magit
-  :straight (:build t)
+  :straight (:straight t)
   :config
   :general
   (dqv/major-leader-key
@@ -4235,7 +4235,7 @@ And let’s enable some intergration with ~ivy~.
     [remap xref-find-apropos] #'consult-lsp-symbols))
 #+end_src
 
-~dap-mode~ is an advanced debugging mode that works through lsp.
++ ~dap-mode~ is an advanced debugging mode that works through lsp.
 #+begin_src emacs-lisp
 (use-package dap-mode
   :straight (:build t)
@@ -4257,7 +4257,6 @@ And let’s enable some intergration with ~ivy~.
                                      :target nil
                                      :cwd nil)))
 (setq dap-auto-configure-features '(sessions locals controls breakpoints expressions repl tooltip))
-
 #+end_src
 
 #+begin_src emacs-lisp
@@ -4999,7 +4998,7 @@ Typescript is a safer alternative to Javascript. Let’s install its major mode 
   :hook (typescript-tsx-mode . rainbow-delimiters-mode)
   :hook (typescript-tsx-mode . lsp-deferred)
   :hook (typescript-tsx-mode . prettier-js-mode)
-  :hook (typescript-tsx-mode . eglot-ensure)
+  ;; :hook (typescript-tsx-mode . eglot-ensure)
   :commands typescript-tsx-mode
   :after flycheck
   :init

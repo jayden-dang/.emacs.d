@@ -1166,7 +1166,7 @@ the value `split-window-right', then it will be changed to
 
 (use-package reftex
   :commands turn-on-reftex
-  :init (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
+  :config (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
               reftex-plug-into-AUCTeX     t))
 
 (use-package org-ref
@@ -1862,7 +1862,7 @@ deactivate `magit-todos-mode', otherwise enable it."
 
 (use-package forge
   :after magit
-  :straight (:build t)
+  :straight (:straight t)
   :config
   :general
   (dqv/major-leader-key
@@ -3569,7 +3569,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   :hook (typescript-tsx-mode . rainbow-delimiters-mode)
   :hook (typescript-tsx-mode . lsp-deferred)
   :hook (typescript-tsx-mode . prettier-js-mode)
-  :hook (typescript-tsx-mode . eglot-ensure)
+  ;; :hook (typescript-tsx-mode . eglot-ensure)
   :commands typescript-tsx-mode
   :after flycheck
   :init
