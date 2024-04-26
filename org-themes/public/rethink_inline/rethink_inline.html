@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-02-18 Thu 23:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rethink</title>
+<meta name="author" content="Jesse Kelly (jessekelly881)" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i");
+/* Set variables */:root {    --font-size-1: 2rem;    --font-size-2: 1.5rem;    --font-size-3: 1.15rem;    --font-size-4: 1rem;    --font-size-small: 0.8rem;    --font-size-xsmall: 0.6rem;}/* Set padding and margin */html, body{    padding: 0;    margin: 0;    background-color: #fdfdfd;}/* Header margin */h2{margin-top: 2rem; margin-bottom: 1.5rem;}h3{margin-top: 1rem; margin-bottom: 1rem;}h4{margin-top: 1rem; margin-bottom: 1rem;}/* ------------------------- */::selection {    background-color: purple;    color: white;}html, body{    font-family: "Source Sans Pro", Helvetica, sans-serif;		font-weight: 300;}h1{font-size: var(--font-size-1);}h2{font-size: var(--font-size-2);}h3{font-size: var(--font-size-3);}h4{font-size: var(--font-size-3);}h5{font-size: var(--font-size-3);}h1 > .subtitle{    font-size: var(--font-size-3);}h1, h2, h3, h4, h5, h6 {		font-weight: 300;		letter-spacing: -0.03em;}.outline-2 > h2, #table-of-contents > h2{    text-align: center;}/* Table of contents */#table-of-contents ul{    list-style-type:none;    margin: 0;}#table-of-contents .tag{    display: none;}.outline-3{    border-bottom: 1px solid #CCC;}.outline-2 > h2{    grid-row-start: 1;    grid-row-end: 2;}.outline-2{    grid-row-start: 2;    grid-row-end: 3;}img{    max-width: 100%;}/* Code */pre{    margin: 1rem;    background-color: #EEE;    padding: 0.5rem;    border-radius: 0.2rem;    font-size: var(--font-size-small) !important;}.outline-3{    display: grid;    grid-template-columns: 40fr 60fr;} /* Responsive content positioning */@media only screen and (min-width: 750px) /* Large screens */{    .outline-3{        margin: 0vh 10vw;    }    .outline-text-2, #table-of-contents{        padding: 0vh 10vw;    }}@media only screen and (max-width: 750px) /* Small screens */{    .outline-3{        margin: 0vh 5vw;        display: block;    }    .outline-text-2, #table-of-contents{        padding: 0vh 5vw;    }}blockquote{    border-left: 0.2rem solid purple;    padding-left: 1rem;		font-style: italic;}p, pre, ol, ul, table, code{    color: #1A1A1A;}table, blockquote, pre, ol, ul, p, #postamble{    margin-top: 1rem;    margin-bottom: 1rem;}h1, h2, h3, h4, h5, h6{    color: #0A0A0A;}.tag{    margin-top: 0.5rem;    display: block;    color: white;    font-size: var(--font-size-xsmall);}.tag > span{		font-weight: 400;    font-size: 0.6rem;    background-color: purple;    text-transform: uppercase;    border-radius: 2px;    width: fit-content;    height: auto;    padding: 1px 5px;    margin: 1px;}/* Stripe table */tr:nth-child(even) {  background-color: #EEE;}.title{   padding: 2vh 5vw;}pre{		font-family: "Courier New", monospace;    font-size: var(--font-size-4)}.org-org-meta-line{    color: purple;}.org-keyword{    color: purple;}a{    color: purple;}.underline{    text-decoration: underline;}.todo{    color: #7D161A;		font-weight: 400;}.done{    color: purple;		font-weight: 400;}/* Postamble */#postamble{    text-align: center;    width: 100%;}#postamble > p{    display: inline;    font-size: var(--font-size-4)} .outline-text-2, .outline-text-3, .outline-text-4{ max-width: 100%; overflow-x: auto;}
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Rethink</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2c58f62">1. Rethink</a></li>
+<li><a href="#orga6a7e47">2. Lists</a>
+<ul>
+<li><a href="#org402b2b0">2.1. Todo List</a>
+<ul>
+<li><a href="#org7ae1ceb">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#org0447428">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#orgdd446b0">2.1.3. <span class="todo TODO">TODO</span> Scheduled</a></li>
+<li><a href="#org698e903">2.1.4. <span class="todo TODO">TODO</span> Deadline</a></li>
+<li><a href="#org6e5fb14">2.1.5. <span class="todo TODO">TODO</span> Date</a></li>
+</ul>
+</li>
+<li><a href="#org25ae160">2.2. Simple list</a></li>
+<li><a href="#org3570452">2.3. Sorted List</a></li>
+<li><a href="#org77f8eaa">2.4. Checkbox</a></li>
+</ul>
+</li>
+<li><a href="#orga7034be">3. H1</a>
+<ul>
+<li><a href="#orge8bdf3d">3.1. H2</a>
+<ul>
+<li><a href="#orge0988a2">3.1.1. H3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgac56f53">4. Table</a></li>
+<li><a href="#org702f1fc">5. Blocks</a>
+<ul>
+<li><a href="#org0c5d669">5.1. Center</a></li>
+<li><a href="#orgcbf7bbd">5.2. Comment</a></li>
+<li><a href="#orgb90a735">5.3. Example</a></li>
+<li><a href="#orgbeeef0f">5.4. Quote</a></li>
+<li><a href="#org60992b4">5.5. Verse</a></li>
+<li><a href="#org7eb5c94">5.6. Source Blocks</a>
+<ul>
+<li><a href="#org5b3a0da">5.6.1. Python</a></li>
+<li><a href="#org46435ac">5.6.2. Elisp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2c58f62" class="outline-2">
+<h2 id="org2c58f62"><span class="section-number-2">1</span> Rethink</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Original: <a href="https://github.com/jessekelly881/Rethink">https://github.com/jessekelly881/Rethink</a>
+</p>
+
+<p>
+Includes:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> CSS</li>
+<li class="off"><code>[&#xa0;]</code> JAVASCRIPT</li>
+</ul>
+
+<p>
+Available as:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> CSS FILE</li>
+<li class="off"><code>[&#xa0;]</code> JS FILE</li>
+<li class="on"><code>[X]</code> SETUPFILE</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga6a7e47" class="outline-2">
+<h2 id="orga6a7e47"><span class="section-number-2">2</span> Lists</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org402b2b0" class="outline-3">
+<h3 id="org402b2b0"><span class="section-number-3">2.1</span> Todo List</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org7ae1ceb" class="outline-4">
+<h4 id="org7ae1ceb"><span class="section-number-4">2.1.1</span> <span class="todo TODO">TODO</span> First todo</h4>
+</div>
+<div id="outline-container-org0447428" class="outline-4">
+<h4 id="org0447428"><span class="section-number-4">2.1.2</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2021-02-18 Thu 10:12]</span></span></p>
+</div>
+</div>
+<div id="outline-container-orgdd446b0" class="outline-4">
+<h4 id="orgdd446b0"><span class="section-number-4">2.1.3</span> <span class="todo TODO">TODO</span> Scheduled</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-org698e903" class="outline-4">
+<h4 id="org698e903"><span class="section-number-4">2.1.4</span> <span class="todo TODO">TODO</span> Deadline</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-org6e5fb14" class="outline-4">
+<h4 id="org6e5fb14"><span class="section-number-4">2.1.5</span> <span class="todo TODO">TODO</span> Date</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org25ae160" class="outline-3">
+<h3 id="org25ae160"><span class="section-number-3">2.2</span> Simple list</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3570452" class="outline-3">
+<h3 id="org3570452"><span class="section-number-3">2.3</span> Sorted List</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org77f8eaa" class="outline-3">
+<h3 id="org77f8eaa"><span class="section-number-3">2.4</span> Checkbox</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga7034be" class="outline-2">
+<h2 id="orga7034be"><span class="section-number-2">3</span> H1</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+H1 Text
+</p>
+</div>
+<div id="outline-container-orge8bdf3d" class="outline-3">
+<h3 id="orge8bdf3d"><span class="section-number-3">3.1</span> H2</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+H2 Text
+</p>
+</div>
+<div id="outline-container-orge0988a2" class="outline-4">
+<h4 id="orge0988a2"><span class="section-number-4">3.1.1</span> H3</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+H3 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org93e01a6"></a>H4<br />
+<div class="outline-text-5" id="text-3-1-1-1">
+<p>
+H4 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgd401bc0"></a>H5<br />
+<div class="outline-text-6" id="text-3-1-1-1-1">
+<p>
+H5 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgcdde628"></a>H6<br />
+<div class="outline-text-7" id="text-3-1-1-1-1-1">
+<p>
+H6 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org7a2ce53"></a>H7<br />
+<div class="outline-text-8" id="text-3-1-1-1-1-1-1">
+<p>
+H7 Text
+</p>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgac56f53" class="outline-2">
+<h2 id="orgac56f53"><span class="section-number-2">4</span> Table</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+<th scope="col" class="org-right">d</th>
+<th scope="col" class="org-right">e</th>
+<th scope="col" class="org-right">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">7</td>
+<td class="org-right">8</td>
+<td class="org-right">9</td>
+<td class="org-right">10</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-right">13</td>
+<td class="org-right">14</td>
+<td class="org-right">15</td>
+<td class="org-right">16</td>
+<td class="org-right">17</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-right">19</td>
+<td class="org-right">20</td>
+<td class="org-right">21</td>
+<td class="org-right">22</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-right">24</td>
+<td class="org-right">25</td>
+<td class="org-right">26</td>
+<td class="org-right">27</td>
+<td class="org-right">28</td>
+<td class="org-right">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org702f1fc" class="outline-2">
+<h2 id="org702f1fc"><span class="section-number-2">5</span> Blocks</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org0c5d669" class="outline-3">
+<h3 id="org0c5d669"><span class="section-number-3">5.1</span> Center</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-center">
+<p>
+This is a center block
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcbf7bbd" class="outline-3">
+<h3 id="orgcbf7bbd"><span class="section-number-3">5.2</span> Comment</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+</div>
+
+<div id="outline-container-orgb90a735" class="outline-3">
+<h3 id="orgb90a735"><span class="section-number-3">5.3</span> Example</h3>
+<div class="outline-text-3" id="text-5-3">
+<pre class="example" id="org20f456f">
+This is an example block
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgbeeef0f" class="outline-3">
+<h3 id="orgbeeef0f"><span class="section-number-3">5.4</span> Quote</h3>
+<div class="outline-text-3" id="text-5-4">
+<blockquote>
+<p>
+This is a quote block
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org60992b4" class="outline-3">
+<h3 id="org60992b4"><span class="section-number-3">5.5</span> Verse</h3>
+<div class="outline-text-3" id="text-5-5">
+<p class="verse">
+This is a verse block<br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org7eb5c94" class="outline-3">
+<h3 id="org7eb5c94"><span class="section-number-3">5.6</span> Source Blocks</h3>
+<div class="outline-text-3" id="text-5-6">
+</div>
+<div id="outline-container-org5b3a0da" class="outline-4">
+<h4 id="org5b3a0da"><span class="section-number-4">5.6.1</span> Python</h4>
+<div class="outline-text-4" id="text-5-6-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5180b3;">for</span> i <span style="color: #5180b3;">in</span> <span style="color: #528fd1;">range</span><span style="color: #ff8c00;">(</span>10<span style="color: #ff8c00;">)</span>:
+    <span style="color: #5180b3;">print</span><span style="color: #ff8c00;">(</span>i<span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example" id="orgeec0cbb">
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org46435ac" class="outline-4">
+<h4 id="org46435ac"><span class="section-number-4">5.6.2</span> Elisp</h4>
+<div class="outline-text-4" id="text-5-6-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #ff8c00;">(</span>car '<span style="color: #ff1493;">(</span>a b c d<span style="color: #ff1493;">)</span><span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+a
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Jesse Kelly (jessekelly881) (<a href="mailto:mail@blablub.nil">mail@blablub.nil</a>)</p>
+                                      <p class="update">Last Update: 2021-02-18 Thu 20:31</p>
+</div>
+</body>
+</html>

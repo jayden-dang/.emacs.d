@@ -1,0 +1,124 @@
+#+TITLE: Org Themes collection
+#+AUTHOR: Marco Pawłowski
+#+EMAIL: pawlowski.marco@gmail.com
+#+OPTIONS: ^:nil toc:nil \n:t
+
+
+* Introduction
+This is a collection of org html themes.
+I collected them in the past years and used them personally. So they should work.
+There are two ways to use them [not all themes include both solutions]:
+- as extern css/js files
+- embedded inside an html file
+
+For the embedded version there is a SETUPFILE with the extension ".theme". This file has all needed css and js
+inside =style= and =script= tags.
+
+Include it by using:
+#+begin_src emacs-lisp
+,#+SETUPFILE: <path to .theme file>
+#+end_src
+  
+Every theme is rendered with the same org file. A plane version is also included.
+The git repository with all files is here: [[https://gitlab.com/OlMon/org-themes/][Gitlab Repo]]
+
+** Credits and apology
+I used them mainly embedded, with custom created SETUPFILES.
+This means I not always have the source files.
+This also means I probably don't know from where I got the themes. So I apologize when your work is listed here
+without your name. Please contact me, so I can credit you.
+
+** Contributions
+I am happy to include any theme.
+
+** The list of Themes:
+#+NAME: Themes list
+#+begin_src emacs-lisp :exports none
+;; https://kitchingroup.cheme.cmu.edu/blog/2014/03/23/Make-a-list-of-org-files-in-all-the-subdirectories-of-the-current-working-directory/
+(defun os-walk (root)
+  (let ((files '()) ;empty list to store results
+        (current-list (directory-files root t)))
+    ;;process current-list
+    (while current-list
+      (let ((fn (car current-list))) ; get next entry
+        (cond 
+         ;; regular files
+         ((file-regular-p fn)
+          (add-to-list 'files fn))
+         ;; directories
+         ((and
+           (file-directory-p fn)
+           ;; ignore . and ..
+           (not (string-equal ".." (substring fn -2)))
+           (not (string-equal "." (substring fn -1))))
+          ;; we have to recurse into this directory
+          (setq files (append files (os-walk fn))))
+        )
+      ;; cut list down by an element
+      (setq current-list (cdr current-list)))
+      )
+    files))
+
+(mapcar 
+ (lambda (x) (princ (format "[[%s][%s]]\n"  x (replace-regexp-in-string "\.org$" "" (replace-regexp-in-string "_" " " (replace-regexp-in-string ".*/" "" (file-relative-name x ".")))))))
+ (cl-remove-if-not 
+  (lambda (x) (and (string= (file-name-extension x) "org") (not (string-match "example" x)) (not (string-match "index" x))))
+  (os-walk "")))
+#+end_src
+
+| [[file:/home/olmon/Workplace/Org/Themes/src/bigblow_inline/bigblow.org][bigblow]]           |
+| [[file:/home/olmon/Workplace/Org/Themes/src/comfy_inline/comfy_inline.org][comfy inline]]      |
+| [[file:/home/olmon/Workplace/Org/Themes/src/darksun/darksun.org][darksun]]           |
+| [[file:/home/olmon/Workplace/Org/Themes/src/gray/gray.org][gray]]              |
+| [[file:/home/olmon/Workplace/Org/Themes/src/imagine_light/imagine_light.org][imagine light]]     |
+| [[file:/home/olmon/Workplace/Org/Themes/src/latexcss/latexcss.org][latexcss]]          |
+| [[file:/home/olmon/Workplace/Org/Themes/src/plain/plain.org][plain]]             |
+| [[file:/home/olmon/Workplace/Org/Themes/src/readtheorg_inline/readtheorg_inline.org][readtheorg inline]] |
+| [[file:/home/olmon/Workplace/Org/Themes/src/rethink_inline/rethink_inline.org][rethink inline]]    |
+| [[file:/home/olmon/Workplace/Org/Themes/src/retro_dark/retro_dark.org][retro dark]]        |
+| [[file:/home/olmon/Workplace/Org/Themes/src/simple_gray/simple_gray.org][simple gray]]       |
+| [[file:/home/olmon/Workplace/Org/Themes/src/simple_inline/simple_inline.org][simple inline]]     |
+| [[file:/home/olmon/Workplace/Org/Themes/src/simple_white/simple_white.org][simple white]]      |
+| [[file:/home/olmon/Workplace/Org/Themes/src/simple_whiteblue/simple_whiteblue.org][simple whiteblue]]  |
+| [[file:/home/olmon/Workplace/Org/Themes/src/solarized_dark/solarized_dark.org][solarized dark]]    |
+| [[file:/home/olmon/Workplace/Org/Themes/src/solarized_light/solarized_light.org][solarized light]]   |
+| [[file:/home/olmon/Workplace/Org/Themes/src/stylish_white/stylish_white.org][stylish white]]     |
+| [[file:/home/olmon/Workplace/Org/Themes/src/white_clean/white_clean.org][white clean]]       |
+
+
+#+begin_src emacs-lisp :exports none
+(setq org-publish-project-alist
+      '(("orgfiles"
+         :base-directory "~/Workplace/Org/Themes/src/"
+         :base-extension "org" ;; get all files
+         :exclude "example"
+         :publishing-directory "~/Workplace/Org/Themes/public/"
+         :publishing-function org-html-publish-to-html
+         :html-preamble t
+         :recursive t)
+        
+        ("website" :components ("orgfiles"))))
+#+end_src
+
+#+RESULTS:
+| orgfiles | :base-directory | ~/Workplace/Org/Themes/src/ | :base-extension | org | :exclude | example | :publishing-directory | ~/Workplace/Org/Themes/public/ | :publishing-function | org-html-publish-to-html | :html-preamble | t | :recursive | t |
+| website  | :components     | (orgfiles)                  |                 |     |          |         |                       |                                |                      |                          |                |   |            |   |
+
+#+NAME: Help Function for creating setupfile from css
+#+begin_src emacs-lisp :exports none
+(defun make-setupfile-form-css (cssfile output)
+(with-temp-file output
+  (insert-file-contents cssfile)
+  (string-insert-rectangle (point-min) (point-max) "#+HTML_HEAD: ")
+  (goto-char (point-min))
+  (insert "#+HTML_HEAD: <style type=\"text/css\">\n")
+  (goto-char (point-max))
+  (insert "\n#+HTML_HEAD: </style>")))
+
+(make-setupfile-form-css "./latexcss/latexcss.css" "./latexcss/latexcss.theme")
+#+end_src
+
+#+RESULTS: Help Function for creating setupfile from css
+
+** Irony
+There is a reason that this page has no custom css.

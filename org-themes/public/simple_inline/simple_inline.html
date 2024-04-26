@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-02-18 Thu 23:07 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simple Inline</title>
+<meta name="author" content="Unknown" />
+<meta name="generator" content="Org Mode" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+html,button,input,select,textarea {  color: #484C66;}html {  font-size: 90%;  line-height: 1.4;}*,*:before,*:after {  -moz-box-sizing: border-box;  -webkit-box-sizing: border-box;  box-sizing: border-box;}a {  white-space: pre;  white-space: pre-wrap;  white-space: pre-line;  white-space: -pre-wrap;  white-space: -o-pre-wrap;  white-space: -moz-pre-wrap;  white-space: -hp-pre-wrap;  word-wrap: break-word;  text-decoration: none;}a:hover {  color: #0A4C89;}/* * Remove text-shadow in selection highlight: h5bp.com/i * These selection rule sets have to be separate. * Customize the background color to match your design. */::-moz-selection {  background: #0A4C89;  color: #FFF;  text-shadow: none;}::selection {  background: #0A4C89;  color: #FFF;  text-shadow: none;}/* * A better looking default horizontal rule */hr {  display: block;  height: 1px;  border: 0;  border-top: 1px dashed #CCC;  margin: 1em 0;  padding: 0;}/* * Remove the gap between images, videos, audio and canvas and the bottom of * their containers: h5bp.com/i/440 */audio,canvas,img,video {  vertical-align: middle;}/* * Remove default fieldset styles. */fieldset {  border: 0;  margin: 0;  padding: 0;}/* * Allow only vertical resizing of textareas. */textarea {  resize: vertical;}/* ==========================================================================   Author's custom styles   ========================================================================== */.todo,.done,.tag {  font-family: "Source Pro", Monaco, "Courier New", monospace;  padding: 0 0.3em;  background-color: #EEE;  border: 1px solid #CCC;}.todo {  color: #DD4433;}.done {  color: #44934B;}.tag {  font-size: 80%;  font-weight: normal;  margin: 0 0.3em;  display: none;}.timestamp {  color: #BEBEBE;}.timestamp-kwd {  color: #5F9EA0;}.right {  margin-left: auto;  margin-right: 0px;  text-align: right;}.left {  margin-left: 0px;  margin-right: auto;  text-align: left;}.center {  margin-left: auto;  margin-right: auto;  text-align: center;}.underline {  text-decoration: underline;}#postamble p,#preamble p {  font-size: 90%;  margin: .2em;}pre,code {  font-family: "Source Pro", Monaco, "Courier New", monospace;  padding-left: 0.3em;  padding-right: 0.3em;}pre {  font-size: 90%;  padding: 8pt;  overflow: auto;  white-space: pre;  word-wrap: normal;}pre.src {  position: relative;}pre.src:before {  display: none;  position: absolute;  background-color: #FFF;  top: 0.5em;  right: 0.5em;  padding: 4px;  border: 1px solid #CCC;}pre.src-sh:before {  content: "Shell Script";}pre.src-bash:before {  content: "Bash Script";}pre.src-emacs-lisp:before {  content: "Emacs Lisp";}pre.src-R:before {  content: "R";}pre.src-perl:before {  content: "Perl";}pre.src-java:before {  content: "Java";}pre.src-sql:before {  content: "SQL";}pre.src-c:before {  content: "C";}pre.src-cpp:before {  content: "C++";}pre.src-html:before {  content: "HTML";}table {  border-collapse: collapse;  display: block;  overflow-x: auto;}caption.t-above {  caption-side: top;}caption.t-bottom {  caption-side: bottom;}td, th {  vertical-align: top;  border: 1px solid #CCC;  padding: 0.5em;}th.right {  text-align: center;}th.left {  text-align: center;}th.center {  text-align: center;}td.right {  text-align: right;}td.left {  text-align: left;}td.center {  text-align: center;}dt {  font-weight: bold;}#footnotes {  border-top: 5px solid #0A4C89;  margin-bottom: 5em;}#footnotes h2 {  display: none;}#text-footnotes {  margin-top: 1em;}.footpara:nth-child(2) {  display: inline;}.footpara {  display: block;}.footdef sup:before {  content: "[";}.footdef sup:after {  content: "]";}.footdef p {  display: inline;}figure {  margin: 0;}figure img {  max-width: 100%;}figcaption {  text-align: center;  font-size: 0.8rem;}.inlinetask {  padding: 10px;  border: 2px solid gray;  margin: 10px;  background: #ffffcc;}#org-div-home-and-up {  text-align: right;  font-size: 70%;  white-space: nowrap;}textarea {  overflow-x: auto;}.linenr {  font-size: smaller;}.code-highlighted {  background-color: #ffff00;}.org-info-js_info-navigation {  border-style: none;}#org-info-js_console-label {  font-size: 10px;  font-weight: bold;  white-space: nowrap;}.org-info-js_search-highlight {  background-color: #ffff00;  color: #000000;  font-weight: bold;}p.verse,blockquote {  margin: 0;  padding: 0;  padding-left: 3%;  border-left: 5px solid #0A4C89;}body {  font-family: Lora, Palatino, Georgia, serif;  width: 92%;  max-width: 1024px;  margin: 0 auto;  background-color: #FFF;}h2 {  line-height: 1.62em;}.title {  margin: 0 0 2em 0;  line-height: 2em;  border-bottom: 5px solid #0A4C89;  text-align: center;}#postamble {  font-size: 80%;  line-height: 1.4em;  text-align: right;}h1, h2, h3, h4, h5, h6 {  font-family: "Source Sans Pro", sans-serif;  color: #222;}.outline-2 {  margin-bottom: 4em;}.outline-2 h2 {  border-bottom: 1px solid #CCC;}.outline-text-2 code, pre {  background-color: #EEE;}#table-of-contents {  display: none;  margin-left: 0.5em;}#text-table-of-contents ul {  padding-left: 1.8em;}#text-table-of-contents li {  list-style-type: circle;  margin: 0.4em 0;}#text-table-of-contents ul ul {  margin: 0;}#text-table-of-contents li li {  font-weight: normal;  font-size: 90%;  margin: 0;}#content {  overflow: hidden;  *zoom: 1;}/* ==========================================================================   EXAMPLE Media Queries for Responsive Design.   These examples override the primary ('mobile first') styles.   Modify as content requires.   ========================================================================== */@media only screen and (min-width: 35em) {  /* Style adjustments for viewports that meet the condition */}@media print, (-o-min-device-pixel-ratio: 5 / 4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {  /* Style adjustments for high resolution devices */}/* ==========================================================================   Print styles.   Inlined to avoid required HTTP connection: h5bp.com/r   ========================================================================== */@media print {  * {    background: transparent !important;    color: #000 !important;    /* Black prints faster: h5bp.com/s */    box-shadow: none !important;    text-shadow: none !important;  }  a,  a:visited {    text-decoration: underline;  }  a[href]:after {    content: " (" attr(href) ")";  }  abbr[title]:after {    content: " (" attr(title) ")";  }  /*   * Don't show links for images, or javascript/internal links   */  .ir a:after,  a[href^="javascript:"]:after,  a[href^="#"]:after {    content: "";  }  pre,  blockquote {    /* border: 1px solid #999; */    page-break-inside: avoid;  }  thead {    display: table-header-group;    /* h5bp.com/t */  }  tr,  img {    page-break-inside: avoid;  }  img {    max-width: 100% !important;  }  @page {    margin: 0.5cm;  }  p,  h2,  h3 {    orphans: 3;    widows: 3;  }  h2,  h3 {    page-break-after: avoid;  }  #table-of-contents {    display: block;    width: initial;    border: none;  }  #table-of-contents a {    text-decoration: none;  }}/* large screen */@media screen and (min-width: 40rem) {  html {    font-size: 100%;  }  #table-of-contents {    display: block;    padding: 1em;    width: 32%;    min-width: 18em;    float: right;    background-color: #EEE;    position: relative;    /* required by z-index */    z-index: 5000;    border: 1px solid #CCC;  }  .tag {    display: initial;  }}
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<header>
+<h1 class="title">Simple Inline</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga67f671">1. Simple Inline</a></li>
+<li><a href="#orgb7484c9">2. Lists</a>
+<ul>
+<li><a href="#org8232c9d">2.1. Todo List</a>
+<ul>
+<li><a href="#org62c4971">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#orgcd4371d">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#org5c5b9d9">2.1.3. <span class="todo TODO">TODO</span> Scheduled</a></li>
+<li><a href="#orgdc00b4c">2.1.4. <span class="todo TODO">TODO</span> Deadline</a></li>
+<li><a href="#org513bd78">2.1.5. <span class="todo TODO">TODO</span> Date</a></li>
+</ul>
+</li>
+<li><a href="#org1302a52">2.2. Simple list</a></li>
+<li><a href="#orgf9c0a2d">2.3. Sorted List</a></li>
+<li><a href="#orgee6b8e5">2.4. Checkbox</a></li>
+</ul>
+</li>
+<li><a href="#org8fb644b">3. H1</a>
+<ul>
+<li><a href="#orgf36e65f">3.1. H2</a>
+<ul>
+<li><a href="#orgafa51fa">3.1.1. H3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1f30193">4. Table</a></li>
+<li><a href="#orgd53df19">5. Blocks</a>
+<ul>
+<li><a href="#org3df0de8">5.1. Center</a></li>
+<li><a href="#org4e18659">5.2. Comment</a></li>
+<li><a href="#org29bbee9">5.3. Example</a></li>
+<li><a href="#org3241a67">5.4. Quote</a></li>
+<li><a href="#orgdd1b0fe">5.5. Verse</a></li>
+<li><a href="#orgbf69f79">5.6. Source Blocks</a>
+<ul>
+<li><a href="#org21c6903">5.6.1. Python</a></li>
+<li><a href="#orgcd890bd">5.6.2. Elisp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-orga67f671" class="outline-2">
+<h2 id="orga67f671"><span class="section-number-2">1</span> Simple Inline</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Includes:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> CSS</li>
+<li class="off"><code>[&#xa0;]</code> JAVASCRIPT</li>
+</ul>
+
+<p>
+Available as:
+</p>
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> CSS FILE</li>
+<li class="off"><code>[&#xa0;]</code> JS FILE</li>
+<li class="on"><code>[X]</code> SETUPFILE</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb7484c9" class="outline-2">
+<h2 id="orgb7484c9"><span class="section-number-2">2</span> Lists</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org8232c9d" class="outline-3">
+<h3 id="org8232c9d"><span class="section-number-3">2.1</span> Todo List</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org62c4971" class="outline-4">
+<h4 id="org62c4971"><span class="section-number-4">2.1.1</span> <span class="todo TODO">TODO</span> First todo</h4>
+</div>
+<div id="outline-container-orgcd4371d" class="outline-4">
+<h4 id="orgcd4371d"><span class="section-number-4">2.1.2</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2021-02-18 Thu 10:12]</span></span></p>
+</div>
+</div>
+<div id="outline-container-org5c5b9d9" class="outline-4">
+<h4 id="org5c5b9d9"><span class="section-number-4">2.1.3</span> <span class="todo TODO">TODO</span> Scheduled</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-orgdc00b4c" class="outline-4">
+<h4 id="orgdc00b4c"><span class="section-number-4">2.1.4</span> <span class="todo TODO">TODO</span> Deadline</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-org513bd78" class="outline-4">
+<h4 id="org513bd78"><span class="section-number-4">2.1.5</span> <span class="todo TODO">TODO</span> Date</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1302a52" class="outline-3">
+<h3 id="org1302a52"><span class="section-number-3">2.2</span> Simple list</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf9c0a2d" class="outline-3">
+<h3 id="orgf9c0a2d"><span class="section-number-3">2.3</span> Sorted List</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgee6b8e5" class="outline-3">
+<h3 id="orgee6b8e5"><span class="section-number-3">2.4</span> Checkbox</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8fb644b" class="outline-2">
+<h2 id="org8fb644b"><span class="section-number-2">3</span> H1</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+H1 Text
+</p>
+</div>
+<div id="outline-container-orgf36e65f" class="outline-3">
+<h3 id="orgf36e65f"><span class="section-number-3">3.1</span> H2</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+H2 Text
+</p>
+</div>
+<div id="outline-container-orgafa51fa" class="outline-4">
+<h4 id="orgafa51fa"><span class="section-number-4">3.1.1</span> H3</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+H3 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org31a0247"></a>H4<br>
+<div class="outline-text-5" id="text-3-1-1-1">
+<p>
+H4 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org9b2843d"></a>H5<br>
+<div class="outline-text-6" id="text-3-1-1-1-1">
+<p>
+H5 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org4cad34e"></a>H6<br>
+<div class="outline-text-7" id="text-3-1-1-1-1-1">
+<p>
+H6 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgaa1ec77"></a>H7<br>
+<div class="outline-text-8" id="text-3-1-1-1-1-1-1">
+<p>
+H7 Text
+</p>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org1f30193" class="outline-2">
+<h2 id="org1f30193"><span class="section-number-2">4</span> Table</h2>
+<div class="outline-text-2" id="text-4">
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+<th scope="col" class="org-right">d</th>
+<th scope="col" class="org-right">e</th>
+<th scope="col" class="org-right">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">7</td>
+<td class="org-right">8</td>
+<td class="org-right">9</td>
+<td class="org-right">10</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-right">13</td>
+<td class="org-right">14</td>
+<td class="org-right">15</td>
+<td class="org-right">16</td>
+<td class="org-right">17</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-right">19</td>
+<td class="org-right">20</td>
+<td class="org-right">21</td>
+<td class="org-right">22</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-right">24</td>
+<td class="org-right">25</td>
+<td class="org-right">26</td>
+<td class="org-right">27</td>
+<td class="org-right">28</td>
+<td class="org-right">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgd53df19" class="outline-2">
+<h2 id="orgd53df19"><span class="section-number-2">5</span> Blocks</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org3df0de8" class="outline-3">
+<h3 id="org3df0de8"><span class="section-number-3">5.1</span> Center</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-center">
+<p>
+This is a center block
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e18659" class="outline-3">
+<h3 id="org4e18659"><span class="section-number-3">5.2</span> Comment</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+</div>
+
+<div id="outline-container-org29bbee9" class="outline-3">
+<h3 id="org29bbee9"><span class="section-number-3">5.3</span> Example</h3>
+<div class="outline-text-3" id="text-5-3">
+<pre class="example" id="org3c85ef2">
+This is an example block
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3241a67" class="outline-3">
+<h3 id="org3241a67"><span class="section-number-3">5.4</span> Quote</h3>
+<div class="outline-text-3" id="text-5-4">
+<blockquote>
+<p>
+This is a quote block
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgdd1b0fe" class="outline-3">
+<h3 id="orgdd1b0fe"><span class="section-number-3">5.5</span> Verse</h3>
+<div class="outline-text-3" id="text-5-5">
+<p class="verse">
+This is a verse block<br>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgbf69f79" class="outline-3">
+<h3 id="orgbf69f79"><span class="section-number-3">5.6</span> Source Blocks</h3>
+<div class="outline-text-3" id="text-5-6">
+</div>
+<div id="outline-container-org21c6903" class="outline-4">
+<h4 id="org21c6903"><span class="section-number-4">5.6.1</span> Python</h4>
+<div class="outline-text-4" id="text-5-6-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5180b3;">for</span> i <span style="color: #5180b3;">in</span> <span style="color: #528fd1;">range</span><span style="color: #ff8c00;">(</span>10<span style="color: #ff8c00;">)</span>:
+    <span style="color: #5180b3;">print</span><span style="color: #ff8c00;">(</span>i<span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example" id="orgb8b9926">
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgcd890bd" class="outline-4">
+<h4 id="orgcd890bd"><span class="section-number-4">5.6.2</span> Elisp</h4>
+<div class="outline-text-4" id="text-5-6-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #ff8c00;">(</span>car '<span style="color: #ff1493;">(</span>a b c d<span style="color: #ff1493;">)</span><span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+a
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Unknown (<a href="mailto:mail@blablub.nil">mail@blablub.nil</a>)</p>
+                                      <p class="update">Last Update: 2021-02-18 Thu 20:21</p>
+</div>
+</body>
+</html>

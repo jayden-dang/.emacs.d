@@ -1,0 +1,489 @@
+#+HTML_HEADS: <style type="text/css">
+#+HTML_HEADS: /*!
+#+HTML_HEADS:  * LaTeX.css (https://latex.now.sh/)
+#+HTML_HEADS:  *
+#+HTML_HEADS:  * Source: https://github.com/vincentdoerig/latex-css
+#+HTML_HEADS:  * Licensed under MIT (https://github.com/vincentdoerig/latex-css/blob/master/LICENSE)
+#+HTML_HEADS: */
+#+HTML_HEADS:
+#+HTML_HEADS: /* Box sizing rules */
+#+HTML_HEADS: *,
+#+HTML_HEADS: *::before,
+#+HTML_HEADS: *::after {
+#+HTML_HEADS:   box-sizing: border-box;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Remove default margin */
+#+HTML_HEADS: body,
+#+HTML_HEADS: h1,
+#+HTML_HEADS: h2,
+#+HTML_HEADS: h3,
+#+HTML_HEADS: h4,
+#+HTML_HEADS: p,
+#+HTML_HEADS: ul[class],
+#+HTML_HEADS: ol[class],
+#+HTML_HEADS: li,
+#+HTML_HEADS: figure,
+#+HTML_HEADS: figcaption,
+#+HTML_HEADS: dl,
+#+HTML_HEADS: dd {
+#+HTML_HEADS:   margin: 0;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Make default font-size 1rem and add smooth scrolling to anchors */
+#+HTML_HEADS: html {
+#+HTML_HEADS:   font-size: 1rem;
+#+HTML_HEADS:   scroll-behavior: smooth;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: body.libertinus {
+#+HTML_HEADS:   font-family: 'Libertinus', Georgia, Cambria, 'Times New Roman', Times, serif;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: body {
+#+HTML_HEADS:   font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
+#+HTML_HEADS:   line-height: 1.8;
+#+HTML_HEADS: 
+#+HTML_HEADS:   max-width: 80ch;
+#+HTML_HEADS:   min-height: 100vh;
+#+HTML_HEADS:   overflow-x: hidden;
+#+HTML_HEADS:   margin: 0 auto;
+#+HTML_HEADS:   padding: 2rem 1.25rem;
+#+HTML_HEADS: 
+#+HTML_HEADS:   counter-reset: theorem;
+#+HTML_HEADS:   counter-reset: definition;
+#+HTML_HEADS:   counter-reset: sidenote-counter;
+#+HTML_HEADS: 
+#+HTML_HEADS:   color: hsl(0, 5%, 10%);
+#+HTML_HEADS:   background-color: hsl(210, 20%, 98%);
+#+HTML_HEADS: 
+#+HTML_HEADS:   text-rendering: optimizeLegibility;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Justify and hyphenate all paragraphs */
+#+HTML_HEADS: p {
+#+HTML_HEADS:   text-align: justify;
+#+HTML_HEADS:   hyphens: auto;
+#+HTML_HEADS:   -webkit-hyphens: auto;
+#+HTML_HEADS:   -moz-hyphens: auto;
+#+HTML_HEADS:   margin-top: 1rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* A elements that don't have a class get default styles */
+#+HTML_HEADS: a:not([class]) {
+#+HTML_HEADS:   text-decoration-skip-ink: auto;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Make links red */
+#+HTML_HEADS: a,
+#+HTML_HEADS: a:visited {
+#+HTML_HEADS:   color: #a00;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: a:focus {
+#+HTML_HEADS:   outline-offset: 2px;
+#+HTML_HEADS:   outline: 2px solid hsl(220, 90%, 52%);
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Make images easier to work with */
+#+HTML_HEADS: img {
+#+HTML_HEADS:   max-width: 100%;
+#+HTML_HEADS:   height: auto;
+#+HTML_HEADS:   display: block;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Inherit fonts for inputs and buttons */
+#+HTML_HEADS: input,
+#+HTML_HEADS: button,
+#+HTML_HEADS: textarea,
+#+HTML_HEADS: select {
+#+HTML_HEADS:   font: inherit;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Prevent textarea from overflowing */
+#+HTML_HEADS: textarea {
+#+HTML_HEADS:   width: 100%;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Natural flow and rhythm in articles by default */
+#+HTML_HEADS: article > * + * {
+#+HTML_HEADS:   margin-top: 1em;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Styles for inline code or code snippets */
+#+HTML_HEADS: code,
+#+HTML_HEADS: pre,
+#+HTML_HEADS: kbd {
+#+HTML_HEADS:   font-family: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+#+HTML_HEADS:     monospace;
+#+HTML_HEADS:   font-size: 85%;
+#+HTML_HEADS: }
+#+HTML_HEADS: pre {
+#+HTML_HEADS:   padding: 1rem 1.4rem;
+#+HTML_HEADS:   max-width: 100%;
+#+HTML_HEADS:   overflow: auto;
+#+HTML_HEADS:   border-radius: 4px;
+#+HTML_HEADS:   background: hsl(210, 28%, 93%);
+#+HTML_HEADS: }
+#+HTML_HEADS: pre code {
+#+HTML_HEADS:   font-size: 95%;
+#+HTML_HEADS:   position: relative;
+#+HTML_HEADS: }
+#+HTML_HEADS: kbd {
+#+HTML_HEADS:   background: hsl(210, 5%, 100%);
+#+HTML_HEADS:   border: 1px solid hsl(210, 5%, 70%);
+#+HTML_HEADS:   border-radius: 2px;
+#+HTML_HEADS:   padding: 2px 4px;
+#+HTML_HEADS:   font-size: 75%;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Better tables */
+#+HTML_HEADS: table {
+#+HTML_HEADS:   border-collapse: collapse;
+#+HTML_HEADS:   border-spacing: 0;
+#+HTML_HEADS:   width: auto;
+#+HTML_HEADS:   max-width: 100%;
+#+HTML_HEADS:   border-top: 2.27px solid black;
+#+HTML_HEADS:   border-bottom: 2.27px solid black;
+#+HTML_HEADS:   /* display: block; */
+#+HTML_HEADS:   overflow-x: auto; /* does not work because element is not block */
+#+HTML_HEADS:   /* white-space: nowrap; */
+#+HTML_HEADS:   counter-increment: caption;
+#+HTML_HEADS: }
+#+HTML_HEADS: /* add bottom border on column table headings  */
+#+HTML_HEADS: table tr > th[scope='col'] {
+#+HTML_HEADS:   border-bottom: 1.36px solid black;
+#+HTML_HEADS: }
+#+HTML_HEADS: /* add right border on row table headings  */
+#+HTML_HEADS: table tr > th[scope='row'] {
+#+HTML_HEADS:   border-right: 1.36px solid black;
+#+HTML_HEADS: }
+#+HTML_HEADS: table > tbody > tr:first-child > td,
+#+HTML_HEADS: table > tbody > tr:first-child > th {
+#+HTML_HEADS:   border-top: 1.36px solid black;
+#+HTML_HEADS: }
+#+HTML_HEADS: table > tbody > tr:last-child > td,
+#+HTML_HEADS: table > tbody > tr:last-child > th {
+#+HTML_HEADS:   border-bottom: 1.36px solid black;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: th,
+#+HTML_HEADS: td {
+#+HTML_HEADS:   text-align: left;
+#+HTML_HEADS:   padding: 0.5rem;
+#+HTML_HEADS:   line-height: 1.1;
+#+HTML_HEADS: }
+#+HTML_HEADS: /* Table caption */
+#+HTML_HEADS: caption {
+#+HTML_HEADS:   text-align: left;
+#+HTML_HEADS:   font-size: 0.923em;
+#+HTML_HEADS:   /* border-bottom: 2pt solid #000; */
+#+HTML_HEADS:   padding: 0 0.25em 0.25em;
+#+HTML_HEADS:   width: 100%;
+#+HTML_HEADS:   margin-left: 0;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: caption::before {
+#+HTML_HEADS:   content: 'Table ' counter(caption) '. ';
+#+HTML_HEADS:   font-weight: bold;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* allow scroll on the x-axis */
+#+HTML_HEADS: .scroll-wrapper {
+#+HTML_HEADS:   overflow-x: auto;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* if a table is wrapped in a scroll wrapper,
+#+HTML_HEADS:   the table cells shouldn't wrap */
+#+HTML_HEADS: .scroll-wrapper > table td {
+#+HTML_HEADS:   white-space: nowrap;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Center align the title */
+#+HTML_HEADS: h1:first-child {
+#+HTML_HEADS:   text-align: center;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Nested ordered list for ToC */
+#+HTML_HEADS: nav ol {
+#+HTML_HEADS:   counter-reset: item;
+#+HTML_HEADS:   padding-left: 2rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: nav li {
+#+HTML_HEADS:   display: block;
+#+HTML_HEADS: }
+#+HTML_HEADS: nav li:before {
+#+HTML_HEADS:   content: counters(item, '.') ' ';
+#+HTML_HEADS:   counter-increment: item;
+#+HTML_HEADS:   padding-right: 0.85rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Center definitions (most useful for display equations) */
+#+HTML_HEADS: dl dd {
+#+HTML_HEADS:   text-align: center;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Theorem */
+#+HTML_HEADS: .theorem {
+#+HTML_HEADS:   counter-increment: theorem;
+#+HTML_HEADS:   display: block;
+#+HTML_HEADS:   margin: 12px 0;
+#+HTML_HEADS:   font-style: italic;
+#+HTML_HEADS: }
+#+HTML_HEADS: .theorem::before {
+#+HTML_HEADS:   content: 'Theorem ' counter(theorem) '. ';
+#+HTML_HEADS:   font-weight: bold;
+#+HTML_HEADS:   font-style: normal;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Lemma */
+#+HTML_HEADS: .lemma {
+#+HTML_HEADS:   counter-increment: theorem;
+#+HTML_HEADS:   display: block;
+#+HTML_HEADS:   margin: 12px 0;
+#+HTML_HEADS:   font-style: italic;
+#+HTML_HEADS: }
+#+HTML_HEADS: .lemma::before {
+#+HTML_HEADS:   content: 'Lemma ' counter(theorem) '. ';
+#+HTML_HEADS:   font-weight: bold;
+#+HTML_HEADS:   font-style: normal;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Proof */
+#+HTML_HEADS: .proof {
+#+HTML_HEADS:   display: block;
+#+HTML_HEADS:   margin: 12px 0;
+#+HTML_HEADS:   font-style: normal;
+#+HTML_HEADS:   position: relative;
+#+HTML_HEADS: }
+#+HTML_HEADS: .proof::before {
+#+HTML_HEADS:   content: 'Proof. ' attr(title);
+#+HTML_HEADS:   font-style: italic;
+#+HTML_HEADS: }
+#+HTML_HEADS: .proof:after {
+#+HTML_HEADS:   content: '◾️';
+#+HTML_HEADS:   position: absolute;
+#+HTML_HEADS:   right: -12px;
+#+HTML_HEADS:   bottom: -2px;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Definition */
+#+HTML_HEADS: .definition {
+#+HTML_HEADS:   counter-increment: definition;
+#+HTML_HEADS:   display: block;
+#+HTML_HEADS:   margin: 12px 0;
+#+HTML_HEADS:   font-style: normal;
+#+HTML_HEADS: }
+#+HTML_HEADS: .definition::before {
+#+HTML_HEADS:   content: 'Definition ' counter(definition) '. ';
+#+HTML_HEADS:   font-weight: bold;
+#+HTML_HEADS:   font-style: normal;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Center align author name, use small caps and add vertical spacing  */
+#+HTML_HEADS: .author {
+#+HTML_HEADS:   margin: 0.85rem 0;
+#+HTML_HEADS:   font-variant-caps: small-caps;
+#+HTML_HEADS:   text-align: center;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Sidenotes */
+#+HTML_HEADS: 
+#+HTML_HEADS: .sidenote {
+#+HTML_HEADS:   font-size: 0.8rem;
+#+HTML_HEADS:   float: right;
+#+HTML_HEADS:   clear: right;
+#+HTML_HEADS:   width: 18vw;
+#+HTML_HEADS:   margin-right: -20vw;
+#+HTML_HEADS:   margin-bottom: 1em;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: .sidenote.left {
+#+HTML_HEADS:   float: left;
+#+HTML_HEADS:   margin-left: -20vw;
+#+HTML_HEADS:   margin-bottom: 1em;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* (WIP) add border when a sidenote is clicked on */
+#+HTML_HEADS: .sidenote:target {
+#+HTML_HEADS:   border: hsl(55, 55%, 70%) 1.5px solid;
+#+HTML_HEADS:   padding: 0 .5rem;
+#+HTML_HEADS:   scroll-margin-block-start: 10rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* sidenote counter */
+#+HTML_HEADS: .sidenote-number {
+#+HTML_HEADS:   counter-increment: sidenote-counter;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: .sidenote-number::after,
+#+HTML_HEADS: .sidenote::before {
+#+HTML_HEADS:   position: relative;
+#+HTML_HEADS:   vertical-align: baseline;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* add number in main content */
+#+HTML_HEADS: .sidenote-number::after {
+#+HTML_HEADS:   content: counter(sidenote-counter);
+#+HTML_HEADS:   font-size: 0.7rem;
+#+HTML_HEADS:   top: -0.5rem;
+#+HTML_HEADS:   left: 0.1rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* add number in front of the sidenote */
+#+HTML_HEADS: .sidenote-number ~ .sidenote::before {
+#+HTML_HEADS:   content: counter(sidenote-counter) ' ';
+#+HTML_HEADS:   font-size: 0.7rem;
+#+HTML_HEADS:   top: -0.5rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: label.sidenote-toggle:not(.sidenote-number) {
+#+HTML_HEADS:   display: none;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* sidenotes inside blockquotes are indented more */
+#+HTML_HEADS: blockquote .sidenote {
+#+HTML_HEADS:   margin-right: -24vw;
+#+HTML_HEADS:   width: 18vw;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: 
+#+HTML_HEADS: label.sidenote-toggle {
+#+HTML_HEADS:   display: inline;
+#+HTML_HEADS:   cursor: pointer;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: input.sidenote-toggle {
+#+HTML_HEADS:   display: none;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: @media (max-width: 1050px) {
+#+HTML_HEADS:   label.sidenote-toggle:not(.sidenote-number) {
+#+HTML_HEADS:     display: inline;
+#+HTML_HEADS:   }
+#+HTML_HEADS:   .sidenote {
+#+HTML_HEADS:     display: none;
+#+HTML_HEADS:   }
+#+HTML_HEADS:   .sidenote-toggle:checked + .sidenote {
+#+HTML_HEADS:     display: block;
+#+HTML_HEADS:     margin: 0.5rem 1.25rem 1rem 0.5rem;
+#+HTML_HEADS:     float: left;
+#+HTML_HEADS:     left: 1rem;
+#+HTML_HEADS:     clear: both;
+#+HTML_HEADS:     width: 95%;
+#+HTML_HEADS:   }
+#+HTML_HEADS:   /* tweak indentation of sidenote inside a blockquote */
+#+HTML_HEADS:   blockquote .sidenote {
+#+HTML_HEADS:     margin-right: -25vw;
+#+HTML_HEADS:     width: 16vw;
+#+HTML_HEADS:   }
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Make footnote text smaller and left align it (looks bad with long URLs) */
+#+HTML_HEADS: .footnotes p {
+#+HTML_HEADS:   text-align: left;
+#+HTML_HEADS:   line-height: 1.5;
+#+HTML_HEADS:   font-size: 85%;
+#+HTML_HEADS:   margin-bottom: 0.4rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: .footnotes {
+#+HTML_HEADS:   border-top: 1px solid hsl(0, 0%, 39%);
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Center title and paragraph */
+#+HTML_HEADS: .abstract,
+#+HTML_HEADS: .abstract p {
+#+HTML_HEADS:   text-align: center;
+#+HTML_HEADS:   margin-top: 0;
+#+HTML_HEADS: }
+#+HTML_HEADS: .abstract {
+#+HTML_HEADS:   margin: 2.25rem 0;
+#+HTML_HEADS: }
+#+HTML_HEADS: .abstract > h2 {
+#+HTML_HEADS:   font-size: 1rem;
+#+HTML_HEADS:   margin-bottom: -0.2rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Format the LaTeX symbol correctly (a higher up, e lower) */
+#+HTML_HEADS: .latex span:nth-child(1) {
+#+HTML_HEADS:   text-transform: uppercase;
+#+HTML_HEADS:   font-size: 0.75em;
+#+HTML_HEADS:   vertical-align: 0.28em;
+#+HTML_HEADS:   margin-left: -0.48em;
+#+HTML_HEADS:   margin-right: -0.15em;
+#+HTML_HEADS:   line-height: 1ex;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: .latex span:nth-child(2) {
+#+HTML_HEADS:   text-transform: uppercase;
+#+HTML_HEADS:   vertical-align: -0.5ex;
+#+HTML_HEADS:   margin-left: -0.1667em;
+#+HTML_HEADS:   margin-right: -0.125em;
+#+HTML_HEADS:   line-height: 1ex;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: /* Heading typography */
+#+HTML_HEADS: h1 {
+#+HTML_HEADS:   font-size: 2.5rem;
+#+HTML_HEADS:   line-height: 3.25rem;
+#+HTML_HEADS:   margin-bottom: 1.625rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h2 {
+#+HTML_HEADS:   font-size: 1.7rem;
+#+HTML_HEADS:   line-height: 2rem;
+#+HTML_HEADS:   margin-top: 3rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h3 {
+#+HTML_HEADS:   font-size: 1.4rem;
+#+HTML_HEADS:   margin-top: 2.5rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h4 {
+#+HTML_HEADS:   font-size: 1.2rem;
+#+HTML_HEADS:   margin-top: 2rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h5 {
+#+HTML_HEADS:   font-size: 1rem;
+#+HTML_HEADS:   margin-top: 1.8rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h6 {
+#+HTML_HEADS:   font-size: 1rem;
+#+HTML_HEADS:   font-style: italic;
+#+HTML_HEADS:   font-weight: normal;
+#+HTML_HEADS:   margin-top: 2.5rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h3,
+#+HTML_HEADS: h4,
+#+HTML_HEADS: h5,
+#+HTML_HEADS: h6 {
+#+HTML_HEADS:   line-height: 1.625rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h1 + h2 {
+#+HTML_HEADS:   margin-top: 1.625rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h2 + h3,
+#+HTML_HEADS: h3 + h4,
+#+HTML_HEADS: h4 + h5 {
+#+HTML_HEADS:   margin-top: 0.8rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h5 + h6 {
+#+HTML_HEADS:   margin-top: -0.8rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: h2,
+#+HTML_HEADS: h3,
+#+HTML_HEADS: h4,
+#+HTML_HEADS: h5,
+#+HTML_HEADS: h6 {
+#+HTML_HEADS:   margin-bottom: 0.8rem;
+#+HTML_HEADS: }
+#+HTML_HEADS: 
+#+HTML_HEADS: <style type="text/css">

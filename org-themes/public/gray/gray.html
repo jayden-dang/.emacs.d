@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-06-24 Fri 19:42 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gray Theme</title>
+<meta name="author" content="Lee Hinman" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+body {
+font-family: Helvetica, Arial, sans-serif;
+font-size: 16px;
+line-height: 1.4;
+color: #33333f;
+}
+
+code {
+font-family: "Inconsolata", "monospace";
+font-size: 16px;
+}
+
+p>code, li>code {
+background-color: #eee;
+padding: 0.25em;
+}
+
+h1, h2, h3 {
+font-family: "Roboto Slab", Helvetica, Arial, sans-serif;
+}
+
+h2 {
+border-bottom: 1px solid #f0c;
+padding-bottom: 0.5em;
+font-size: 1.75em;
+}
+
+h3 {
+margin-top: 2em;
+font-size: 1.5em;
+}
+
+h4 {
+font-size: 1.25em;
+}
+
+h5 {
+font-size: 1em;
+}
+
+h2 code, h3 code, h4 code, h5 code, td code {
+font-family: inherit !important;
+font-size: inherit !important;
+}
+
+td code {
+font-weight: bold;
+}
+
+a:link, a:hover, a:visited {
+text-decoration: none;
+color: black;
+}
+
+a:link {
+background: #ff8;
+}
+
+a:visited {
+color: #666;
+background: #ffc;
+}
+
+a:link:hover,
+a:visited:hover {
+background: #ff0;
+}
+
+a[href^="http"] {
+background: #bff;
+}
+
+a[href^="http"]:visited {
+background: #dff;
+}
+
+a[href^="http"]:link:hover,
+a[href^="http"]:visited:hover {
+background: #0ff;
+}
+
+a[href^="http"]:after {
+content: "\21B3";
+background: white;
+padding-left: 0.2em;
+}
+
+#meta {
+margin-top: 2em;
+}
+
+#table-of-contents a:link,
+#table-of-contents a:visited {
+color: black;
+background: transparent;
+}
+
+#table-of-contents {
+line-height: 1.2;
+}
+#table-of-contents h2 {
+border-bottom: 0;
+}
+
+#table-of-contents ul {
+list-style: none;
+padding-left: 0.5em;
+font-weight: normal;
+}
+
+#table-of-contents div>ul>li {
+margin-top: 1em;
+font-weight: bold;
+}
+
+#table-of-contents .tag {
+display: none;
+}
+
+#table-of-contents .todo,
+#table-of-contents .done {
+font-size: 80%;
+}
+
+#table-of-contents ol>li {
+margin-top: 1em;
+}
+
+table {
+width: 100%;
+}
+
+table, th, td {
+border: 1px solid #666;
+}
+
+th, td {
+padding: 0.5em;
+text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+background-color: #eee;
+}
+
+img {
+max-width: 90%;
+}
+
+div.notice {
+position: relative;
+margin: 0 1.2em;
+padding: 0.25em 1em;
+border-left: 4px solid;
+}
+
+table + div.notice {
+margin-top: 2em;
+}
+
+div.notice a {
+background: transparent !important;
+border-bottom: 1px dotted;
+}
+
+div.notice a[href^="http"]:after {
+background: transparent !important;
+}
+
+div.notice:before {
+position: absolute;
+top: 0;
+right: 0;
+padding: 0.25em 0.5em 0;
+font-size: 60%;
+border-bottom-left-radius: 0.5em;
+}
+
+.notice-warning {
+background: #fcc;
+color: #600;
+}
+
+.notice-example {
+background: #def;
+color: #069;
+}
+
+.notice-info {
+background: #efe;
+color: #060;
+}
+
+.notice-warning a {
+color: #600;
+}
+
+.notice-example a {
+color: #069;
+}
+
+.notice-info a {
+color: #060;
+}
+
+div.notice-warning:before {
+content: "WARNING";
+background: #c99;
+color: #fcc;
+}
+
+div.notice-example:before {
+content: "EXAMPLE";
+background: #abc;
+color: #def;
+}
+
+div.notice-info:before {
+content: "INFO";
+background: #9c9;
+color: #efe;
+}
+
+/* things inside the #+BEGIN_NOTE...#+END_NOTE block */
+div.NOTE a {
+background: transparent !important;
+border-bottom: 1px dotted;
+}
+
+div.NOTE {
+position: relative;
+margin: 0 1.2em;
+padding: 0.25em 1em;
+border-left: 4px solid;
+margin-top: 2em;
+background: #efe;
+color: #060;
+}
+
+div.NOTE:before {
+position: absolute;
+top: 0;
+right: 0;
+padding: 0.25em 0.5em 0;
+font-size: 60%;
+border-bottom-left-radius: 0.5em;
+content: "NOTE";
+background: #9c9;
+color: #efe;
+}
+
+blockquote {
+padding: 0px 10px 0px 10px;
+border: 1px solid #ddd;
+background: #eee;
+box-shadow: 5px 5px 5px #eee;
+border-radius: 2px;
+line-height: 1.2em;
+}
+
+pre {
+font-family: "Inconsolata", "monospace";
+font-size: 100%;
+border: 0;
+box-shadow: none;
+overflow: auto;
+}
+
+pre.example:before {
+content: "EXAMPLE";
+display: block;
+border-bottom: 1px dotted;
+margin-bottom: 1em;
+}
+
+pre.example {
+background: #fec;
+color: #666;
+font-size: 0.85em;
+}
+
+pre {
+background-color: #f8f8f8;
+background-size: 8px 8px;
+background-image: linear-gradient(135deg, transparent 25%, rgba(0, 0, 0, 0.02) 25%, rgba(0, 0, 0, 0.02) 50%, transparent 50%, transparent 75%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02));
+}
+
+pre.src {
+padding: 0.5em;
+}
+
+pre.src:before {
+display: block;
+position: absolute;
+background-color: #ccccd0;
+top: 0;
+right: 0;
+padding: 0.25em 0.5em;
+border-bottom-left-radius: 8px;
+border: 0;
+color: white;
+font-size: 80%;
+}
+
+pre.src-plantuml:before {
+content: "UML";
+}
+
+pre.src-javascript:before {
+content: "JS";
+}
+
+pre.src-clojure:before {
+content: "CLJ";
+}
+
+pre.src-c:before {
+content: "C";
+}
+
+pre.src-sh:before {
+content: "Shell";
+}
+
+pre.src-es:before {
+content: "ES";
+}
+
+span.org-string {
+color: #f94;
+}
+
+span.org-keyword {
+color: #c07;
+}
+
+span.org-variable-name {
+color: #f04;
+}
+
+span.org-clojure-keyword {
+color: #09f;
+}
+
+span.org-comment, span.org-comment-delimiter {
+color: #999;
+}
+
+span.org-rainbow-delimiters-depth-1, span.org-rainbow-delimiters-depth-5 {
+color: #666;
+}
+
+span.org-rainbow-delimiters-depth-2, span.org-rainbow-delimiters-depth-6 {
+color: #888;
+}
+
+span.org-rainbow-delimiters-depth-3, span.org-rainbow-delimiters-depth-7 {
+color: #aaa;
+}
+
+span.org-rainbow-delimiters-depth-4, span.org-rainbow-delimiters-depth-8 {
+color: #ccc;
+}
+
+div.figure {
+font-size: 0.85em;
+}
+
+.tag {
+font-family: "Roboto Slab", Helvetica, Arial, sans-serif;
+font-size: 11px;
+font-weight: normal;
+float: right;
+margin-top: 1em;
+background: transparent;
+}
+
+.tag span {
+background: #ccc;
+padding: 0 0.5em;
+border-radius: 0.2em;
+color: white;
+}
+
+.todo, .done {
+font-family: "Roboto Slab", Helvetica, Arial, sans-serif;
+font-weight: normal;
+padding: 0 0.25em;
+border-radius: 0.2em;
+}
+
+.todo {
+background: #f04;
+color: white;
+}
+
+.done {
+background: #5f7;
+color: white;
+}
+
+@media screen {
+h1.title {
+text-align: left;
+margin: 0.5em 0 1em 0;
+}
+
+h2 {
+margin-top: 3em;
+}
+
+#table-of-contents {
+position: fixed;
+top: 0;
+left: 0;
+padding: 2em 0 2em 2em;
+width: 290px;
+height: 100vh;
+font-size: 11px;
+background: #eee;
+overlow-x: hidden;
+overlow-y: auto;
+}
+
+#table-of-contents h2 {
+margin-top: 0;
+}
+
+#table-of-contents code {
+font-size: 12px;
+}
+
+div#content {
+margin-left: 320px;
+max-width: 1100px;
+}
+div#postamble {
+margin-left: 320px;
+max-width: 1100px;
+}
+}
+
+@media screen and (max-width: 1024px) {
+html, body {
+font-size: 14px;
+}
+
+#table-of-contents {
+display: none;
+}
+
+h1.title {
+margin-left: 0%;
+}
+
+div#content {
+margin-left: 5%;
+max-width: 90%;
+}
+div#postamble {
+margin-left: 5%;
+max-width: 90%;
+}
+}
+
+@media print {
+
+body {
+color: black;
+}
+
+@page {
+margin: 25mm;
+}
+
+h2, h3 {
+page-break-before: always;
+margin-top: 0;
+}
+
+table {
+page-break-inside: avoid;
+}
+
+a:visited {
+color: black;
+background: #ff8;
+}
+
+a[href^="http"]:visited {
+background: #bff;
+}
+
+div.notice:before {
+display: none;
+}
+}
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Gray Theme</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0ccedaf">1. Plain Org</a></li>
+<li><a href="#orgfd19679">2. Lists</a>
+<ul>
+<li><a href="#org407afbb">2.1. Todo List</a>
+<ul>
+<li><a href="#orgc418707">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#orgc18d408">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#org5a0d070">2.1.3. <span class="todo TODO">TODO</span> Scheduled</a></li>
+<li><a href="#org5671973">2.1.4. <span class="todo TODO">TODO</span> Deadline</a></li>
+<li><a href="#orgf5ede8b">2.1.5. <span class="todo TODO">TODO</span> Date</a></li>
+</ul>
+</li>
+<li><a href="#org78a53a9">2.2. Simple list</a></li>
+<li><a href="#org4bc1f93">2.3. Sorted List</a></li>
+<li><a href="#org164c018">2.4. Checkbox</a></li>
+</ul>
+</li>
+<li><a href="#org0d19632">3. H1</a>
+<ul>
+<li><a href="#orgc6b5857">3.1. H2</a>
+<ul>
+<li><a href="#org8c8b338">3.1.1. H3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org13b6831">4. Table</a></li>
+<li><a href="#org951db71">5. Blocks</a>
+<ul>
+<li><a href="#org2a66a12">5.1. Center</a></li>
+<li><a href="#org9d343ad">5.2. Comment</a></li>
+<li><a href="#org5594273">5.3. Example</a></li>
+<li><a href="#orgf723821">5.4. Quote</a></li>
+<li><a href="#orgee741a4">5.5. Verse</a></li>
+<li><a href="#orgddc0891">5.6. Source Blocks</a>
+<ul>
+<li><a href="#org13f87f7">5.6.1. Python</a></li>
+<li><a href="#org26e47e0">5.6.2. Elisp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0ccedaf" class="outline-2">
+<h2 id="org0ccedaf"><span class="section-number-2">1.</span> Plain Org</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Includes:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> CSS</li>
+<li class="off"><code>[&#xa0;]</code> JAVASCRIPT</li>
+</ul>
+
+<p>
+Available as:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> CSS FILE</li>
+<li class="off"><code>[&#xa0;]</code> JS FILE</li>
+<li class="on"><code>[X]</code> SETUPFILE</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfd19679" class="outline-2">
+<h2 id="orgfd19679"><span class="section-number-2">2.</span> Lists</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org407afbb" class="outline-3">
+<h3 id="org407afbb"><span class="section-number-3">2.1.</span> Todo List</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-orgc418707" class="outline-4">
+<h4 id="orgc418707"><span class="section-number-4">2.1.1.</span> <span class="todo TODO">TODO</span> First todo</h4>
+</div>
+<div id="outline-container-orgc18d408" class="outline-4">
+<h4 id="orgc18d408"><span class="section-number-4">2.1.2.</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<div class="outline-text-4" id="text-2-1-2">
+</div>
+</div>
+<div id="outline-container-org5a0d070" class="outline-4">
+<h4 id="org5a0d070"><span class="section-number-4">2.1.3.</span> <span class="todo TODO">TODO</span> Scheduled</h4>
+<div class="outline-text-4" id="text-2-1-3">
+</div>
+</div>
+<div id="outline-container-org5671973" class="outline-4">
+<h4 id="org5671973"><span class="section-number-4">2.1.4.</span> <span class="todo TODO">TODO</span> Deadline</h4>
+<div class="outline-text-4" id="text-2-1-4">
+</div>
+</div>
+<div id="outline-container-orgf5ede8b" class="outline-4">
+<h4 id="orgf5ede8b"><span class="section-number-4">2.1.5.</span> <span class="todo TODO">TODO</span> Date</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78a53a9" class="outline-3">
+<h3 id="org78a53a9"><span class="section-number-3">2.2.</span> Simple list</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4bc1f93" class="outline-3">
+<h3 id="org4bc1f93"><span class="section-number-3">2.3.</span> Sorted List</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org164c018" class="outline-3">
+<h3 id="org164c018"><span class="section-number-3">2.4.</span> Checkbox</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0d19632" class="outline-2">
+<h2 id="org0d19632"><span class="section-number-2">3.</span> H1</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+H1 Text
+</p>
+</div>
+<div id="outline-container-orgc6b5857" class="outline-3">
+<h3 id="orgc6b5857"><span class="section-number-3">3.1.</span> H2</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+H2 Text
+</p>
+</div>
+<div id="outline-container-org8c8b338" class="outline-4">
+<h4 id="org8c8b338"><span class="section-number-4">3.1.1.</span> H3</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+H3 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orge06b470"></a>H4<br />
+<div class="outline-text-5" id="text-3-1-1-1">
+<p>
+H4 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org3ea6e39"></a>H5<br />
+<div class="outline-text-6" id="text-3-1-1-1-1">
+<p>
+H5 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org48406a9"></a>H6<br />
+<div class="outline-text-7" id="text-3-1-1-1-1-1">
+<p>
+H6 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgee78efe"></a>H7<br />
+<div class="outline-text-8" id="text-3-1-1-1-1-1-1">
+<p>
+H7 Text
+</p>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org13b6831" class="outline-2">
+<h2 id="org13b6831"><span class="section-number-2">4.</span> Table</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+<th scope="col" class="org-right">d</th>
+<th scope="col" class="org-right">e</th>
+<th scope="col" class="org-right">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">7</td>
+<td class="org-right">8</td>
+<td class="org-right">9</td>
+<td class="org-right">10</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-right">13</td>
+<td class="org-right">14</td>
+<td class="org-right">15</td>
+<td class="org-right">16</td>
+<td class="org-right">17</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-right">19</td>
+<td class="org-right">20</td>
+<td class="org-right">21</td>
+<td class="org-right">22</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-right">24</td>
+<td class="org-right">25</td>
+<td class="org-right">26</td>
+<td class="org-right">27</td>
+<td class="org-right">28</td>
+<td class="org-right">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org951db71" class="outline-2">
+<h2 id="org951db71"><span class="section-number-2">5.</span> Blocks</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org2a66a12" class="outline-3">
+<h3 id="org2a66a12"><span class="section-number-3">5.1.</span> Center</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-center">
+<p>
+This is a center block
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d343ad" class="outline-3">
+<h3 id="org9d343ad"><span class="section-number-3">5.2.</span> Comment</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+</div>
+
+<div id="outline-container-org5594273" class="outline-3">
+<h3 id="org5594273"><span class="section-number-3">5.3.</span> Example</h3>
+<div class="outline-text-3" id="text-5-3">
+<pre class="example" id="org8369dc6">
+This is an example block
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgf723821" class="outline-3">
+<h3 id="orgf723821"><span class="section-number-3">5.4.</span> Quote</h3>
+<div class="outline-text-3" id="text-5-4">
+<blockquote>
+<p>
+This is a quote block
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgee741a4" class="outline-3">
+<h3 id="orgee741a4"><span class="section-number-3">5.5.</span> Verse</h3>
+<div class="outline-text-3" id="text-5-5">
+<p class="verse">
+This is a verse block<br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgddc0891" class="outline-3">
+<h3 id="orgddc0891"><span class="section-number-3">5.6.</span> Source Blocks</h3>
+<div class="outline-text-3" id="text-5-6">
+</div>
+<div id="outline-container-org13f87f7" class="outline-4">
+<h4 id="org13f87f7"><span class="section-number-4">5.6.1.</span> Python</h4>
+<div class="outline-text-4" id="text-5-6-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5180b3;">for</span> i <span style="color: #5180b3;">in</span> <span style="color: #528fd1;">range</span><span style="color: #ff8c00;">(</span>10<span style="color: #ff8c00;">)</span>:
+    <span style="color: #528fd1;">print</span><span style="color: #ff8c00;">(</span>i<span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example" id="orgdf8a796">
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org26e47e0" class="outline-4">
+<h4 id="org26e47e0"><span class="section-number-4">5.6.2.</span> Elisp</h4>
+<div class="outline-text-4" id="text-5-6-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #ff8c00;">(</span>car '<span style="color: #ff1493;">(</span>a b c d<span style="color: #ff1493;">)</span><span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+a
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Lee Hinman (<a href="mailto:lee@writequit.org">lee@writequit.org</a>)</p>
+  				      <p class="update">Last Update: 2022-06-24 Fri 19:42</p>
+</div>
+</body>
+</html>

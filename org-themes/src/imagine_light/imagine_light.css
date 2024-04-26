@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css?family=Elsie&display=swap');
+
+/* Variables. Feel free to edit these! */
+:root {
+    --color-primary: #028090;
+    --color-secondary: #00A896;
+
+    --color-soft-white: #FFFFF0;
+
+    --color-soft-black: #444;
+    --color-hard-black: #222;
+
+    --color-special-todo: #790604;
+
+    --font-normal: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman";
+    --font-headings: 'Elsie', cursive;
+
+    --font-size-1: 33.57px;
+    --font-size-2: 26.86px;
+    --font-size-3: 21.48px;
+    --font-size-4: 17.19px;
+
+    --font-size-small: 11px;
+}
+
+/* Selection color */
+::selection {
+    background-color: var(--color-primary);
+    color: var(--color-soft-white);
+}
+
+/* Remove outer padding */
+html, body{
+    margin: 0;
+}
+
+/* Heading styles */
+h1, h2, h3, h4, h5, h6{
+    color: var(--color-hard-black);
+    font-family: var(--font-headings)
+}
+
+/* Scaled font sizes */
+h1{font-size: var(--font-size-1);}
+h2{font-size: var(--font-size-2);}
+h3{font-size: var(--font-size-3);}
+h3{font-size: var(--font-size-4);}
+h4{font-size: var(--font-size-4);}
+h5{font-size: var(--font-size-4);}
+
+h1 > .subtitle{
+    font-size: 21.48px;
+}
+
+/* Normal text style(including code) */
+p, pre, ol, ul, table, code{
+    color: #444;
+    font-size: var(--font-size-4);
+    font-family: var(--font-normal)
+}
+
+/* Better anchor tags */
+a{
+    color: inherit;
+}
+
+a:hover{
+    color: var(--color-secondary);
+}
+
+/* Force footer to bottom and center */
+#postamble{
+    text-align: center;
+    width: 100%;
+}
+
+#postamble > p{
+    display: inline;
+}
+
+.title{
+   padding: 2vh 5vw;
+}
+
+
+/* Responsive images */
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive code blocks and tables */
+pre, .outline-text-2, .outline-text-3, outline-text-4{
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Responsive content positioning */
+@media only screen and (min-width: 750px) /* Large screens */
+{
+    .outline-2{
+        padding: 2vh 20vw;
+    }
+
+}
+
+@media only screen and (max-width: 750px) /* Small screens */
+{
+    .outline-2{
+        padding: 2vh 5vw;
+    }
+}
+
+
+/* Code blocks */
+.org-keyword{
+    color: var(--color-primary);
+}
+
+.org-rainbow-delimiters-depth-1{
+    color: var(--color-secondary);
+}
+
+.org-org-meta-line{
+    color: var(--color-primary);
+}
+blockquote{
+    border-left:5px solid var(--color-primary);
+    padding-left: 10px;
+}
+
+.todo{
+    color: var(--color-special-todo);
+}
+
+.done{
+    color: var(--color-primary);
+}
+
+/* Tags.
+   The way org exports tags is a little strange.
+   They are exported as a span with class "tag" containing each
+   of the tags in its own span with class and contents equal to
+   the tags name. This is actually really useful as it allows
+   for targeting both the "tag group" and each tag individually */
+
+.tag{
+    margin-top: 5px;
+    display: block;
+    color: var(--color-soft-white);
+    font-size: var(--font-size-small);
+    font-family: var(--font-normal)
+
+}
+
+.tag > span{
+    background-color: var(--color-secondary);
+    text-transform: uppercase;
+    border-radius: 2px;
+    width: fit-content;
+    height: auto;
+    padding: 1px 5px;
+    margin: 1px;
+}
+
+.underline{
+    text-decoration: underline;
+}

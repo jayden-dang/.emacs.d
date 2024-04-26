@@ -2,7 +2,6 @@
 # name: org theme
 # key: theme
 # --
-#+SETUPFILE: ~/theme-readtheorg.setup
+#+SETUPFILE: ~/.emacs.d/org-themes/src/${1:$$(yas-choose-value '("bigblow_inline" "comfy_inline" "darksun" "gray" "imagine_light" "latexcss" "plain" "readtheorg_inline" "rethink_inline" "retro_dark" "simple_gray" "simple_inline" "simple_white" "simple_whiteblue" "solarized_dark" "solarized_light" "stylish_white" "white_clean"))}/$1.theme
 #+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>
-#+EXPORT_FILE_NAME: index.html
 $0

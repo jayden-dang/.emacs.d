@@ -1,11 +1,10 @@
 #+title: My Emacs Configuration
 #+AUTHOR: =Dang Quang Vu=
-#+EMAIL: jayden.dangvu@gmail.com
+#+EMAIL: jayden@openedu101.com
 #+SUBTITLE: Emacs configuration for work and life
 #+property: header-args:emacs-lisp :mkdirp yes :lexical t :exports code
 #+property: header-args:emacs-lisp+ :tangle ./init.el
 #+property: header-args:emacs-lisp+ :mkdirp yes :noweb no-export
-
 
 * Package Management
 ** Repositories
@@ -388,7 +387,7 @@ Emacs needs to know its master! For various reasons by the way, some packages re
 (setq user-full-name       "Dang Quang Vu"
       user-real-login-name "Dang Quang Vu"
       user-login-name      "jaydendang"
-      user-mail-address    "jayden.dangvu@gmail.com")
+      user-mail-address    "jayden@openedu101.com")
 #+end_src
 
 ** Visual Configuration
@@ -2316,7 +2315,7 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
 
 (setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
       org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
+      org-gcal-fetch-file-alist '(("jayden@openedu101.com" .  "~/Dropbox/Org/Personal.org")
                                   ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
                                   ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
                                   ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
@@ -2365,14 +2364,14 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
       :unnarrowed t)
      ("l" "programming language" plain
       "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
       :unnarrowed t)
      ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
       :unnarrowed t)))
   :config
   (org-roam-setup))
@@ -2679,10 +2678,13 @@ I could almost merge this chapter with the previous one since counsel is a packa
 Yasnippet allows you to insert some pre-made code by just typing a few characters. It can even generate some string with Elisp expressions and ask the user for some input in some precise places.
 #+begin_src emacs-lisp
 (use-package yasnippet
-  :defer t
+  :defer 15 ;; takes a while to load, so do it async
+  :diminish yas-minor-mode
   :straight (:build t)
-  :init
+  :config
   (yas-global-mode)
+  :custom
+  (yas-prompt-functions '(yas-completing-prompt))
   :hook ((prog-mode . yas-minor-mode)
          (text-mode . yas-minor-mode)))
 #+end_src
@@ -2804,12 +2806,16 @@ left it.
 Magit is an awesome wrapper around Git for Emacs! Very often, I go from disliking to really hating Git GUI clients because they often obfuscate which Git commands are used to make things happen. Such a thing doesn’t happen with Magit, it’s pretty transparent but it still provides some awesome features and visualizations of what you are doing and what Git is doing! In short, I absolutely love it!
 #+begin_src emacs-lisp
 (use-package magit
+  ;; :diminish magit-auto-revert-mode
+  ;; :diminish auto-revert-mode
   :straight (:build t)
   :defer t
   :init
   (setq forge-add-default-bindings nil)
+  (setq magit-merge-preview-mode t)
   :config
   (setq magit-diff-options '("-b")) ; ignore whitespace
+  (add-to-list 'magit-no-confirm 'stage-all-changes)
   (defadvice magit-insert-unstaged-changes (around sacha activate)
     (if my-magit-limit-to-directory
         (let ((magit-current-diff-range (cons 'index 'working))
@@ -2836,6 +2842,11 @@ Magit is an awesome wrapper around Git for Emacs! Very often, I go from dislikin
    "C-k" #'evil-previous-line)
   (dqv/major-leader-key
     :keymaps 'git-rebase-mode-map
+    :packages 'magit
+    "," #'with-editor-finish
+    "k" #'with-editor-cancel
+    "a" #'with-editor-cancel)
+  (dqv/major-leader-key
     :packages 'magit
     "," #'with-editor-finish
     "k" #'with-editor-cancel
@@ -2919,8 +2930,9 @@ Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot
 - [[https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started][Getting started]]
 #+begin_src emacs-lisp
 (use-package forge
+  :ensure t
   :after magit
-  :straight (:straight t)
+  :straight (:build t)
   :config
   :general
   (dqv/major-leader-key
@@ -2938,6 +2950,15 @@ Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot
     "er" #'forge-edit-topic-review-requests
     "es" #'forge-edit-topic-state
     "et" #'forge-edit-topic-title))
+#+end_src
+
+***** Code Review
+#+begin_src emacs-lisp
+(use-package code-review
+  :after magit
+  :bind (:map forge-topic-mode-map ("C-c r" . #'code-review-forge-pr-at-point))
+  :bind (:map code-review-mode-map (("C-c n" . #'code-review-comment-jump-next)
+                                    ("C-c p" . #'code-review-comment-jump-previous))))
 #+end_src
 
 ***** Git message
@@ -5086,7 +5107,16 @@ First, here is its major mode.
 (use-package go-mode
   :straight (:build t)
   :defer t
+  :config
+  (add-hook 'before-save-hook #'gofmt-before-save)
   :mode ("\\.go\\'" . go-mode))
+
+(use-package go-snippets
+  :defer t)
+
+(defun fix-messed-up-gofmt-path
+  (interactive)
+  (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
 
 ;; (lsp-register-custom-settings
 ;;  '(("gopls.completeUnimported" t t)

@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-02-18 Thu 23:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Solarized Dark</title>
+<meta name="author" content="Unknown" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style type="text/css">
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap;word-wrap:break-word}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}html{font-family:'PT Sans',sans-serif}pre,code{font-family:'Inconsolata',sans-serif}h1,h2,h3,h4,h5,h6{font-family:'PT Sans Narrow',sans-serif;font-weight:700}html{background-color:#073642;color:#839496;margin:1em}body{background-color:#002b36;margin:0 auto;max-width:23cm;border:1pt solid #586e75;padding:1em}code{background-color:#073642;padding:2px}a{color:#b58900}a:visited{color:#cb4b16}a:hover{color:#cb4b16}h1{color:#d33682}h2,h3,h4,h5,h6{color:#859900}pre{background-color:#002b36;color:#839496;border:1pt solid #586e75;padding:1em;box-shadow:5pt 5pt 8pt #073642}pre code{background-color:#002b36}h1{font-size:2.8em}h2{font-size:2.4em}h3{font-size:1.8em}h4{font-size:1.4em}h5{font-size:1.3em}h6{font-size:1.15em}.tag{background-color:#073642;color:#d33682;padding:0 .2em}.todo,.next,.done{color:#002b36;background-color:#dc322f;padding:0 .2em}.tag{-webkit-border-radius:.35em;-moz-border-radius:.35em;border-radius:.35em}.TODO{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#2aa198}.NEXT{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#268bd2}.ACTIVE{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#268bd2}.DONE{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#859900}.WAITING{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#cb4b16}.HOLD{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#d33682}.NOTE{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#d33682}.CANCELLED{-webkit-border-radius:.2em;-moz-border-radius:.2em;border-radius:.2em;background-color:#859900}
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Solarized Dark</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgb83fbf4">1. Solarized Dark</a></li>
+<li><a href="#org191e395">2. Lists</a>
+<ul>
+<li><a href="#orgc3023f9">2.1. Todo List</a>
+<ul>
+<li><a href="#orgc521449">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#org3720bf1">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#orgc62cbeb">2.1.3. <span class="todo TODO">TODO</span> Scheduled</a></li>
+<li><a href="#org5c51255">2.1.4. <span class="todo TODO">TODO</span> Deadline</a></li>
+<li><a href="#org7e7cbb3">2.1.5. <span class="todo TODO">TODO</span> Date</a></li>
+</ul>
+</li>
+<li><a href="#org225d7c5">2.2. Simple list</a></li>
+<li><a href="#orgae144bd">2.3. Sorted List</a></li>
+<li><a href="#orgcc8e3a6">2.4. Checkbox</a></li>
+</ul>
+</li>
+<li><a href="#org0098540">3. H1</a>
+<ul>
+<li><a href="#org4cf76d5">3.1. H2</a>
+<ul>
+<li><a href="#org0226157">3.1.1. H3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org05aab1b">4. Table</a></li>
+<li><a href="#org3e47103">5. Blocks</a>
+<ul>
+<li><a href="#org513a500">5.1. Center</a></li>
+<li><a href="#org5e85024">5.2. Comment</a></li>
+<li><a href="#orga65f1db">5.3. Example</a></li>
+<li><a href="#orge97e2d0">5.4. Quote</a></li>
+<li><a href="#org63fa8a9">5.5. Verse</a></li>
+<li><a href="#orge42c3d9">5.6. Source Blocks</a>
+<ul>
+<li><a href="#org0fe9e37">5.6.1. Python</a></li>
+<li><a href="#orgea30ea1">5.6.2. Elisp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb83fbf4" class="outline-2">
+<h2 id="orgb83fbf4"><span class="section-number-2">1</span> Solarized Dark</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Includes:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> CSS</li>
+<li class="off"><code>[&#xa0;]</code> JAVASCRIPT</li>
+</ul>
+
+<p>
+Available as:
+</p>
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> CSS FILE</li>
+<li class="off"><code>[&#xa0;]</code> JS FILE</li>
+<li class="on"><code>[X]</code> SETUPFILE</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org191e395" class="outline-2">
+<h2 id="org191e395"><span class="section-number-2">2</span> Lists</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgc3023f9" class="outline-3">
+<h3 id="orgc3023f9"><span class="section-number-3">2.1</span> Todo List</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-orgc521449" class="outline-4">
+<h4 id="orgc521449"><span class="section-number-4">2.1.1</span> <span class="todo TODO">TODO</span> First todo</h4>
+</div>
+<div id="outline-container-org3720bf1" class="outline-4">
+<h4 id="org3720bf1"><span class="section-number-4">2.1.2</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED:</span> <span class="timestamp">[2021-02-18 Thu 10:12]</span></span></p>
+</div>
+</div>
+<div id="outline-container-orgc62cbeb" class="outline-4">
+<h4 id="orgc62cbeb"><span class="section-number-4">2.1.3</span> <span class="todo TODO">TODO</span> Scheduled</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-org5c51255" class="outline-4">
+<h4 id="org5c51255"><span class="section-number-4">2.1.4</span> <span class="todo TODO">TODO</span> Deadline</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE:</span> <span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span></p>
+</div>
+</div>
+<div id="outline-container-org7e7cbb3" class="outline-4">
+<h4 id="org7e7cbb3"><span class="section-number-4">2.1.5</span> <span class="todo TODO">TODO</span> Date</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org225d7c5" class="outline-3">
+<h3 id="org225d7c5"><span class="section-number-3">2.2</span> Simple list</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgae144bd" class="outline-3">
+<h3 id="orgae144bd"><span class="section-number-3">2.3</span> Sorted List</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgcc8e3a6" class="outline-3">
+<h3 id="orgcc8e3a6"><span class="section-number-3">2.4</span> Checkbox</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+<li class="off"><code>[&#xa0;]</code> List item</li>
+<li class="on"><code>[X]</code> List item</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0098540" class="outline-2">
+<h2 id="org0098540"><span class="section-number-2">3</span> H1</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+H1 Text
+</p>
+</div>
+<div id="outline-container-org4cf76d5" class="outline-3">
+<h3 id="org4cf76d5"><span class="section-number-3">3.1</span> H2</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+H2 Text
+</p>
+</div>
+<div id="outline-container-org0226157" class="outline-4">
+<h4 id="org0226157"><span class="section-number-4">3.1.1</span> H3</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+H3 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgf341ca8"></a>H4<br />
+<div class="outline-text-5" id="text-3-1-1-1">
+<p>
+H4 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org7639986"></a>H5<br />
+<div class="outline-text-6" id="text-3-1-1-1-1">
+<p>
+H5 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgeddeb5b"></a>H6<br />
+<div class="outline-text-7" id="text-3-1-1-1-1-1">
+<p>
+H6 Text
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org3cb4885"></a>H7<br />
+<div class="outline-text-8" id="text-3-1-1-1-1-1-1">
+<p>
+H7 Text
+</p>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org05aab1b" class="outline-2">
+<h2 id="org05aab1b"><span class="section-number-2">4</span> Table</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+<th scope="col" class="org-right">d</th>
+<th scope="col" class="org-right">e</th>
+<th scope="col" class="org-right">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">7</td>
+<td class="org-right">8</td>
+<td class="org-right">9</td>
+<td class="org-right">10</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-right">13</td>
+<td class="org-right">14</td>
+<td class="org-right">15</td>
+<td class="org-right">16</td>
+<td class="org-right">17</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-right">19</td>
+<td class="org-right">20</td>
+<td class="org-right">21</td>
+<td class="org-right">22</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-right">24</td>
+<td class="org-right">25</td>
+<td class="org-right">26</td>
+<td class="org-right">27</td>
+<td class="org-right">28</td>
+<td class="org-right">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org3e47103" class="outline-2">
+<h2 id="org3e47103"><span class="section-number-2">5</span> Blocks</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org513a500" class="outline-3">
+<h3 id="org513a500"><span class="section-number-3">5.1</span> Center</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-center">
+<p>
+This is a center block
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5e85024" class="outline-3">
+<h3 id="org5e85024"><span class="section-number-3">5.2</span> Comment</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+</div>
+
+<div id="outline-container-orga65f1db" class="outline-3">
+<h3 id="orga65f1db"><span class="section-number-3">5.3</span> Example</h3>
+<div class="outline-text-3" id="text-5-3">
+<pre class="example" id="org02f4f88">
+This is an example block
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge97e2d0" class="outline-3">
+<h3 id="orge97e2d0"><span class="section-number-3">5.4</span> Quote</h3>
+<div class="outline-text-3" id="text-5-4">
+<blockquote>
+<p>
+This is a quote block
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org63fa8a9" class="outline-3">
+<h3 id="org63fa8a9"><span class="section-number-3">5.5</span> Verse</h3>
+<div class="outline-text-3" id="text-5-5">
+<p class="verse">
+This is a verse block<br />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orge42c3d9" class="outline-3">
+<h3 id="orge42c3d9"><span class="section-number-3">5.6</span> Source Blocks</h3>
+<div class="outline-text-3" id="text-5-6">
+</div>
+<div id="outline-container-org0fe9e37" class="outline-4">
+<h4 id="org0fe9e37"><span class="section-number-4">5.6.1</span> Python</h4>
+<div class="outline-text-4" id="text-5-6-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5180b3;">for</span> i <span style="color: #5180b3;">in</span> <span style="color: #528fd1;">range</span><span style="color: #ff8c00;">(</span>10<span style="color: #ff8c00;">)</span>:
+    <span style="color: #5180b3;">print</span><span style="color: #ff8c00;">(</span>i<span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example" id="orgfcbd24c">
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgea30ea1" class="outline-4">
+<h4 id="orgea30ea1"><span class="section-number-4">5.6.2</span> Elisp</h4>
+<div class="outline-text-4" id="text-5-6-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #ff8c00;">(</span>car '<span style="color: #ff1493;">(</span>a b c d<span style="color: #ff1493;">)</span><span style="color: #ff8c00;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+a
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Unknown (<a href="mailto:mail@blablub.nil">mail@blablub.nil</a>)</p>
+                                      <p class="update">Last Update: 2021-02-18 Thu 20:21</p>
+</div>
+</body>
+</html>

@@ -120,7 +120,7 @@
 (setq user-full-name       "Dang Quang Vu"
       user-real-login-name "Dang Quang Vu"
       user-login-name      "jaydendang"
-      user-mail-address    "jayden.dangvu@gmail.com")
+      user-mail-address    "jayden@openedu101.com")
 
 (setq visible-bell t)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -1414,7 +1414,7 @@ the value `split-window-right', then it will be changed to
 
 (setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
       org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
+      org-gcal-fetch-file-alist '(("jayden@openedu101.com" .  "~/Dropbox/Org/Personal.org")
                                   ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
                                   ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
                                   ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
@@ -1456,14 +1456,14 @@ the value `split-window-right', then it will be changed to
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
       :unnarrowed t)
      ("l" "programming language" plain
       "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
       :unnarrowed t)
      ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
       :unnarrowed t)))
   :config
   (org-roam-setup))
@@ -1674,10 +1674,13 @@ the value `split-window-right', then it will be changed to
          ("C-r" . 'counsel-minibuffer-history)))
 
 (use-package yasnippet
-  :defer t
+  :defer 15 ;; takes a while to load, so do it async
+  :diminish yas-minor-mode
   :straight (:build t)
-  :init
+  :config
   (yas-global-mode)
+  :custom
+  (yas-prompt-functions '(yas-completing-prompt))
   :hook ((prog-mode . yas-minor-mode)
          (text-mode . yas-minor-mode)))
 
@@ -1767,12 +1770,16 @@ the value `split-window-right', then it will be changed to
                                                     user-emacs-directory)))
 
 (use-package magit
+  :diminish magit-auto-revert-mode
+  :diminish auto-revert-mode
   :straight (:build t)
   :defer t
   :init
   (setq forge-add-default-bindings nil)
   :config
   (setq magit-diff-options '("-b")) ; ignore whitespace
+  (setq magit-merge-preview-mode t)
+  (add-to-list 'magit-no-confirm 'stage-all-changes)
   (defadvice magit-insert-unstaged-changes (around sacha activate)
     (if my-magit-limit-to-directory
         (let ((magit-current-diff-range (cons 'index 'working))
@@ -1799,6 +1806,11 @@ the value `split-window-right', then it will be changed to
    "C-k" #'evil-previous-line)
   (dqv/major-leader-key
     :keymaps 'git-rebase-mode-map
+    :packages 'magit
+    "," #'with-editor-finish
+    "k" #'with-editor-cancel
+    "a" #'with-editor-cancel)
+  (dqv/major-leader-key
     :packages 'magit
     "," #'with-editor-finish
     "k" #'with-editor-cancel
@@ -1861,8 +1873,9 @@ deactivate `magit-todos-mode', otherwise enable it."
   :hook (magit-mode . turn-on-magit-gitflow))
 
 (use-package forge
+  :ensure t
   :after magit
-  :straight (:straight t)
+  :straight (:build t)
   :config
   :general
   (dqv/major-leader-key
@@ -1880,6 +1893,12 @@ deactivate `magit-todos-mode', otherwise enable it."
     "er" #'forge-edit-topic-review-requests
     "es" #'forge-edit-topic-state
     "et" #'forge-edit-topic-title))
+
+(use-package code-review
+  :after magit
+  :bind (:map forge-topic-mode-map ("C-c r" . #'code-review-forge-pr-at-point))
+  :bind (:map code-review-mode-map (("C-c n" . #'code-review-comment-jump-next)
+                                    ("C-c p" . #'code-review-comment-jump-previous))))
 
 (use-package git-messenger
   :straight (:build t)
@@ -3645,7 +3664,16 @@ Spell Commands^^           Add To Dictionary^^              Other
 (use-package go-mode
   :straight (:build t)
   :defer t
+  :config
+  (add-hook 'before-save-hook #'gofmt-before-save)
   :mode ("\\.go\\'" . go-mode))
+
+(use-package go-snippets
+  :defer t)
+
+(defun fix-messed-up-gofmt-path
+  (interactive)
+  (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
 
 ;; (lsp-register-custom-settings
 ;;  '(("gopls.completeUnimported" t t)
