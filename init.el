@@ -1770,15 +1770,15 @@ the value `split-window-right', then it will be changed to
                                                     user-emacs-directory)))
 
 (use-package magit
-  :diminish magit-auto-revert-mode
-  :diminish auto-revert-mode
+  ;; :diminish magit-auto-revert-mode
+  ;; :diminish auto-revert-mode
   :straight (:build t)
   :defer t
   :init
   (setq forge-add-default-bindings nil)
+  (setq magit-merge-preview-mode t)
   :config
   (setq magit-diff-options '("-b")) ; ignore whitespace
-  (setq magit-merge-preview-mode t)
   (add-to-list 'magit-no-confirm 'stage-all-changes)
   (defadvice magit-insert-unstaged-changes (around sacha activate)
     (if my-magit-limit-to-directory
@@ -2877,7 +2877,7 @@ Spell Commands^^           Add To Dictionary^^              Other
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
          (zig-mode            . lsp-deferred)
-         ;; (typescript-mode     . lsp-deferred)
+         (typescript-mode     . lsp-deferred)
          (typescript-tsx-mode . lsp-deferred)
          (lsp-mode            . lsp-enable-which-key-integration)
          (lsp-mode            . lsp-ui-mode))
@@ -3585,8 +3585,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   :hook (typescript-mode     . rainbow-delimiters-mode)
   :hook (typescript-mode     . lsp-deferred)
   :hook (typescript-mode     . prettier-js-mode)
-  :hook (typescript-tsx-mode . rainbow-delimiters-mode)
   :hook (typescript-tsx-mode . lsp-deferred)
+  :hook (typescript-tsx-mode . rainbow-delimiters-mode)
   :hook (typescript-tsx-mode . prettier-js-mode)
   ;; :hook (typescript-tsx-mode . eglot-ensure)
   :commands typescript-tsx-mode
@@ -3783,8 +3783,8 @@ Spell Commands^^           Add To Dictionary^^              Other
 
 (dqv/leader-key
   "SPC" '(counsel-M-x :which-key "M-x")
-  ;; "."  '(dirvish-dwim :which-key "Dirvish")
-  "."  '(dired-jump :which-key "Dirvish")
+  "."  '(dirvish-dwim :which-key "Dirvish")
+  ;; "."  '(dired-jump :which-key "Dirvish")
   "'"   '(shell-pop :which-key "shell-pop")
   ","  '(magit-status :which-key "Magit Status")
   "j" '(bufler-switch-buffer :which-key "Switch Buffer")
@@ -4076,3 +4076,5 @@ Spell Commands^^           Add To Dictionary^^              Other
   ;; :hook (text-mode . (lambda ()
   ;;                      (require 'lsp-grammarly)
   ;;                      (lsp-deferred))))  ; or lsp-deferred
+
+(add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: id
+# key: id
+# --
+---
+id: $1
+title: ${2:title}
+---
+
+# $2

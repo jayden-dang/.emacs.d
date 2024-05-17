@@ -4148,7 +4148,7 @@ Spell Commands^^           Add To Dictionary^^              Other
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
          (zig-mode            . lsp-deferred)
-         ;; (typescript-mode     . lsp-deferred)
+         (typescript-mode     . lsp-deferred)
          (typescript-tsx-mode . lsp-deferred)
          (lsp-mode            . lsp-enable-which-key-integration)
          (lsp-mode            . lsp-ui-mode))
@@ -5016,8 +5016,8 @@ Typescript is a safer alternative to Javascript. Let’s install its major mode 
   :hook (typescript-mode     . rainbow-delimiters-mode)
   :hook (typescript-mode     . lsp-deferred)
   :hook (typescript-mode     . prettier-js-mode)
-  :hook (typescript-tsx-mode . rainbow-delimiters-mode)
   :hook (typescript-tsx-mode . lsp-deferred)
+  :hook (typescript-tsx-mode . rainbow-delimiters-mode)
   :hook (typescript-tsx-mode . prettier-js-mode)
   ;; :hook (typescript-tsx-mode . eglot-ensure)
   :commands typescript-tsx-mode
@@ -5256,8 +5256,8 @@ Undefining some stuff to make keybind prefixes work correctly.
 #+begin_src emacs-lisp
 (dqv/leader-key
   "SPC" '(counsel-M-x :which-key "M-x")
-  ;; "."  '(dirvish-dwim :which-key "Dirvish")
-  "."  '(dired-jump :which-key "Dirvish")
+  "."  '(dirvish-dwim :which-key "Dirvish")
+  ;; "."  '(dired-jump :which-key "Dirvish")
   "'"   '(shell-pop :which-key "shell-pop")
   ","  '(magit-status :which-key "Magit Status")
   "j" '(bufler-switch-buffer :which-key "Switch Buffer")
@@ -5734,4 +5734,9 @@ compinit
   ;; :hook (text-mode . (lambda ()
   ;;                      (require 'lsp-grammarly)
   ;;                      (lsp-deferred))))  ; or lsp-deferred
+#+end_src
+
+** MarkdownX
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 #+end_src

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: category
+# key: category
+# --
+{
+  "label": "$1",
+  "position": $0,
+  "link": {
+    "type": "generated-index"
+  }
+}
