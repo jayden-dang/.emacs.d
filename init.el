@@ -120,7 +120,7 @@
 (setq user-full-name       "Dang Quang Vu"
       user-real-login-name "Dang Quang Vu"
       user-login-name      "jaydendang"
-      user-mail-address    "jayden@openedu101.com")
+      user-mail-address    "jayden.dangvu@gmail.com")
 
 (setq visible-bell t)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -1414,7 +1414,7 @@ the value `split-window-right', then it will be changed to
 
 (setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
       org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("jayden@openedu101.com" .  "~/Dropbox/Org/Personal.org")
+      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
                                   ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
                                   ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
                                   ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
@@ -1456,14 +1456,14 @@ the value `split-window-right', then it will be changed to
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>")
       :unnarrowed t)
      ("l" "programming language" plain
       "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
       :unnarrowed t)
      ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
       :unnarrowed t)))
   :config
   (org-roam-setup))
@@ -1777,6 +1777,7 @@ the value `split-window-right', then it will be changed to
   :init
   (setq forge-add-default-bindings nil)
   (setq magit-merge-preview-mode t)
+  (setq magit-auto-revert-mode nil)
   :config
   (setq magit-diff-options '("-b")) ; ignore whitespace
   (add-to-list 'magit-no-confirm 'stage-all-changes)
@@ -3445,8 +3446,9 @@ Spell Commands^^           Add To Dictionary^^              Other
    "="  '(:ignore t :which-key "format")
    "E"  '(:ignore t :which-key "errors")
    "El" #'web-mode-dom-errors-show
-   "gb" #'web-mode-element-beginning
    "g"  '(:ignore t :which-key "goto")
+   "gb" #'web-mode-element-beginning
+   "ge" #'web-mode-element-end
    "gc" #'web-mode-element-child
    "gp" #'web-mode-element-parent
    "gs" #'web-mode-element-sibling-next
@@ -3617,6 +3619,21 @@ Spell Commands^^           Add To Dictionary^^              Other
     (define-derived-mode typescript-tsx-mode web-mode "TypeScript-TSX"))
   (autoload 'js2-line-break "js2-mode" nil t))
 
+(defun my-tsx-mode-auto-switch ()
+  "Auto convert go-mode"
+  (when (and buffer-file-name
+             (string-match-p "\\.tsx\\'" buffer-file-name))
+    (typescript-tsx-mode)))
+
+(defun my-ts-mode-auto-switch ()
+  "Auto convert go-mode"
+  (when (and buffer-file-name
+             (string-match-p "\\.ts\\'" buffer-file-name))
+    (typescript-mode)))
+
+(add-hook 'find-file-hook #'my-ts-mode-auto-switch)
+(add-hook 'find-file-hook #'my-tsx-mode-auto-switch)
+
 (use-package tide
   :defer t
   :straight (:build t)
@@ -3664,20 +3681,34 @@ Spell Commands^^           Add To Dictionary^^              Other
 (use-package go-mode
   :straight (:build t)
   :defer t
+  :mode ("\\.go\\'" . go-mode)
+  :mode ("\\.mod\\'" . go-mode)
   :config
-  (add-hook 'before-save-hook #'gofmt-before-save)
-  :mode ("\\.go\\'" . go-mode))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+  (add-hook 'before-save-hook #'gofmt-before-save))
+
+
+(setq lsp-go-analyses '((shadow . t)
+                        (simplifycompositelit . :json-false)))
 
 (use-package go-snippets
   :defer t)
 
 (defun fix-messed-up-gofmt-path
-  (interactive)
+    (interactive)
   (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
 
-;; (lsp-register-custom-settings
-;;  '(("gopls.completeUnimported" t t)
-;;    ("gopls.staticcheck" t t)))
+(defun my-go-mode-auto-switch ()
+  "Auto convert go-mode"
+  (when (and buffer-file-name
+             (string-match-p "\\.go\\'" buffer-file-name))
+    (go-mode)))
+
+(add-hook 'find-file-hook #'my-go-mode-auto-switch)
+
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
 
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -3691,15 +3722,7 @@ Spell Commands^^           Add To Dictionary^^              Other
     (cons 'go-module root)))
 
 (cl-defmethod project-root ((project (head go-module)))
-  (cdr project))
-
-(add-hook 'project-find-functions #'project-find-go-module)
-
-;; (add-hook 'go-mode-hook 'eglot-ensure)
-
-(defun eglot-format-buffer-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+   (cdr project))
 
 (defun my/local-tab-indent ()
   (setq-local indent-tabs-mode 1))

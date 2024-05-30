@@ -1,6 +1,6 @@
 #+title: My Emacs Configuration
 #+AUTHOR: =Dang Quang Vu=
-#+EMAIL: jayden@openedu101.com
+#+EMAIL: jayden.dangvu@gmail.com
 #+SUBTITLE: Emacs configuration for work and life
 #+property: header-args:emacs-lisp :mkdirp yes :lexical t :exports code
 #+property: header-args:emacs-lisp+ :tangle ./init.el
@@ -251,8 +251,8 @@ The early init file is the file loaded before anything else in Emacs. This is wh
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; ;; Set Transparency
-;; (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-;; (add-to-list 'default-frame-alist '(alpha . (100 . 100)))
+(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
 #+end_src
 
 ** Emacs Behavior
@@ -387,7 +387,7 @@ Emacs needs to know its master! For various reasons by the way, some packages re
 (setq user-full-name       "Dang Quang Vu"
       user-real-login-name "Dang Quang Vu"
       user-login-name      "jaydendang"
-      user-mail-address    "jayden@openedu101.com")
+      user-mail-address    "jayden.dangvu@gmail.com")
 #+end_src
 
 ** Visual Configuration
@@ -1386,10 +1386,7 @@ Since very recently, the ~contrib/lisp/~ directory of org moved out of the main 
 #+end_src
 
 *** Babel
-One of the amazing features of org-mode is its literary programming capacities
-by running code blocks from within Org-mode itself. But for that, only a couple
-of languages are supported directly by Org-mode itself, and they need to be
-activated. Here are the languages I activated in my Org-mode configuration:
+One of the amazing features of org-mode is its literary programming capacities by running code blocks from within Org-mode itself. But for that, only a couple of languages are supported directly by Org-mode itself, and they need to be activated. Here are the languages I activated in my Org-mode configuration:
 #+NAME: org-babel-languages-table
 | C          |
 | emacs-lisp |
@@ -1419,6 +1416,7 @@ activated. Here are the languages I activated in my Org-mode configuration:
 #+begin_example
 '((C . t)
   (emacs-lisp . t)
+  (go . t)
   (gnuplot . t)
   (latex . t)
   (makefile . t)
@@ -2315,7 +2313,7 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
 
 (setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
       org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("jayden@openedu101.com" .  "~/Dropbox/Org/Personal.org")
+      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
                                   ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
                                   ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
                                   ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
@@ -2364,14 +2362,14 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>\n#+EXPORT_FILE_NAME: index.html")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com\n#+SETUPFILE: ~/theme-readtheorg.setup\n#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>")
       :unnarrowed t)
      ("l" "programming language" plain
       "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
       :unnarrowed t)
      ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden@openedu101.com")
+      :if-new (file+head "${slug}.org" "#+TITLE: ${title}\n#+filetags: Project\n#+AUTHOR: Dang Quang Vu\n#+EMAIL: jayden.dangvu@gmail.com")
       :unnarrowed t)))
   :config
   (org-roam-setup))
@@ -2813,6 +2811,7 @@ Magit is an awesome wrapper around Git for Emacs! Very often, I go from dislikin
   :init
   (setq forge-add-default-bindings nil)
   (setq magit-merge-preview-mode t)
+  (setq magit-auto-revert-mode nil)
   :config
   (setq magit-diff-options '("-b")) ; ignore whitespace
   (add-to-list 'magit-no-confirm 'stage-all-changes)
@@ -4843,8 +4842,9 @@ Web mode is a sort of hybrid major mode that allows editing several languages in
    "="  '(:ignore t :which-key "format")
    "E"  '(:ignore t :which-key "errors")
    "El" #'web-mode-dom-errors-show
-   "gb" #'web-mode-element-beginning
    "g"  '(:ignore t :which-key "goto")
+   "gb" #'web-mode-element-beginning
+   "ge" #'web-mode-element-end
    "gc" #'web-mode-element-child
    "gp" #'web-mode-element-parent
    "gs" #'web-mode-element-sibling-next
@@ -5049,6 +5049,24 @@ Typescript is a safer alternative to Javascript. Let’s install its major mode 
   (autoload 'js2-line-break "js2-mode" nil t))
 #+end_src
 
+Auto Enable Tsx mode
+#+begin_src emacs-lisp
+(defun my-tsx-mode-auto-switch ()
+  "Auto convert go-mode"
+  (when (and buffer-file-name
+             (string-match-p "\\.tsx\\'" buffer-file-name))
+    (typescript-tsx-mode)))
+
+(defun my-ts-mode-auto-switch ()
+  "Auto convert go-mode"
+  (when (and buffer-file-name
+             (string-match-p "\\.ts\\'" buffer-file-name))
+    (typescript-mode)))
+
+(add-hook 'find-file-hook #'my-ts-mode-auto-switch)
+(add-hook 'find-file-hook #'my-tsx-mode-auto-switch)
+#+end_src
+
 Tide enabled interactivity with Typescript.
 #+begin_src emacs-lisp
 (use-package tide
@@ -5107,20 +5125,34 @@ First, here is its major mode.
 (use-package go-mode
   :straight (:build t)
   :defer t
+  :mode ("\\.go\\'" . go-mode)
+  :mode ("\\.mod\\'" . go-mode)
   :config
-  (add-hook 'before-save-hook #'gofmt-before-save)
-  :mode ("\\.go\\'" . go-mode))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+  (add-hook 'before-save-hook #'gofmt-before-save))
+
+
+(setq lsp-go-analyses '((shadow . t)
+                        (simplifycompositelit . :json-false)))
 
 (use-package go-snippets
   :defer t)
 
 (defun fix-messed-up-gofmt-path
-  (interactive)
+    (interactive)
   (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
 
-;; (lsp-register-custom-settings
-;;  '(("gopls.completeUnimported" t t)
-;;    ("gopls.staticcheck" t t)))
+(defun my-go-mode-auto-switch ()
+  "Auto convert go-mode"
+  (when (and buffer-file-name
+             (string-match-p "\\.go\\'" buffer-file-name))
+    (go-mode)))
+
+(add-hook 'find-file-hook #'my-go-mode-auto-switch)
+
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
 
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -5134,15 +5166,7 @@ First, here is its major mode.
     (cons 'go-module root)))
 
 (cl-defmethod project-root ((project (head go-module)))
-  (cdr project))
-
-(add-hook 'project-find-functions #'project-find-go-module)
-
-;; (add-hook 'go-mode-hook 'eglot-ensure)
-
-(defun eglot-format-buffer-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+   (cdr project))
 #+end_src
 
 *** DSLs
