@@ -1509,7 +1509,7 @@ the value `split-window-right', then it will be changed to
   :config
   (setq company-minimum-prefix-length     2
         company-toolsip-limit             14
-        company-idle-delay                0.2
+        company-idle-delay                0.1
         company-tooltip-align-annotations t
         company-require-match             'never
         company-global-modes              '(not erc-mode message-mode help-mode gud-mode)
@@ -2866,12 +2866,15 @@ Spell Commands^^           Add To Dictionary^^              Other
   :straight (:build t)
   :init
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-go-analyses '((shadow . t)
+                          (simplifycompositelit . :json-false)))
   :hook ((c-mode              . lsp-deferred)
          (c++-mode            . lsp-deferred)
          (html-mode           . lsp-deferred)
          (sh-mode             . lsp-deferred)
          (rustic-mode         . lsp-deferred)
          (go-mode             . lsp-deferred)
+         (go-mod-ts-mode      . lsp-deferred)
          (move-mode           . lsp-deferred)
          (toml-mode           . lsp-deferred)
          (toml-ts-mode        . lsp-deferred)
@@ -3682,47 +3685,38 @@ Spell Commands^^           Add To Dictionary^^              Other
   :straight (:build t)
   :defer t
   :mode ("\\.go\\'" . go-mode)
-  :mode ("\\.mod\\'" . go-mode)
+  :init
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq tab-width 2)
+              (tree-sitter-hl-mode)
+              (lsp-go-install-save-hooks)))
   :config
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
   (add-hook 'before-save-hook #'gofmt-before-save))
 
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
 
-(setq lsp-go-analyses '((shadow . t)
-                        (simplifycompositelit . :json-false)))
+(add-to-list 'auto-mode-alist '("\\.mod\\'" . go-mod-ts-mode))
 
 (use-package go-snippets
   :defer t)
 
-(defun fix-messed-up-gofmt-path
-    (interactive)
-  (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
-
 (defun my-go-mode-auto-switch ()
-  "Auto convert go-mode"
   (when (and buffer-file-name
              (string-match-p "\\.go\\'" buffer-file-name))
     (go-mode)))
 
 (add-hook 'find-file-hook #'my-go-mode-auto-switch)
 
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+
 (lsp-register-custom-settings
  '(("gopls.completeUnimported" t t)
    ("gopls.staticcheck" t t)))
-
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-
-(require 'project)
-
-(defun project-find-go-module (dir)
-  (when-let ((root (locate-dominating-file dir "go.mod")))
-    (cons 'go-module root)))
-
-(cl-defmethod project-root ((project (head go-module)))
-   (cdr project))
 
 (defun my/local-tab-indent ()
   (setq-local indent-tabs-mode 1))
