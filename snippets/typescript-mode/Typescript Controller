@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Typescript Controller
+# key: ctl
+# --
+import { NextFunction, Request, Response } from "express"
+
+const $1 = {
+      $0
+}
+
+export default $1

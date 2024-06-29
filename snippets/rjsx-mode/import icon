@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: import icon
+# key: ipi
+# --
+import ${1:$(upcase yas-text)}Icon from '../assets/tokens/${1:token}.svg'
+$0
+${1:$(upcase yas-text)}: ${1:$(upcase yas-text)}Icon,

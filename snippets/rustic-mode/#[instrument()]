@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: #[instrument()]
+# key: #i
+# --
+#[instrument($0)]

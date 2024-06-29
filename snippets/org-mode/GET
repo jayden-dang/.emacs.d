@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: GET
+# key: GET
+# --
+#+begin_src restclient :var host=host :var header=header
+GET :host$0
+#+end_src

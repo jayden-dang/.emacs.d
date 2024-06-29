@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: static function
+# key: sfn
+# --
+static ${1:functionName} = async ($2) => {
+       $0
+}

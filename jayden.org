@@ -108,6 +108,12 @@ The early init file is the file loaded before anything else in Emacs. This is wh
 ;; Error during redisplay: (jit-lock-function 22138) signaled (args-out-of-range 0 16341)
 (setq-default font-lock-multiline nil)
 
+;; remove title bar
+(add-to-list 'default-frame-alist '(undecorated . t))
+
+;; rounde corners
+(add-to-list 'default-frame-alist '(undecorated-round . t))
+
 ;;; Better defaults
 (set-language-environment "UTF-8")
 (setq default-input-method nil)
@@ -251,16 +257,16 @@ The early init file is the file loaded before anything else in Emacs. This is wh
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; ;; Set Transparency
-(set-frame-parameter (selected-frame) 'alpha '(95 . 95))
-(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+(add-to-list 'default-frame-alist '(alpha . (100 . 100)))
 #+end_src
 
 ** Emacs Behavior
 *** Editing Text in Emacs
 #+begin_src emacs-lisp
-  ;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
-  (setq user-emacs-directory (expand-file-name "~/.emacs.d/")
-        url-history-file (expand-file-name "url/history" user-emacs-directory))
+;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
+(setq user-emacs-directory (expand-file-name "~/.emacs.d/")
+      url-history-file (expand-file-name "url/history" user-emacs-directory))
 #+end_src
 
 I *never* want to keep trailing spaces in my files, which is why I’m doing this:
@@ -277,6 +283,10 @@ I don’t understand why some people add two spaces behind a full stop, I sure d
 Lastly, I want the default mode for Emacs to be Emacs Lisp.
 #+begin_src emacs-lisp
 (setq-default initial-major-mode 'emacs-lisp-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(setq switch-to-buffer-obey-display-actions t)
 #+end_src
 
 *** Programming Modes
@@ -361,12 +371,12 @@ It is also very impolite to keep a certain version of a file in its buffer when 
 
 **** Keep .emacs.d Clean
 #+begin_src emacs-lisp
-  ;; Keep customization settings in a temporary file (thanks Ambrevar!)
-  (setq custom-file
-        (if (boundp 'server-socket-dir)
-            (expand-file-name "custom.el" server-socket-dir)
-          (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-  (load custom-file t)
+;; Keep customization settings in a temporary file (thanks Ambrevar!)
+(setq custom-file
+      (if (boundp 'server-socket-dir)
+          (expand-file-name "custom.el" server-socket-dir)
+        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+(load custom-file t)
 #+end_src
 
 *** Fill Column
@@ -406,7 +416,7 @@ It is nicer to see a cursor cover the actual space of a character.
 When text is ellipsed, I want the ellipsis marker to be a single character of three dots. Let’s make it so:
 #+begin_src emacs-lisp
 (with-eval-after-load 'mule-util
- (setq truncate-string-ellipsis "…"))
+  (setq truncate-string-ellipsis "…"))
 #+end_src
 
 *** Modeline Modules
@@ -463,41 +473,43 @@ Now, let’s automate the call to this function in order to apply the modificati
 *** Font
 **** Set The Font
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil
-                      ;; :font "JetBrains Mono"
-                      :font "Victor Mono"
-                      :weight 'regular
-                      :height 135)
+    (set-face-attribute 'default nil
+                        ;; :font "JetBrains Mono"
+                        :font "Iosevka"
+                        :weight 'Light
+                        :height 150)
 
-  ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil
-                      ;; :font "JetBrains Mono"
-                      :font "Victor Mono"
-                      :weight 'regular
-                      :height 135)
+    ;; Set the fixed pitch face
+    (set-face-attribute 'fixed-pitch nil
+                        ;; :font "JetBrains Mono"
+                        :font "Iosevka"
+                        :weight 'Light
+                        :height 150)
 
-  ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil
-                      ;; :font "Cantarell"
-                      :font "Victor Mono"
-                      :height 135
-                      :weight 'light)
+
+    ;; Set the variable pitch face
+    (set-face-attribute 'variable-pitch nil
+                        ;; :font "Cantarell"
+                        :font "Iosevka Aile"
+                        :weight 'Light
+                        :height 150)
+
 #+end_src
 
 **** Emojis
 #+begin_src emacs-lisp
-  ;;(set-fontset-font t 'symbol "Noto Color Emoji")
-  ;;(set-fontset-font t 'symbol "Symbola" nil 'append)
+;;(set-fontset-font t 'symbol "Noto Color Emoji")
+;;(set-fontset-font t 'symbol "Symbola" nil 'append)
 
-  (use-package emojify
-    :straight (:build t)
-    :custom
-    (emojify-emoji-set "emojione-v2.2.6")
-    (emojify-emojis-dir (concat user-emacs-directory "emojify/"))
-    (emojify-display-style 'image)
-    (emojify-download-emojis-p t)
-    :config
-    (global-emojify-mode 1))
+(use-package emojify
+  :straight (:build t)
+  :custom
+  (emojify-emoji-set "emojione-v2.2.6")
+  (emojify-emojis-dir (concat user-emacs-directory "emojify/"))
+  (emojify-display-style 'image)
+  (emojify-download-emojis-p t)
+  :config
+  (global-emojify-mode 1))
 #+end_src
 
 *** Moody
@@ -696,7 +708,7 @@ Solaire-mode applies a subtle but useful tweak to your current color scheme: the
         modus-themes-custom-auto-reload t
         modus-themes-disable-other-themes t
         modus-themes-common-palette-overrides '((bg-mode-line-active bg-yellow-subtle)
-                                               ;; (bg-main #120B11)
+                                                (bg-main "#120B11")
                                                 (border-mode-line-active yellow)
                                                 (comment yellow-faint)
                                                 (constant magenta-cooler)
@@ -704,8 +716,8 @@ Solaire-mode applies a subtle but useful tweak to your current color scheme: the
                                                 (docstring green-faint)
                                                 (fg-mode-line-active fg-main)
                                                 (fnname magenta-warmer)
-                                                ;; (fnname green-cooler)
-                                                ;; (keyword cyan)
+                                                (fnname green-cooler)
+                                                (keyword cyan)
                                                 (keyword yellow)
                                                 (preprocessor cyan-cooler)
                                                 (rx-backslash blue-cooler)
@@ -739,13 +751,13 @@ You may have noticed I use the Nord theme pretty much everywhere on my computer,
   ;; (load-theme 'catppuccin-latte t)
   ;; (load-theme 'catppuccin-frappe t)
   ;; (load-theme 'catppuccin-macchiato t)
-  ;; (load-theme 'catppuccin-mocha t)
+  (load-theme 'catppuccin-mocha t)
   ;; (load-theme 'rose-pine t)
   ;; (load-theme 'amarena t)
   ;; (load-theme 'oxocarbon t)
   ;; (load-theme 'kman t)
   ;; (load-theme 'kanagawa t)
-  (load-theme 'doom-tokyo-night t)
+  ;; (load-theme 'doom-tokyo-night t)
   ;; (load-theme 'modus-vivendi t)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
@@ -765,10 +777,10 @@ You may have noticed I use the Nord theme pretty much everywhere on my computer,
   ;; FIX Add some padding to the right
   (doom-modeline-def-modeline 'main
     '(bar workspace-name window-number modals matches follow buffer-info
-      remote-host buffer-position word-count parrot selection-info)
+          remote-host buffer-position word-count parrot selection-info)
     '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug
-      repl lsp minor-modes input-method indent-info buffer-encoding major-mode
-      process vcs checker time "   ")))
+                  repl lsp minor-modes input-method indent-info buffer-encoding major-mode
+                  process vcs checker time "   ")))
 (setq evil-normal-state-tag   (propertize "[NORMAL]" 'face '((:background "lightgreen" :foreground "black")))
       evil-emacs-state-tag    (propertize "[EMACS]" 'face '((:background "yellow" :foreground "black")))
       evil-insert-state-tag   (propertize "[INSERT]" 'face '((:background "red") :foreground "white"))
@@ -808,48 +820,9 @@ This function allows the user to open all marked files from a dired buffer as ne
                       (if (equal major-mode "dired-mode")
                           (dired-get-marked-files)
                         (list (buffer-file-name))))))
-   (mapc (lambda (file-path)
-           (find-file file-path))
-         (file-list))))
-#+end_src
-
-** Handle new windows
-The two functions below allow the user to not only create a new window
-to the right or below the current window (respectively), but also to
-focus the new window immediately.
-#+begin_src emacs-lisp
-(defun split-window-right-and-focus ()
-  "Spawn a new window right of the current one and focus it."
-  (interactive)
-  (split-window-right)
-  (windmove-right))
-
-(defun jd/eldoc-and-focus ()
-  "Spawn a new window right of the current one and focus it."
-  (interactive)
-  (eldoc-doc-buffer)
-  (windmove-right))
-
-(defun split-window-below-and-focus ()
-  "Spawn a new window below the current one and focus it."
-  (interactive)
-  (split-window-below)
-  (windmove-down))
-
-(defun split-window-right-and-open-point ()
-  "Spawn a new window right of the current one and focus it."
-  (interactive)
-  (split-window-right)
-  (org-open-at-point))
-
-
-(defun kill-buffer-and-delete-window ()
-  "Kill the current buffer and delete its window."
-  (interactive)
-  (progn
-    (kill-this-buffer)
-    (delete-window)))
-
+    (mapc (lambda (file-path)
+            (find-file file-path))
+          (file-list))))
 #+end_src
 
 ** Extend ~add-to-list~
@@ -881,17 +854,17 @@ APPEND and COMPARE-FN, see `add-to-list'."
 
 ** Switch to previous buffer
 #+begin_src emacs-lisp
-  (defun dqv/switch-to-previous-buffer ()
-    "Switch to previously open buffer.
+(defun dqv/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
         Repeated invocations toggle between the two most recently open buffers."
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 #+end_src
 
 ** Move to beginning of live
 #+begin_src emacs-lisp
- (defun my-smarter-move-beginning-of-line (arg)
-   "Move point back to indentation of beginning of line.
+(defun my-smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
 
         Move point to the first non-whitespace character on this line.
         If point is already there, move to the beginning of the line.
@@ -900,20 +873,20 @@ APPEND and COMPARE-FN, see `add-to-list'."
 
         If ARG is not nil or 1, move forward ARG - 1 lines first.  If
         point reaches the beginning or end of the buffer, stop there."
-   (interactive "^p")
-   (setq arg (or arg 1))
+  (interactive "^p")
+  (setq arg (or arg 1))
 
-   ;; Move lines first
-   (when (/= arg 1)
-     (let ((line-move-visual nil))
-        (forward-line (1- arg))))
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
 
-   (let ((orig-point (point)))
-     (back-to-indentation)
-     (when (= orig-point (point))
-        (move-beginning-of-line 1))))
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
 
- ;; remap C-a to `smarter-move-beginning-of-line'
+;; remap C-a to `smarter-move-beginning-of-line'
 
 #+end_src
 
@@ -927,7 +900,7 @@ APPEND and COMPARE-FN, see `add-to-list'."
         ((looking-at "[\]\)\}]") (forward-char) (evil-jump-item))
         ((looking-back "[\[\(\{]" 1) (backward-char) (evil-jump-item))
         (t nil)))
-  (global-set-key (kbd "s-;") #'dqv/goto-match-paren)
+(global-set-key (kbd "s-;") #'dqv/goto-match-paren)
 #+end_src
 
 ** Delete This File
@@ -950,10 +923,10 @@ With a prefix argument, TRASH is nil."
 
 ** Kill all the buffer
 #+begin_src emacs-lisp
-    (defun dqv/kill-other-buffers ()
-      "Kill all other buffers."
-      (interactive)
-      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+(defun dqv/kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
 
 * Keybinding Management
@@ -1075,25 +1048,25 @@ I want to undefine some of the default keybinds of Evil because it does not matc
 
 This package enables and integrates Evil into a lot of different modes, such as org-mode, dired, mu4e, etc. Again, I need some additional code compared to most people due to the jayden layout.
 #+begin_src emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :straight (:build t)
-    :config
-    ;; jayden conversion
-    ;; (defun my/jd-rotate-evil-collection (_mode mode-keymaps &rest _rest)
-    ;;   (evil-collection-translate-key 'normal mode-keymaps
-    ;;     ;; jd ctsr is qwerty hjkl
-    ;;     "c" "h"
-    ;;     "t" "j"
-    ;;     "s" "k"
-    ;;     "r" "l"
-    ;;     ;; add back ctsr
-    ;;     "h" "c"
-    ;;     "j" "t"
-    ;;     "k" "s"
-    ;;     "l" "r"))
-    ;; (add-hook 'evil-collection-setup-hook #'my/jd-rotate-evil-collection)
-    (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :straight (:build t)
+  :config
+  ;; jayden conversion
+  ;; (defun my/jd-rotate-evil-collection (_mode mode-keymaps &rest _rest)
+  ;;   (evil-collection-translate-key 'normal mode-keymaps
+  ;;     ;; jd ctsr is qwerty hjkl
+  ;;     "c" "h"
+  ;;     "t" "j"
+  ;;     "s" "k"
+  ;;     "r" "l"
+  ;;     ;; add back ctsr
+  ;;     "h" "c"
+  ;;     "j" "t"
+  ;;     "k" "s"
+  ;;     "l" "r"))
+  ;; (add-hook 'evil-collection-setup-hook #'my/jd-rotate-evil-collection)
+  (evil-collection-init))
 #+end_src
 
 ~undo-tree~ is my preferred way of undoing and redoing stuff. The main reason is it doesn’t create a linear undo/redo history, but rather a complete tree you can navigate to see your complete editing history. One of the two obvious things to do are to tell Emacs to save all its undo history fies in a dedicated directory, otherwise we’d risk littering all of our directories. The second thing is to simply globally enable its mode.
@@ -1167,171 +1140,171 @@ Since recently, in order to make ~org-cite~ compile properly, we need the ~citep
 *** Org
 Org is the main reason I am using Emacs. It is an extremely powerfu tool when you want to write anything that is not necessarily primarily programming-related, though it absolutely can be! Org can be a replacement for anything similar to LibreOffice Writer, LibreOffice Calc, and LibreOffice Impress. It is a much more powerful (and older) version of Markdown which can be exported to LaTeX and HTML at least, rendering writing web pages and technical, scientific documents much simpler than writing manually HTML and LaTeX code, especially when a single document source is meant to be exported for both formats. And since org is an Emacs package, that also means it can be greatly extended however we like!
 #+begin_src emacs-lisp
-  (use-package org
-    :straight t
-    :defer t
-    :commands (orgtbl-mode)
-    :hook (org-mode . visual-line-mode)
-           ;; (org-mode . org-num-mode))
-    :custom-face
-    (org-macro ((t (:foreground "#b48ead"))))
-    :init
-    (auto-fill-mode -1)
-    :config
-    <<org-hydra-babel>>
-    (require 'ox-beamer)
-    (require 'org-protocol)
-    (setq org-hide-leading-stars             nil
-          org-hide-macro-markers             t
-          org-ellipsis                       " ⤵"
-          org-image-actual-width             1200
-          org-image-actual-height            1000
-          org-redisplay-inline-images        t
-          org-display-inline-images          t
-          org-startup-with-inline-images     "inlineimages"
-          org-pretty-entities                t
-          org-fontify-whole-heading-line     t
-          org-fontify-done-headline          t
-          org-fontify-quote-and-verse-blocks t
-          org-startup-indented               t
-          org-startup-align-all-tables       t
-          org-use-property-inheritance       t
-          org-list-allow-alphabetical        t
-          org-M-RET-may-split-line           nil
-          org-src-window-setup               'split-window-right
-          org-src-fontify-natively           t
-          org-src-tab-acts-natively          t
-          org-src-preserve-indentation       t
-          org-log-done                       'time
-          org-directory                      "~/Dropbox/Org"
-          org-default-notes-file             (expand-file-name "notes.org" org-directory))
-    (with-eval-after-load 'oc
-     (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
-    <<org-agenda-files>>
-    <<org-behavior-electric>>
-    <<org-capture-target-files>>
-    <<org-capture-templates>>
-    <<org-create-emphasis-functions()>>
-    <<org-babel-load-languages>>
-    <<org-use-sub-superscripts>>
-    <<org-latex-compiler>>
-    <<org-latex-src-block-backend>>
-    <<org-latex-default-packages>>
-    <<org-export-latex-hyperref-format>>
-    <<org-latex-pdf-process>>
-    <<org-latex-logfiles-add-extensions>>
-    <<org-re-reveal>>
-    <<org-html-validation>>
-    <<org-latex-classes>>
-    <<org-publish-projects>>
-    :general
-    (dqv/evil
-      :keymaps 'org-mode-map
-      :packages 'org
-      "RET" 'org-open-at-point)
-    (dqv/major-leader-key
-      :keymaps 'org-mode-map
-      :packages 'org
-      ;; Various
-      "RET" #'org-ctrl-c-ret
-      "*" #'org-ctrl-c-star
-      "'" #'org-edit-special
-      "-" #'org-ctrl-c-minus
-      "a" #'org-agenda
-      "c" #'org-capture
-      "C" #'org-columns
-      "e" #'org-export-dispatch
-      "l" #'org-store-link
-      "p" #'org-priority
-      "r" #'org-reload
-      ;; Babels
-      "b" '(:ignore t :which-key "babel")
-      "b." #'org-babel-transient/body
-      "bb" #'org-babel-execute-buffer
-      "bc" #'org-babel-check-src-block
-      "bC" #'org-babel-tangle-clean
-      "be" #'org-babel-execute-maybe
-      "bf" #'org-babel-tangle-file
-      "bn" #'org-babel-next-src-block
-      "bo" #'org-babel-open-src-block-result
-      "bp" #'org-babel-previous-src-block
-      "br" #'org-babel-remove-result-one-or-many
-      "bR" #'org-babel-goto-named-result
-      "bt" #'org-babel-tangle
-      "bi" #'org-babel-view-src-block-info
-      ;; Dates
-      "d" '(:ignore t :which-key "Dates")
-      "dd" #'org-deadline
-      "ds" #'org-schedule
-      "dt" #'org-time-stamp
-      "dT" #'org-time-stramp-inactive
-      ;; Insert
-      "i" '(:ignore t :which-key "Insert")
-      "ib" #'org-insert-structure-template
-      "id" #'org-insert-drawer
-      "ie" '(:ignore t :which-key "Emphasis")
-      "ieb" #'org-emphasize-bold
-      "iec" #'org-emphasize-code
-      "iei" #'org-emphasize-italic
-      "ies" #'org-emphasize-strike-through
-      "ieu" #'org-emphasize-underline
-      "iev" #'org-emphasize-verbatim
-      "iE" #'org-set-effort
-      "if" #'org-footnote-new
-      "ih" #'org-insert-heading
-      "iH" #'counsel-org-link
-      "ii" #'org-insert-item
-      "il" #'org-insert-link
-      "in" #'org-add-note
-      "ip" #'org-set-property
-      "is" #'org-insert-subheading
-      "it" #'org-set-tags-command
-      ;; Tables
-      "t" '(:ignore t :which-key "Table")
-      "th" #'org-table-move-column-left
-      "tj" #'org-table-move-row-down
-      "tk" #'org-table-move-row-up
-      "tl" #'org-table-move-column-right
-      "ta" #'org-table-align
-      "te" #'org-table-eval-formula
-      "tf" #'org-table-field-info
-      "tF" #'org-table-edit-formulas
-      "th" #'org-table-convert
-      "tl" #'org-table-recalculate
-      "tp" #'org-plot/gnuplot
-      "tS" #'org-table-sort-lines
-      "tw" #'org-table-wrap-region
-      "tx" #'org-table-shrink
-      "tN" #'org-table-create-with-table.el
-      "td" '(:ignore t :which-key "Delete")
-      "tdc" #'org-table-delete-column
-      "tdr" #'org-table-kill-row
-      "ti" '(:ignore t :which-key "Insert")
-      "tic" #'org-table-insert-column
-      "tih" #'org-table-insert-hline
-      "tir" #'org-table-insert-row
-      "tiH" #'org-table-hline-and-move
-      "tt" '(:ignore t :which-key "Toggle")
-      "ttf" #'org-table-toggle-formula-debugger
-      "tto" #'org-table-toggle-coordinate-overlays
-      ;; Toggle
-      "T" '(:ignore t :which-key "Toggle")
-      "Tc" #'org-toggle-checkbox
-      "Ti" #'org-toggle-inline-images
-      "Tl" #'org-latex-preview
-      "Tn" #'org-num-mode
-      "Ts" #'dqv/toggle-org-src-window-split
-      "Tt" #'org-show-todo-tree
-      "<SPC>" #'org-todo
-      )
+(use-package org
+  :straight t
+  :defer t
+  :commands (orgtbl-mode)
+  :hook (org-mode . visual-line-mode)
+  ;; (org-mode . org-num-mode))
+  :custom-face
+  (org-macro ((t (:foreground "#b48ead"))))
+  :init
+  (auto-fill-mode -1)
+  :config
+  <<org-hydra-babel>>
+  (require 'ox-beamer)
+  (require 'org-protocol)
+  (setq org-hide-leading-stars             nil
+        org-hide-macro-markers             t
+        org-ellipsis                       " ⤵"
+        org-image-actual-width             1200
+        org-image-actual-height            1000
+        org-redisplay-inline-images        t
+        org-display-inline-images          t
+        org-startup-with-inline-images     "inlineimages"
+        org-pretty-entities                t
+        org-fontify-whole-heading-line     t
+        org-fontify-done-headline          t
+        org-fontify-quote-and-verse-blocks t
+        org-startup-indented               t
+        org-startup-align-all-tables       t
+        org-use-property-inheritance       t
+        org-list-allow-alphabetical        t
+        org-M-RET-may-split-line           nil
+        org-src-window-setup               'split-window-right
+        org-src-fontify-natively           t
+        org-src-tab-acts-natively          t
+        org-src-preserve-indentation       t
+        org-log-done                       'time
+        org-directory                      "~/Dropbox/Org"
+        org-default-notes-file             (expand-file-name "notes.org" org-directory))
+  (with-eval-after-load 'oc
+    (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
+  <<org-agenda-files>>
+  <<org-behavior-electric>>
+  <<org-capture-target-files>>
+  <<org-capture-templates>>
+  <<org-create-emphasis-functions()>>
+  <<org-babel-load-languages>>
+  <<org-use-sub-superscripts>>
+  <<org-latex-compiler>>
+  <<org-latex-src-block-backend>>
+  <<org-latex-default-packages>>
+  <<org-export-latex-hyperref-format>>
+  <<org-latex-pdf-process>>
+  <<org-latex-logfiles-add-extensions>>
+  <<org-re-reveal>>
+  <<org-html-validation>>
+  <<org-latex-classes>>
+  <<org-publish-projects>>
+  :general
+  (dqv/evil
+    :keymaps 'org-mode-map
+    :packages 'org
+    "RET" 'org-open-at-point)
+  (dqv/major-leader-key
+    :keymaps 'org-mode-map
+    :packages 'org
+    ;; Various
+    "RET" #'org-ctrl-c-ret
+    "*" #'org-ctrl-c-star
+    "'" #'org-edit-special
+    "-" #'org-ctrl-c-minus
+    "a" #'org-agenda
+    "c" #'org-capture
+    "C" #'org-columns
+    "e" #'org-export-dispatch
+    "l" #'org-store-link
+    "p" #'org-priority
+    "r" #'org-reload
+    ;; Babels
+    "b" '(:ignore t :which-key "babel")
+    "b." #'org-babel-transient/body
+    "bb" #'org-babel-execute-buffer
+    "bc" #'org-babel-check-src-block
+    "bC" #'org-babel-tangle-clean
+    "be" #'org-babel-execute-maybe
+    "bf" #'org-babel-tangle-file
+    "bn" #'org-babel-next-src-block
+    "bo" #'org-babel-open-src-block-result
+    "bp" #'org-babel-previous-src-block
+    "br" #'org-babel-remove-result-one-or-many
+    "bR" #'org-babel-goto-named-result
+    "bt" #'org-babel-tangle
+    "bi" #'org-babel-view-src-block-info
+    ;; Dates
+    "d" '(:ignore t :which-key "Dates")
+    "dd" #'org-deadline
+    "ds" #'org-schedule
+    "dt" #'org-time-stamp
+    "dT" #'org-time-stramp-inactive
+    ;; Insert
+    "i" '(:ignore t :which-key "Insert")
+    "ib" #'org-insert-structure-template
+    "id" #'org-insert-drawer
+    "ie" '(:ignore t :which-key "Emphasis")
+    "ieb" #'org-emphasize-bold
+    "iec" #'org-emphasize-code
+    "iei" #'org-emphasize-italic
+    "ies" #'org-emphasize-strike-through
+    "ieu" #'org-emphasize-underline
+    "iev" #'org-emphasize-verbatim
+    "iE" #'org-set-effort
+    "if" #'org-footnote-new
+    "ih" #'org-insert-heading
+    "iH" #'counsel-org-link
+    "ii" #'org-insert-item
+    "il" #'org-insert-link
+    "in" #'org-add-note
+    "ip" #'org-set-property
+    "is" #'org-insert-subheading
+    "it" #'org-set-tags-command
+    ;; Tables
+    "t" '(:ignore t :which-key "Table")
+    "th" #'org-table-move-column-left
+    "tj" #'org-table-move-row-down
+    "tk" #'org-table-move-row-up
+    "tl" #'org-table-move-column-right
+    "ta" #'org-table-align
+    "te" #'org-table-eval-formula
+    "tf" #'org-table-field-info
+    "tF" #'org-table-edit-formulas
+    "th" #'org-table-convert
+    "tl" #'org-table-recalculate
+    "tp" #'org-plot/gnuplot
+    "tS" #'org-table-sort-lines
+    "tw" #'org-table-wrap-region
+    "tx" #'org-table-shrink
+    "tN" #'org-table-create-with-table.el
+    "td" '(:ignore t :which-key "Delete")
+    "tdc" #'org-table-delete-column
+    "tdr" #'org-table-kill-row
+    "ti" '(:ignore t :which-key "Insert")
+    "tic" #'org-table-insert-column
+    "tih" #'org-table-insert-hline
+    "tir" #'org-table-insert-row
+    "tiH" #'org-table-hline-and-move
+    "tt" '(:ignore t :which-key "Toggle")
+    "ttf" #'org-table-toggle-formula-debugger
+    "tto" #'org-table-toggle-coordinate-overlays
+    ;; Toggle
+    "T" '(:ignore t :which-key "Toggle")
+    "Tc" #'org-toggle-checkbox
+    "Ti" #'org-toggle-inline-images
+    "Tl" #'org-latex-preview
+    "Tn" #'org-num-mode
+    "Ts" #'dqv/toggle-org-src-window-split
+    "Tt" #'org-show-todo-tree
+    "<SPC>" #'org-todo
+    )
 
 
-    <<org-capture-keybinds>>
-    (dqv/major-leader-key
-      :packages 'org
-      :keymaps 'org-src-mode-map
-      "'" #'org-edit-src-exit
-      "k" #'org-edit-src-abort))
+  <<org-capture-keybinds>>
+  (dqv/major-leader-key
+    :packages 'org
+    :keymaps 'org-src-mode-map
+    "'" #'org-edit-src-exit
+    "k" #'org-edit-src-abort))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1352,19 +1325,19 @@ Org is the main reason I am using Emacs. It is an extremely powerfu tool when yo
 *** Evil Org
 The main feature from ~evil-org~ that I love is how easy it is to modify some keybindings for keyboards layouts that do not have ~hjkl~, such as the jd layout (or Dvorak or Colemak if you are into that). But it also adds a ton of default keybindings which are just much more comfortable than the default ones you get with evil and org naked.
 #+begin_src emacs-lisp
-  (use-package evil-org
-    :straight (:build t)
-    :after (org)
-    :hook (org-mode . evil-org-mode)
-    :config
-    (setq-default evil-org-movement-bindings
-                  '((up    . "k")
-                    (down  . "j")
-                    (left  . "h")
-                    (right . "l")))
-    (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
+(use-package evil-org
+  :straight (:build t)
+  :after (org)
+  :hook (org-mode . evil-org-mode)
+  :config
+  (setq-default evil-org-movement-bindings
+                '((up    . "k")
+                  (down  . "j")
+                  (left  . "h")
+                  (right . "l")))
+  (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 #+end_src
 
 *** Contrib
@@ -1725,13 +1698,13 @@ files.
                                    :repo "jakebox/preview-org-html-mode")
   :general
   (dqv/major-leader-key
-   :keymaps 'org-mode-map
-   :packages 'preview-org-html-mode
-   :infix "P"
-   ""  '(:ignore t :which-key "preview")
-   "h" #'preview-org-html-mode
-   "r" #'preview-org-html-refresh
-   "p" #'preview-org-html-pop-window-to-frame)
+    :keymaps 'org-mode-map
+    :packages 'preview-org-html-mode
+    :infix "P"
+    ""  '(:ignore t :which-key "preview")
+    "h" #'preview-org-html-mode
+    "r" #'preview-org-html-refresh
+    "p" #'preview-org-html-pop-window-to-frame)
   :config
   (setq preview-org-html-refresh-configuration 'save))
 #+end_src
@@ -1791,13 +1764,13 @@ is!
 ;; (setq org-latex-pdf-process
 ;;       '("tectonic -Z shell-escape --synctex --outdir=%o %f"))
 (setq org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-            "%bibtex -output-directory %o %f"
-            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
+                              "%bibtex -output-directory %o %f"
+                              "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                              "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
       org-latex-remove-logfiles t
       org-latex-logfiles-extensions '("aux" "bcf" "blg" "fdb_latexmk" "fls"
-              "figlist" "idx" "log" "nav" "out" "ptc"
-              "run.xml" "snm" "toc" "vrb" "xdv"))
+                                      "figlist" "idx" "log" "nav" "out" "ptc"
+                                      "run.xml" "snm" "toc" "vrb" "xdv"))
 #+END_SRC
 
 Finally, org-mode is supposed to automatically clean logfiles after it
@@ -2033,7 +2006,7 @@ Another great features of Org-mode is the Org projects that allow the user to ea
 (use-package reftex
   :commands turn-on-reftex
   :config (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
-              reftex-plug-into-AUCTeX     t))
+                reftex-plug-into-AUCTeX     t))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2059,39 +2032,39 @@ Another great features of Org-mode is the Org projects that allow the user to ea
         bibtex-completion-notes-symbol "✎")
   :general
   (dqv/evil
-   :keymaps 'bibtex-mode-map
-   :packages 'org-ref
-   "C-j" #'org-ref-bibtex-next-entry
-   "C-k" #'org-ref-bibtex-previous-entry
-   "gj"  #'org-ref-bibtex-next-entry
-   "gk"  #'org-ref-bibtex-previous-entry)
+    :keymaps 'bibtex-mode-map
+    :packages 'org-ref
+    "C-j" #'org-ref-bibtex-next-entry
+    "C-k" #'org-ref-bibtex-previous-entry
+    "gj"  #'org-ref-bibtex-next-entry
+    "gk"  #'org-ref-bibtex-previous-entry)
   (dqv/major-leader-key
-   :keymaps '(bibtex-mode-map)
-   :packages 'org-ref
-   ;; Navigation
-   "j" #'org-ref-bibtex-next-entry
-   "k" #'org-ref-bibtex-previous-entry
+    :keymaps '(bibtex-mode-map)
+    :packages 'org-ref
+    ;; Navigation
+    "j" #'org-ref-bibtex-next-entry
+    "k" #'org-ref-bibtex-previous-entry
 
-   ;; Open
-   "b" #'org-ref-open-in-browser
-   "n" #'org-ref-open-bibtex-notes
-   "p" #'org-ref-open-bibtex-pdf
+    ;; Open
+    "b" #'org-ref-open-in-browser
+    "n" #'org-ref-open-bibtex-notes
+    "p" #'org-ref-open-bibtex-pdf
 
-   ;; Misc
-   "h" #'org-ref-bibtex-hydra/body
-   "i" #'org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
-   "s" #'org-ref-sort-bibtex-entry
+    ;; Misc
+    "h" #'org-ref-bibtex-hydra/body
+    "i" #'org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
+    "s" #'org-ref-sort-bibtex-entry
 
-   "l" '(:ignore t :which-key "lookup")
-   "la" #'arxiv-add-bibtex-entry
-   "lA" #'arxiv-get-pdf-add-bibtex-entry
-   "ld" #'doi-utils-add-bibtex-entry-from-doi
-   "li" #'isbn-to-bibtex
-   "lp" #'pubmed-insert-bibtex-from-pmid)
+    "l" '(:ignore t :which-key "lookup")
+    "la" #'arxiv-add-bibtex-entry
+    "lA" #'arxiv-get-pdf-add-bibtex-entry
+    "ld" #'doi-utils-add-bibtex-entry-from-doi
+    "li" #'isbn-to-bibtex
+    "lp" #'pubmed-insert-bibtex-from-pmid)
   (dqv/major-leader-key
-   :keymaps 'org-mode-map
-   :pakages 'org-ref
-   "ic" #'org-ref-insert-link))
+    :keymaps 'org-mode-map
+    :pakages 'org-ref
+    "ic" #'org-ref-insert-link))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2332,7 +2305,7 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
 (defun my-org-gcal-set-effort (_calendar-id event _update-mode)
   "Set Effort property based on EVENT if not already set."
   (when-let* ((stime (plist-get (plist-get event :start)
-                           :dateTime))
+                                :dateTime))
               (etime (plist-get (plist-get event :end)
                                 :dateTime))
               (diff (float-time
@@ -2387,26 +2360,26 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
 (setq appt-time-msg-list nil)    ;; clear existing appt list
 (setq appt-display-interval '10)  ;; warn every 10 minutes from t - appt-message-warning-time
 (setq
-  appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
-  appt-display-mode-line t     ;; don't show in the modeline
-  appt-display-format 'window)   ;; pass warnings to the designated window function
+ appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
+ appt-display-mode-line t     ;; don't show in the modeline
+ appt-display-format 'window)   ;; pass warnings to the designated window function
 
 
 (defun dqv/send-notification (title msg)
   (let ((notifier-path (executable-find "terminal-notifier")))
-       (start-process
-           "Appointment Alert"
-           "*Appointment Alert*" ; use `nil` to not capture output; this captures output in background
-           notifier-path
-           "-message" msg
-           "-title" title
-           "-sender" "org.gnu.Emacs"
-           "-activate" "org.gnu.Emacs")))
+    (start-process
+     "Appointment Alert"
+     "*Appointment Alert*" ; use `nil` to not capture output; this captures output in background
+     notifier-path
+     "-message" msg
+     "-title" title
+     "-sender" "org.gnu.Emacs"
+     "-activate" "org.gnu.Emacs")))
 
 (defun dqv/appt-display-native (min-to-app new-time msg)
   (dqv/send-notification
-    (format "Appointment in %s minutes" min-to-app) ; Title
-    (format "%s" msg)))                             ; Message/detail text
+   (format "Appointment in %s minutes" min-to-app) ; Title
+   (format "%s" msg)))                             ; Message/detail text
 
 (setq appt-disp-window-function (function dqv/appt-display-native))
 #+end_src
@@ -2836,20 +2809,20 @@ Magit is an awesome wrapper around Git for Emacs! Very often, I go from dislikin
       "s" #'magit-stage))
   :general
   (:keymaps '(git-rebase-mode-map)
-   :packages 'magit
-   "C-j" #'evil-next-line
-   "C-k" #'evil-previous-line)
-  (dqv/major-leader-key
-    :keymaps 'git-rebase-mode-map
-    :packages 'magit
-    "," #'with-editor-finish
-    "k" #'with-editor-cancel
-    "a" #'with-editor-cancel)
-  (dqv/major-leader-key
-    :packages 'magit
-    "," #'with-editor-finish
-    "k" #'with-editor-cancel
-    "a" #'with-editor-cancel)
+            :packages 'magit
+            "C-j" #'evil-next-line
+            "C-k" #'evil-previous-line)
+  ;; (dqv/major-leader-key
+  ;;   :keymaps 'git-rebase-mode-map
+  ;;   :packages 'magit
+  ;;   "," #'with-editor-finish
+  ;;   "k" #'with-editor-cancel
+  ;;   "a" #'with-editor-cancel)
+  ;; (dqv/major-leader-key
+  ;;   :packages 'magit
+  ;;   "," #'with-editor-finish
+  ;;   "k" #'with-editor-cancel
+  ;;   "a" #'with-editor-cancel)
   (dqv/leader-key
     :infix   "g"
     :packages 'magit
@@ -2896,17 +2869,17 @@ We can now configure properly ~magit-todos~. Notice my custom function hooked to
   :after (magit hl-todo)
   :init
   (with-eval-after-load 'magit
-   (defun my/magit-todos-if-not-yadm ()
-     "Deactivate magit-todos if in yadm Tramp connection.
+    (defun my/magit-todos-if-not-yadm ()
+      "Deactivate magit-todos if in yadm Tramp connection.
 If `magit--default-directory' points to a yadm Tramp directory,
 deactivate `magit-todos-mode', otherwise enable it."
-     (if (string-prefix-p "/yadm:" magit--default-directory)
-         (magit-todos-mode -1)
-       (magit-todos-mode +1)))
-   (add-hook 'magit-mode-hook #'my/magit-todos-if-not-yadm))
+      (if (string-prefix-p "/yadm:" magit--default-directory)
+          (magit-todos-mode -1)
+        (magit-todos-mode +1)))
+    (add-hook 'magit-mode-hook #'my/magit-todos-if-not-yadm))
   :config
   (csetq magit-todos-ignore-case t)
-(setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:"))
+  (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:"))
 #+end_src
 
 ***** Gitflow
@@ -2969,37 +2942,37 @@ Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot
 
 ***** Add Issue Number To Commit Message
 #+begin_src emacs-lisp
- (defun buffer-insert-at-end (string)
-    "Insert STRING at the maximal point in a buffer."
-    (save-excursion
-      (goto-char (point-max))
-      (end-of-line)
-      (insert ?\n string)
-      (unless (string-suffix-p "\n" string)
-        (insert ?\n))))
+(defun buffer-insert-at-end (string)
+  "Insert STRING at the maximal point in a buffer."
+  (save-excursion
+    (goto-char (point-max))
+    (end-of-line)
+    (insert ?\n string)
+    (unless (string-suffix-p "\n" string)
+      (insert ?\n))))
 
-  (defun get-knuth-number-from-string (string)
-    "Return KNUTH issue number from STRING.
+(defun get-knuth-number-from-string (string)
+  "Return KNUTH issue number from STRING.
   Return nil if STRING does not contain a KNUTH issue.
   STRING may be nil."
-    (if (and string (string-match "\\(KNUTH-[[:digit:]]\+\\)" string))
-        (match-string 1 string)
-      nil))
+  (if (and string (string-match "\\(KNUTH-[[:digit:]]\+\\)" string))
+      (match-string 1 string)
+    nil))
 
-  (defun insert-knuth-ticket-number-from-branch ()
-    "If we're on a KNUTH feature branch, insert the ticket number."
-    (interactive)
-    (let ((knuth (get-knuth-number-from-string (magit-get-current-branch))))
-      (if (and knuth (not (buffer-line-matches-p (concat "^" knuth)))) (buffer-insert-at-end knuth))))
+(defun insert-knuth-ticket-number-from-branch ()
+  "If we're on a KNUTH feature branch, insert the ticket number."
+  (interactive)
+  (let ((knuth (get-knuth-number-from-string (magit-get-current-branch))))
+    (if (and knuth (not (buffer-line-matches-p (concat "^" knuth)))) (buffer-insert-at-end knuth))))
 
-  (defun buffer-line-matches-p (needle)
-    "Return t if the last line matches NEEDLE.
+(defun buffer-line-matches-p (needle)
+  "Return t if the last line matches NEEDLE.
   Ignores comments"
-    (save-excursion
-      (goto-char 0)
-      (search-forward-regexp needle nil 'noerror)))
+  (save-excursion
+    (goto-char 0)
+    (search-forward-regexp needle nil 'noerror)))
 
-  (add-hook 'git-commit-setup-hook 'insert-knuth-ticket-number-from-branch)
+(add-hook 'git-commit-setup-hook 'insert-knuth-ticket-number-from-branch)
 #+end_src
 
 ***** Magit Gh
@@ -3016,9 +2989,9 @@ Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot
  if called with a prefix argument. Sets `my-magit-limit-to-directory'
  so that it's still active even after you stage a change. Very experimental."
   (interactive (list (expand-file-name
-                        (if current-prefix-arg
-                            (read-directory-name "Directory: ")
-                          default-directory))))
+                      (if current-prefix-arg
+                          (read-directory-name "Directory: ")
+                        default-directory))))
   (setq my-magit-limit-to-directory directory)
   (magit-status directory))
 #+end_src
@@ -3122,8 +3095,8 @@ Shell-pop allows the user to easily call for a new shell in a pop-up buffer.
   :straight t
   :general
   (dqv/leader-key
-   "ot" '(+popwin:vterm :which-key "vTerm popup")
-   "oT" '(vterm :which-key "vTerm"))
+    "ot" '(+popwin:vterm :which-key "vTerm popup")
+    "oT" '(vterm :which-key "vTerm"))
   :preface
   (when noninteractive
     (advice-add #'vterm-module-compile :override #'ignore)
@@ -3280,106 +3253,106 @@ Don’t let the name of the package fool you! ~parinfer-rust-mode~ is not a ~par
 
 *** Engine
 #+begin_src emacs-lisp
-  (use-package engine-mode
-    :config
-    (engine/set-keymap-prefix (kbd "C-c s"))
-    (setq browse-url-browser-function 'browse-url-default-macosx-browser
-          engine/browser-function 'browse-url-default-macosx-browser)
+(use-package engine-mode
+  :config
+  (engine/set-keymap-prefix (kbd "C-c s"))
+  (setq browse-url-browser-function 'browse-url-default-macosx-browser
+        engine/browser-function 'browse-url-default-macosx-browser)
 
-    (defengine duckduckgo
-      "https://duckduckgo.com/?q=%s"
-      :keybinding "d")
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
 
-    (defengine github
-      "https://github.com/search?ref=simplesearch&q=%s"
-      :keybinding "1")
+  (defengine github
+    "https://github.com/search?ref=simplesearch&q=%s"
+    :keybinding "1")
 
-    (defengine npm
-      "https://www.npmjs.com/search?q=%s"
-      :keybinding "n")
+  (defengine npm
+    "https://www.npmjs.com/search?q=%s"
+    :keybinding "n")
 
-    (defengine crates
-      "https://crates.io/search?q=%s"
-      :keybinding "c")
+  (defengine crates
+    "https://crates.io/search?q=%s"
+    :keybinding "c")
 
-    (defengine localhost
-      "http://localhost:%s"
-      :keybinding "l")
+  (defengine localhost
+    "http://localhost:%s"
+    :keybinding "l")
 
-    (defengine vocabulary
-      "https://www.vocabulary.com/dictionary/%s"
-      :keybinding "t")
+  (defengine vocabulary
+    "https://www.vocabulary.com/dictionary/%s"
+    :keybinding "t")
 
-    (defengine translate
-      "https://translate.google.com/?hl=vi&sl=en&tl=vi&text=%s&op=translate"
-      :keybinding "T")
+  (defengine translate
+    "https://translate.google.com/?hl=vi&sl=en&tl=vi&text=%s&op=translate"
+    :keybinding "T")
 
-    (defengine youtube
-      "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
-      :keybinding "y")
+  (defengine youtube
+    "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
+    :keybinding "y")
 
-    (defengine google
-      "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-      :keybinding "g")
+  (defengine google
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+    :keybinding "g")
 
-    (defengine sui-localnet
-      "https://suiexplorer.com/txblock/%s?network=local"
-      :keybinding "s l")
+  (defengine sui-localnet
+    "https://suiexplorer.com/txblock/%s?network=local"
+    :keybinding "s l")
 
-    (defengine sui-devnnet
-      "https://suiexplorer.com/txblock/%s?network=devnet"
-      :keybinding "s d")
+  (defengine sui-devnnet
+    "https://suiexplorer.com/txblock/%s?network=devnet"
+    :keybinding "s d")
 
-    (defengine sui-mainnet
-      "https://suiexplorer.com/txblock/%s?network=mainnet"
-      :keybinding "s m")
+  (defengine sui-mainnet
+    "https://suiexplorer.com/txblock/%s?network=mainnet"
+    :keybinding "s m")
 
-    (engine-mode 1))
+  (engine-mode 1))
 #+end_src
 
 *** Bm
 #+begin_src emacs-lisp
-  (use-package bm
-    :demand t
-    :init
-    ;; restore on load (even before you require bm)
-    (setq bm-restore-repository-on-load t)
+(use-package bm
+  :demand t
+  :init
+  ;; restore on load (even before you require bm)
+  (setq bm-restore-repository-on-load t)
 
-    :config
-    ;; Allow cross-buffer 'next'
-    (setq bm-cycle-all-buffers t
+  :config
+  ;; Allow cross-buffer 'next'
+  (setq bm-cycle-all-buffers t
 
-          ;; where to store persistant files
-          bm-repository-file "~/.emacs.d/bm-repository")
+        ;; where to store persistant files
+        bm-repository-file "~/.emacs.d/bm-repository")
 
-    ;; save bookmarks
-    (setq-default bm-buffer-persistence t)
+  ;; save bookmarks
+  (setq-default bm-buffer-persistence t)
 
-    ;; Loading the repository from file when on start up.
-    (add-hook 'after-init-hook 'bm-repository-load)
+  ;; Loading the repository from file when on start up.
+  (add-hook 'after-init-hook 'bm-repository-load)
 
-    ;; Saving bookmarks
-    (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  ;; Saving bookmarks
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
 
-    ;; must save all bookmarks first.
-    (add-hook 'kill-emacs-hook #'(lambda nil
-                                   (bm-buffer-save-all)
-                                   (bm-repository-save)))
+  ;; must save all bookmarks first.
+  (add-hook 'kill-emacs-hook #'(lambda nil
+                                 (bm-buffer-save-all)
+                                 (bm-repository-save)))
 
-    (add-hook 'after-save-hook #'bm-buffer-save)
+  (add-hook 'after-save-hook #'bm-buffer-save)
 
-    ;; Restoring bookmarks
-    (add-hook 'find-file-hooks   #'bm-buffer-restore)
-    (add-hook 'after-revert-hook #'bm-buffer-restore)
+  ;; Restoring bookmarks
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
 
-    (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
+  (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
 
-    ;; keys binding
-    :bind (("C-M-s-x" . bm-toggle)
-           ("C-M-s-w" . bm-lifo-next)
-           ("C-M-s-q" . bm-lifo-previous)
-           ("C-M-s-z" . bm-show-all))
-    )
+  ;; keys binding
+  :bind (("C-M-s-x" . bm-toggle)
+         ("C-M-s-w" . bm-lifo-next)
+         ("C-M-s-q" . bm-lifo-previous)
+         ("C-M-s-z" . bm-show-all))
+  )
 #+end_src
 
 *** Move Text
@@ -3418,47 +3391,47 @@ Don’t let the name of the package fool you! ~parinfer-rust-mode~ is not a ~par
           ('hs-cycle-subtree
            (hs-hide-block))
           (_
-               (hs-hide-block)
-             (hs-hide-level 1)
-             (setq this-command 'hs-cycle-children)))
+           (hs-hide-block)
+           (hs-hide-level 1)
+           (setq this-command 'hs-cycle-children)))
       (hs-hide-level level)
       (setq this-command 'hs-hide-level))))
 
 (defun hs-global-cycle ()
-    (interactive)
-    (pcase last-command
-      ('hs-global-cycle
-       (save-excursion (hs-show-all))
-       (setq this-command 'hs-global-show))
-      (_ (hs-hide-all))))
+  (interactive)
+  (pcase last-command
+    ('hs-global-cycle
+     (save-excursion (hs-show-all))
+     (setq this-command 'hs-global-show))
+    (_ (hs-hide-all))))
 #+end_src
 
 *** Eyebrown
 #+begin_src emacs-lisp
-  (use-package eyebrowse
-    :straight (:build t)
-    :config
-    (setq eyebrowse-new-workspace t)
-    (eyebrowse-mode 1))
+(use-package eyebrowse
+  :straight (:build t)
+  :config
+  (setq eyebrowse-new-workspace t)
+  (eyebrowse-mode 1))
 
-  (dqv/leader-key
-   "TAB"  '(:ignore t :which-key "Window Management")
-   "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "Select Windown 0")
-   "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "Select Window 1")
-   "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "Select Window 2")
-   "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "Select Window 3")
-   "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "Select Window 4")
-   "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "Select Window 5")
-   "TAB 6" '(eyebrowse-switch-to-window-config-6 :which-key "Select Window 6")
-   "TAB 7" '(eyebrowse-switch-to-window-config-7 :which-key "Select Window 7")
-   "TAB 8" '(eyebrowse-switch-to-window-config-8 :which-key "Select Window 8")
-   "TAB 9" '(eyebrowse-switch-to-window-config-9 :which-key "Select Window 9")
-   "TAB r" '(eyebrowse-rename-window-config :which-key "Rename Window")
-   "TAB n" '(eyebrowse-create-named-window-config :which-key "Create New Window")
-   "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "Switch Window")
-   "TAB d" '(eyebrowse-close-window-config :which-key "Delete Window")
-   "TAB k" '(eyebrowse-next-window-config :which-key "Next Window")
-   "TAB j" '(eyebrowse-prev-window-config :which-key "Previous Window"))
+(dqv/leader-key
+  "TAB"  '(:ignore t :which-key "Window Management")
+  "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "Select Windown 0")
+  "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "Select Window 1")
+  "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "Select Window 2")
+  "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "Select Window 3")
+  "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "Select Window 4")
+  "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "Select Window 5")
+  "TAB 6" '(eyebrowse-switch-to-window-config-6 :which-key "Select Window 6")
+  "TAB 7" '(eyebrowse-switch-to-window-config-7 :which-key "Select Window 7")
+  "TAB 8" '(eyebrowse-switch-to-window-config-8 :which-key "Select Window 8")
+  "TAB 9" '(eyebrowse-switch-to-window-config-9 :which-key "Select Window 9")
+  "TAB r" '(eyebrowse-rename-window-config :which-key "Rename Window")
+  "TAB n" '(eyebrowse-create-named-window-config :which-key "Create New Window")
+  "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "Switch Window")
+  "TAB d" '(eyebrowse-close-window-config :which-key "Delete Window")
+  "TAB k" '(eyebrowse-next-window-config :which-key "Next Window")
+  "TAB j" '(eyebrowse-prev-window-config :which-key "Previous Window"))
 #+end_src
 
 ** Emacs built-ins
@@ -3483,7 +3456,7 @@ I used to have an extensive configuration for Dired with a couple of additional 
      ("C" "~/Documents/conlanging/content" "Conlanging")))
   (dirvish-mode-line-format
    '(:left (sort file-time " " file-size symlink) :right (omit yank index)))
-   (dirvish-attributes '(all-the-icons file-size  subtree-state vc-state  collapse )) ;; git-msg file-time
+  (dirvish-attributes '(all-the-icons file-size  subtree-state vc-state  collapse )) ;; git-msg file-time
   (setq delete-by-moving-to-trash t)
   :config
   (dirvish-peek-mode)
@@ -3981,7 +3954,7 @@ In case I am sharing my screen with people and I want to show which functions ar
   (let ((b (if mark-active (min (point) (mark)) (point-min)))
         (e (if mark-active (max (point) (mark)) (point-max))))
     (shell-command-on-region b e
-     "python -mjson.tool" (current-buffer) t)))
+                             "python -mjson.tool" (current-buffer) t)))
 #+end_src
 
 ** Protobuf
@@ -3996,8 +3969,8 @@ In case I am sharing my screen with people and I want to show which functions ar
   "Calculate the width of the writing area."
   (if (floatp writeroom-width)
       (progn
-  (message "%s" (window-total-width))
-  (truncate (* (window-total-width) writeroom-width)))
+        (message "%s" (window-total-width))
+        (truncate (* (window-total-width) writeroom-width)))
     writeroom-width))
 
 (use-package writeroom-mode
@@ -4028,7 +4001,34 @@ In case I am sharing my screen with people and I want to show which functions ar
 #+begin_src emacs-lisp
 (use-package flycheck
   :straight (:build t)
+  :preface
+  (defun mp-flycheck-eldoc (callback &rest _ignored)
+    "Print flycheck messages at point by calling CALLBACK."
+    (when-let ((flycheck-errors (and flycheck-mode (flycheck-overlay-errors-at (point)))))
+      (mapc
+       (lambda (err)
+         (funcall callback
+           (format "%s: %s"
+                   (let ((level (flycheck-error-level err)))
+                     (pcase level
+                       ('info (propertize "I" 'face 'flycheck-error-list-info))
+                       ('error (propertize "E" 'face 'flycheck-error-list-error))
+                       ('warning (propertize "W" 'face 'flycheck-error-list-warning))
+                       (_ level)))
+                   (flycheck-error-message err))
+           :thing (or (flycheck-error-id err)
+                      (flycheck-error-group err))
+           :face 'font-lock-doc-face))
+       flycheck-errors)))
+
+  (defun mp-flycheck-prefer-eldoc ()
+    (add-hook 'eldoc-documentation-functions #'mp-flycheck-eldoc nil t)
+    (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+    (setq flycheck-display-errors-function nil)
+    (setq flycheck-help-echo-function nil))
+  :hook ((flycheck-mode . mp-flycheck-prefer-eldoc))
   :defer t
+  :ensure t
   :init
   (global-flycheck-mode)
   :config
@@ -4147,8 +4147,11 @@ Spell Commands^^           Add To Dictionary^^              Other
          (move-mode           . lsp-deferred)
          (toml-mode           . lsp-deferred)
          (toml-ts-mode        . lsp-deferred)
+         (python-ts-mode      . lsp-deferred)
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
+         (solidity-mode       . lsp-deferred)
+         (json-ts-mode        . lsp-deferred)
          (zig-mode            . lsp-deferred)
          (typescript-mode     . lsp-deferred)
          (typescript-tsx-mode . lsp-deferred)
@@ -4160,12 +4163,12 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hint-enable nil)
   (lsp-inlay-hints-mode t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-closure-return-type-hints t) ;; Hints
   (lsp-rust-analyzer-display-parameter-hints nil)
   (lsp-rust-analyzer-display-reborrow-hints nil)
   ;; (lsp-rust-analyzer-store-path "~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer")
@@ -4306,12 +4309,12 @@ I know, I know, C and C++ no longer are closely related languages, each one of t
     :keymaps '(c-mode-map c++-mode-map)
     ";" nil)
   (dqv/major-leader-key
-   :keymaps '(c-mode-map c++-mode-map)
-   "l"  '(:keymap lsp-command-map :which-key "lsp" :package lsp-mode))
+    :keymaps '(c-mode-map c++-mode-map)
+    "l"  '(:keymap lsp-command-map :which-key "lsp" :package lsp-mode))
   (dqv/evil
-   :keymaps '(c-mode-map c++-mode-map)
-   "ga" #'projectile-find-other-file
-   "gA" #'projectile-find-other-file-other-window))
+    :keymaps '(c-mode-map c++-mode-map)
+    "ga" #'projectile-find-other-file
+    "gA" #'projectile-find-other-file-other-window))
 #+end_src
 
 Something that is also important when working with these languages is
@@ -4349,26 +4352,25 @@ In Lisp buffers, let’s enable ~parinfer-rust-mode~.
 **** EmacsLisp
 This package displays the function’s arglist or variable’s docstring in the echo area at the bottom of the frame. Quite useful indeed.
 #+begin_src emacs-lisp
-;; (use-package eldoc
-;;   :straight t
-;;   :defer t
-;;   :after company
-;;   :preface
-;;   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-;;   (add-to-list 'display-buffer-alist
-;;             '("^\\*eldoc for" display-buffer-at-bottom
-;;               (window-height . 4)))
-;;   :hook ((eglot-managed-mode . mp-eglot-eldoc))
-;;   :init
-;;   (eldoc-add-command 'company-complete-selection
-;;                      'company-complete-common
-;;                      'company-capf
-;;                      'company-abort)
-;;   :config
-;;   (setq eldoc-echo-area-prefer-doc-buffer t)
-;;   (eldoc-add-command-completions "paredit-")
-;;   (eldoc-add-command-completions "combobulate-")
-;;   (setq eldoc-echo-area-use-multiline-p nil))
+(use-package eldoc
+  :diminish eldoc-mode
+  :commands turn-on-eldoc-mode
+  :preface
+  (add-to-list 'display-buffer-alist
+               '("^\\*eldoc for" display-buffer-at-bottom
+                 (window-height . 4)))
+  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  :defer t
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
+  :config
+  (eldoc-add-command-completions "combobulate-")
+  (eldoc-add-command-completions "paredit-")
+  (eldoc-add-command-completions "lispy-"))
+
 #+end_src
 
 #+begin_src emacs-lisp
@@ -4398,26 +4400,26 @@ Let’s also declare some Elisp-dedicated keybindings, prefixed by a
 comma.
 #+begin_src emacs-lisp
 (dqv/major-leader-key
- :keymaps 'emacs-lisp-mode-map
- "'"   #'ielm
- "c"   '(emacs-lisp-byte-compile :which-key "Byte compile")
- "C"   '(:ignore t :which-key "checkdoc")
- "Cc"  #'checkdoc
- "Cs"  #'checkdoc-start
- "v"   '(:ignore t :which-key "eval")
- "eb"  #'eval-buffer
- "ed"  #'eval-defun
- "ee"  #'eval-last-sexp
- "er"  #'eval-region
+  :keymaps 'emacs-lisp-mode-map
+  "'"   #'ielm
+  "c"   '(emacs-lisp-byte-compile :which-key "Byte compile")
+  "C"   '(:ignore t :which-key "checkdoc")
+  "Cc"  #'checkdoc
+  "Cs"  #'checkdoc-start
+  "v"   '(:ignore t :which-key "eval")
+  "eb"  #'eval-buffer
+  "ed"  #'eval-defun
+  "ee"  #'eval-last-sexp
+  "er"  #'eval-region
 
- "h"   '(:ignore t :which-key "help")
- "hh"  #'helpful-at-point
+  "h"   '(:ignore t :which-key "help")
+  "hh"  #'helpful-at-point
 
- "t"   '(:ignore t :which-key "toggle")
- "tP"  '(:ignore t :which-key "parinfer")
- "tPs" #'parinfer-rust-switch-mode
- "tPd" #'parinfer-rust-mode-disable
- "tPp" #'parinfer-rust-toggle-paren-mode)
+  "t"   '(:ignore t :which-key "toggle")
+  "tP"  '(:ignore t :which-key "parinfer")
+  "tPs" #'parinfer-rust-switch-mode
+  "tPd" #'parinfer-rust-mode-disable
+  "tPp" #'parinfer-rust-toggle-paren-mode)
 #+end_src
 
 Package linting is important when you want to publish your packages to
@@ -4457,7 +4459,7 @@ First, we need to set up the main Python mode. With this, we’ll also add Pytho
   :config
   (setq python-indent-guess-indent-offset-verbose nil)
   (when (and (executable-find "/usr/local/bin/python3")
-           (string= python-shell-interpreter "/usr/local/bin/python3"))
+             (string= python-shell-interpreter "/usr/local/bin/python3"))
     (setq python-shell-interpreter "/usr/local/bin/python3"))
   (setq python-interpreter "/usr/local/bin/python3"))
 #+end_src
@@ -4479,17 +4481,17 @@ Now let’s add a package for [[https://docs.pytest.org/en/latest/][pytest]].
   (add-to-list 'pytest-project-root-files "setup.cfg")
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :infix "t"
-   :packages 'pytest
-   ""  '(:ignore t :which-key "test")
-   "a" #'python-pytest
-   "f" #'python-pytest-file-dwim
-   "F" #'python-pytest-file
-   "t" #'python-pytest-function-dwim
-   "T" #'python-pytest-function
-   "r" #'python-pytest-repeat
-   "p" #'python-pytest-dispatch))
+    :keymaps 'python-mode-map
+    :infix "t"
+    :packages 'pytest
+    ""  '(:ignore t :which-key "test")
+    "a" #'python-pytest
+    "f" #'python-pytest-file-dwim
+    "F" #'python-pytest-file
+    "t" #'python-pytest-function-dwim
+    "T" #'python-pytest-function
+    "r" #'python-pytest-repeat
+    "p" #'python-pytest-dispatch))
 #+end_src
 
 Poetry is a nice tool with which we can manage our Python runtime version as well as our dependencies.
@@ -4518,9 +4520,9 @@ Why use the command line to interact with pip when we can do it with an Emacs fr
   :straight (:build t)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'pippel
-   "P" #'pippel-list-packages))
+    :keymaps 'python-mode-map
+    :packages 'pippel
+    "P" #'pippel-list-packages))
 #+end_src
 
 This is a [[https://github.com/pypa/pipenv][pipenv]] porcelain
@@ -4538,18 +4540,18 @@ This is a [[https://github.com/pypa/pipenv][pipenv]] porcelain
   :init (setq pipenv-with-projectile nil)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'pipenv
-   :infix "e"
-   ""  '(:ignore t :which-key "pipenv")
-   "a" #'pipenv-activate
-   "d" #'pipenv-deactivate
-   "i" #'pipenv-install
-   "l" #'pipenv-lock
-   "o" #'pipenv-open
-   "r" #'pipenv-run
-   "s" #'pipenv-shell
-   "u" #'pipenv-uninstall))
+    :keymaps 'python-mode-map
+    :packages 'pipenv
+    :infix "e"
+    ""  '(:ignore t :which-key "pipenv")
+    "a" #'pipenv-activate
+    "d" #'pipenv-deactivate
+    "i" #'pipenv-install
+    "l" #'pipenv-lock
+    "o" #'pipenv-open
+    "r" #'pipenv-run
+    "s" #'pipenv-shell
+    "u" #'pipenv-uninstall))
 #+end_src
 
 This integrates ~pyenv~ into ~python-mode~.
@@ -4603,12 +4605,12 @@ On the other hand, this one sorts our imports to make them more readable.
   :straight (:build t)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'py-isort
-   :infix "i"
-   ""  '(:ignore t :which-key "imports")
-   "s" #'py-isort-buffer
-   "R" #'py-isort-region))
+    :keymaps 'python-mode-map
+    :packages 'py-isort
+    :infix "i"
+    ""  '(:ignore t :which-key "imports")
+    "s" #'py-isort-buffer
+    "R" #'py-isort-region))
 #+end_src
 
 Access pydoc through counsel.
@@ -4627,12 +4629,12 @@ This generates Python documentation that is meant to be compatible with Sphinx, 
   (add-hook 'python-mode-hook #'sphinx-doc-mode)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'sphinx-doc
-   :infix "S"
-   ""  '(:ignore t :which-key "sphinx-doc")
-   "e" #'sphinx-doc-mode
-   "d" #'sphinx-doc))
+    :keymaps 'python-mode-map
+    :packages 'sphinx-doc
+    :infix "S"
+    ""  '(:ignore t :which-key "sphinx-doc")
+    "e" #'sphinx-doc-mode
+    "d" #'sphinx-doc))
 #+end_src
 
 Cython is a Python to C compiler. It also introduces the extended Cython programming language which makes writing C for Python easier. This package is a major mode for the Cython programming language.
@@ -4645,11 +4647,11 @@ Cython is a Python to C compiler. It also introduces the extended Cython program
   (setq cython-default-compile-format "cython -a %s")
   :general
   (dqv/major-leader-key
-   :keymaps 'cython-mode-map
-   :packages 'cython-mode
-   :infix "c"
-   ""  '(:ignore t :which-key "cython")
-   "c" #'cython-compile))
+    :keymaps 'cython-mode-map
+    :packages 'cython-mode
+    :infix "c"
+    ""  '(:ignore t :which-key "cython")
+    "c" #'cython-compile))
 #+end_src
 
 Flycheck can also be enabled for Cython:
@@ -4694,10 +4696,10 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
   ;; (setq rustic-lsp-client 'eglot)
   (add-hook 'rustic-mode-hook #'tree-sitter-hl-mode)
   (add-hook 'rustic-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil)
-            (setq tab-width 2)
-            (setq rust-indent-offset 2)))
+            (lambda ()
+              (setq indent-tabs-mode nil)
+              (setq tab-width 2)
+              (setq rust-indent-offset 2)))
   :general
   (general-define-key
    :keymaps 'rustic-mode-map
@@ -4725,7 +4727,10 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
     "dd" #'dap-breakpoint-delete
     "dD" #'dap-breakpoint-delete-all
     "D" #'rustic-cargo-doc
-    "f" #'rustic-cargo-fmt
+    "f" '(:ignore t :which-key "LSP Find")
+    "fr" #'lsp-find-references
+    "fd" #'lsp-find-definition
+    "ff" #'lsp-find-declaration
     "a" #'rustic-cargo-add
     "r" #'rustic-cargo-run
     "c" '(:ignore t :which-key "clippy")
@@ -4770,6 +4775,13 @@ Rust is a general programming language, akin to C++ in some ways, but much more 
   (when buffer-file-name
     (setq-local buffer-save-without-query t))
   (add-hook 'before-save-hook 'lsp-format-buffer nil t))
+
+(defun my-rust-mode-auto-switch ()
+  (when (and buffer-file-name
+             (string-match-p "\\.rs\\'" buffer-file-name))
+    (rustic-mode)))
+
+(add-hook 'find-file-hook #'my-rust-mode-auto-switch)
 #+end_src
 
 **** Web programming
@@ -4840,27 +4852,27 @@ Web mode is a sort of hybrid major mode that allows editing several languages in
          web-mode-script-padding       0)
   :general
   (dqv/major-leader-key
-   :keymaps 'web-mode-map
-   :packages 'web-mode
-   "="  '(:ignore t :which-key "format")
-   "E"  '(:ignore t :which-key "errors")
-   "El" #'web-mode-dom-errors-show
-   "g"  '(:ignore t :which-key "goto")
-   "gb" #'web-mode-element-beginning
-   "ge" #'web-mode-element-end
-   "gc" #'web-mode-element-child
-   "gp" #'web-mode-element-parent
-   "gs" #'web-mode-element-sibling-next
-   "h"  '(:ignore t :which-key "dom")
-   "hp" #'web-mode-dom-xpath
-   "r"  '(:ignore t :which-key "refactor")
-   "j"  '(web-mode-tag-match :which-key "Jump Match")
-   "rc" #'web-mode-element-clone
-   "rd" #'web-mode-element-vanish
-   "rk" #'web-mode-element-kill
-   "rr" #'web-mode-element-rename
-   "rw" #'web-mode-element-wrap
-   "z"  #'web-mode-fold-or-unfold)
+    :keymaps 'web-mode-map
+    :packages 'web-mode
+    "="  '(:ignore t :which-key "format")
+    "E"  '(:ignore t :which-key "errors")
+    "El" #'web-mode-dom-errors-show
+    "g"  '(:ignore t :which-key "goto")
+    "gb" #'web-mode-element-beginning
+    "ge" #'web-mode-element-end
+    "gc" #'web-mode-element-child
+    "gp" #'web-mode-element-parent
+    "gs" #'web-mode-element-sibling-next
+    "h"  '(:ignore t :which-key "dom")
+    "hp" #'web-mode-dom-xpath
+    "r"  '(:ignore t :which-key "refactor")
+    "j"  '(web-mode-tag-match :which-key "Jump Match")
+    "rc" #'web-mode-element-clone
+    "rd" #'web-mode-element-vanish
+    "rk" #'web-mode-element-kill
+    "rr" #'web-mode-element-rename
+    "rw" #'web-mode-element-wrap
+    "z"  #'web-mode-fold-or-unfold)
   (dqv/major-leader-key
     :keymaps 'web-mode-map
     :packages '(lsp-mode web-mode)
@@ -4915,8 +4927,8 @@ And let’s add some autocompletion for CSS.
                                            (scss-mode-map . scss-mode-hook))
            do (add-hook mode-hook #'counsel-css-imenu-setup)
            (dqv/major-leader-key
-            :keymaps mode-map
-            "gh" #'counsel-css)))
+             :keymaps mode-map
+             "gh" #'counsel-css)))
 #+end_src
 
 For some reason, although it is built-in, ~less-css-mode~ does not activate when I open ~.less~ files by default. Let’s fix that.
@@ -4972,7 +4984,7 @@ For some reason, although it is built-in, ~less-css-mode~ does not activate when
         js2-idle-timer-delay             0.15))
 #+end_src
 
-+ ~js2-refactor~ is an amazing tool for refactoring Javascript code. I mean, [[https://www.youtube.com/watch?v=-7yMWD1wUu4][look at this]]! And the video is only from 2013 and it still receives some commits!
++ ~js2-refactor~ is an amazing tool for refactoring Javascript code.
 #+begin_src emacs-lisp
 (use-package js2-refactor
   :defer t
@@ -4980,21 +4992,6 @@ For some reason, although it is built-in, ~less-css-mode~ does not activate when
   :after (js2-mode rjsx-mode)
   :hook (js2-mode . js2-refactor-mode)
   :hook (rjsx-mode . js2-refactor-mode))
-#+end_src
-
-Which Emacser prefers the command line over Emacs itself? I don’t. Let’s interact with NPM through Emacs then.
-#+begin_src emacs-lisp
-(use-package npm-transient
-  :defer t
-  :straight (npm-transient :build t
-                           :type git
-                           :host github
-                           :repo "Phundrak/npm-transient"))
-  ;; :general
-  ;; (dqv/major-leader-key
-  ;;   :packages '(npm-transient rjsx-mode web-mode)
-  ;;   :keymaps '(rjsx-mode-map web-mode-map)
-  ;;   "n" #'npm-transient))
 #+end_src
 
 And finally, here is a formatter for Javascript.
@@ -5055,13 +5052,13 @@ Typescript is a safer alternative to Javascript. Let’s install its major mode 
 Auto Enable Tsx mode
 #+begin_src emacs-lisp
 (defun my-tsx-mode-auto-switch ()
-  "Auto convert go-mode"
+  "Auto convert tsx-mode"
   (when (and buffer-file-name
              (string-match-p "\\.tsx\\'" buffer-file-name))
     (typescript-tsx-mode)))
 
 (defun my-ts-mode-auto-switch ()
-  "Auto convert go-mode"
+  "Auto convert typescript-mode"
   (when (and buffer-file-name
              (string-match-p "\\.ts\\'" buffer-file-name))
     (typescript-mode)))
@@ -5153,6 +5150,7 @@ First, here is its major mode.
              (string-match-p "\\.go\\'" buffer-file-name))
     (go-mode)))
 
+
 (add-hook 'find-file-hook #'my-go-mode-auto-switch)
 
 (cl-defmethod project-root ((project (head go-module)))
@@ -5179,15 +5177,81 @@ It is not rare to encounter a dotenv file, that is, a file with either the ~.env
 (use-package dotenv-mode
   :defer t
   :straight (:build t))
+(add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode)) ;; for optionally supporting additional file extensions such as `.env.test' with this major mode
+
+
+;; (defun my-env-mode-auto-switch ()
+;;   (when (and buffer-file-name
+;;              (string-match-p "\\.env\\..*\\'" buffer-file-name))
+;;     (dotenv-mode)))
+
+;; (add-hook 'find-file-hook #'my-env-mode-auto-switch)
 #+end_src
 
 **** Solidity
++ Requisities
+#+begin_quote
++ pip install semgrep
++ npm install -g solium | brew tap ethereum/ethereum && brew install solidity (for solc)
+#+end_quote
+
+#+begin_src emacs-lisp
+(add-hook 'solidity-mode-hook
+  (lambda ()
+  (set (make-local-variable 'company-backends)
+    (append '((company-solidity company-capf company-dabbrev-code))
+      company-backends))))
+#+end_src
+
 #+begin_src emacs-lisp
 (use-package solidity-mode
   :defer t
   :straight (:build t)
   :config
-  (csetq solidity-comment-style 'slash))
+  (csetq solidity-comment-style 'star))
+#+end_src
+
++ Solidity Compiler
+#+begin_src emacs-lisp
+;; (setq solidity-solc-path "/opt/homebrew/bin/solc")
+(setq solidity-solium-path "/home/lefteris/.nvm/versions/node/v22.3.0/bin/solium")
+#+end_src
+
++ Flycheck
+#+begin_src emacs-lisp
+(use-package solidity-flycheck
+  :defer t
+  :straight (:build t)
+  :ensure t
+  :config
+  ;; (setq solidity-flycheck-solc-checker-active t)
+  (setq solidity-flycheck-solium-checker-active t))
+#+end_src
+
++ Company
+#+begin_src emacs-lisp
+(use-package company-solidity
+  :straight (:build t)
+  :ensure t
+  :defer t
+)
+#+end_src
+
+#+begin_src emacs-lisp
+(add-hook 'solidity-mode-hook
+            (lambda ()
+              (require 'lsp-mode)
+              (add-to-list 'lsp-language-id-configuration '(solidity-mode . "soldity"))
+              (add-to-list 'lsp-language-id-configuration '("\\.sol$" . "solidity"))
+              (lsp-register-client
+               (make-lsp-client :new-connection (lsp-stdio-connection '("solidity-ls" "--stdio"))
+                                :activation-fn (lsp-activate-on "solidity")
+                                :notification-handlers
+                                (ht ("textDocument/didOpen" #'ignore))
+                                :server-id 'solidity))
+              (lsp)
+              )
+            )
 #+end_src
 
 **** Json
@@ -5202,6 +5266,19 @@ It is not rare to encounter a dotenv file, that is, a file with either the ~.env
     :packages 'json-mode
     :keymaps 'json-mode-map
     "f" #'json-pretty-print-buffer))
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq tab-width 2)
+            (setq js-indent-level 2)))
+
+(defun my-json-ts-mode-auto-switch ()
+  (when (and buffer-file-name
+             (string-match-p "\\.json\\'" buffer-file-name))
+    (json-ts-mode)))
+
+;; (add-hook 'find-file-hook #'my-json-ts-mode-auto-switch)
 #+end_src
 
 **** Toml
@@ -5249,26 +5326,28 @@ It is not rare to encounter a dotenv file, that is, a file with either the ~.env
     :server-id 'move-analyzer)))
 
 (use-package eglot
- :config
- (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer")))
+  :config
+  (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer")))
 #+end_src
 
 * Keybindings
 Undefining some stuff to make keybind prefixes work correctly.
 #+begin_src emacs-lisp
-  (dqv/evil
-    ;;:packages '(counsel)
-    "s" '(window-configuration-to-register :wk "Register Window")
-    "f" '(jump-to-register :wk "Jump Register")
-    "K"   #'lsp-ui-doc-glance
-    "U"   #'evil-redo
-    "C-a" #'my-smarter-move-beginning-of-line
-    "C-e" #'end-of-line
-    "*"   #'dired-create-empty-file
-    "C-y" #'yank
-    "C-M-s-p"    #'scroll-half-page-up
-    "C-M-s-n"    #'scroll-half-page-down
-    "M-y" #'counsel-yank-pop)
+(dqv/evil
+  ;;:packages '(counsel)
+  "s" '(window-configuration-to-register :wk "Register Window")
+  "f" '(jump-to-register :wk "Jump Register")
+  "K"   #'lsp-ui-doc-glance
+  "+"   #'evil-goto-last-change
+  "_"   #'evil-search-unbounded-word-forward
+  "-"   #'evil-search-unbounded-word-backward
+  "U"   #'evil-redo
+  "C-a" #'my-smarter-move-beginning-of-line
+  "C-e" #'end-of-line
+  "C-y" #'yank
+  "C-M-s-p"    #'scroll-half-page-up
+  "C-M-s-n"    #'scroll-half-page-down
+  "M-y" #'counsel-yank-pop)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -5462,12 +5541,15 @@ Undefining some stuff to make keybind prefixes work correctly.
   "l"   '(:ignore t :wk "Lsp")
   "ll"  #'lsp
   "lm"  #'lsp-ui-imenu
-  "lR"  #'lsp-workspace-restart
+  "lwr"  #'lsp-workspace-restart
   "ls"  #'lsp-treemacs-symbols
-  "le"  #'lsp-treemacs-errors-list
-  "ld"  #'xref-find-definitions-other-window
+  "lE"  #'lsp-treemacs-errors-list
+  "le"  #'lsp-ui-flycheck-list
+  "ld"  #'lsp-find-definition
+  "lr"  #'lsp-find-references
   "lD"  #'xref-find-definitions
-  "lr"  #'lsp-rename
+  "lr"  #'xref-find-definitions
+  "lR"  #'lsp-rename
 
   "all" #'leetcode
   "ald" #'leetcode-daily
@@ -5524,13 +5606,13 @@ Undefining some stuff to make keybind prefixes work correctly.
           :which-key "straight package")
 
   "owgp"  '((lambda ()
-             (interactive)
-             (browse-url "https://github.com/jayden_dangvu"))
+              (interactive)
+              (browse-url "https://github.com/jayden_dangvu"))
             :wk "My Github")
 
   "owgw"  '((lambda ()
-             (interactive)
-             (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
+              (interactive)
+              (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
             :wk "Work Github")
 
   "owe"  '((lambda ()
@@ -5563,7 +5645,7 @@ Undefining some stuff to make keybind prefixes work correctly.
   "dV" '(docker-volumes :which-key "Docker Volumes")
   "dC" '(docker-containers :which-key "Docker Containers")
   "dN" '(docker-networks :which-key "Docker Networks")
-)
+  )
 #+end_src
 
 * More Configuration
@@ -5575,11 +5657,11 @@ yabai -m config layout bsp
 yabai -m config window_placement second_child
 
 # padding
-yabai -m config top_padding 12
-yabai -m config bottom_padding 12
-yabai -m config left_padding 12
-yabai -m config right_padding 12
-yabai -m config window_gap 12
+# yabai -m config top_padding 0
+# yabai -m config bottom_padding 0
+# yabai -m config left_padding 0
+# yabai -m config right_padding 0
+yabai -m config window_gap 2
 
 # Mouse setting
 
@@ -5591,7 +5673,7 @@ yabai -m config mouse_action1 move
 # right click + drag
 yabai -m config mouse_action2 resize
 
-ybai -m mouse_drop_action swap
+yabai -m mouse_drop_action swap
 
 # Deisable Specific Apps
 yabai -m rule --add app="^System Settings$" manage=off
@@ -5675,9 +5757,9 @@ ctrl + alt - s : yabai --start-service
 #+begin_src emacs-lisp :mkdirp yes :tangle no :export code :results silent :lexical t
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+                                                               # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # PATH
@@ -5748,13 +5830,60 @@ compinit
 #+begin_src emacs-lisp
 (use-package lsp-grammarly
   :straight (:build t))
-  ;; :ensure nil
-  ;; :hook (text-mode . (lambda ()
-  ;;                      (require 'lsp-grammarly)
-  ;;                      (lsp-deferred))))  ; or lsp-deferred
+;; :ensure nil
+;; :hook (text-mode . (lambda ()
+;;                      (require 'lsp-grammarly)
+;;                      (lsp-deferred))))  ; or lsp-deferred
 #+end_src
 
 ** MarkdownX
 #+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
+#+end_src
+
+** Handle new windows
+The two functions below allow the user to not only create a new window
+to the right or below the current window (respectively), but also to
+focus the new window immediately.
+#+begin_src emacs-lisp
+(defun split-window-right-and-focus ()
+  "Spawn a new window right of the current one and focus it."
+  (interactive)
+  (split-window-right)
+  (windmove-right))
+
+(defun jd/eldoc-and-focus ()
+  (interactive)
+  (eldoc-print-current-symbol-info)
+  (evil-window-next))
+
+(defun split-window-below-and-focus ()
+  "Spawn a new window below the current one and focus it."
+  (interactive)
+  (split-window-below)
+  (windmove-down))
+
+(defun split-window-right-and-open-point ()
+  "Spawn a new window right of the current one and focus it."
+  (interactive)
+  (split-window-right)
+  (org-open-at-point))
+
+
+(defun kill-buffer-and-delete-window ()
+  "Kill the current buffer and delete its window."
+  (interactive)
+  (progn
+    (kill-this-buffer)
+    (delete-window)))
+
+#+end_src
+
+** Display Buffer Same Windown
+#+begin_src emacs-lisp
+(defun display-buffer-same-window (buffer alist)
+  (unless (or (cdr (assq 'inhibit-same-window alist))
+              (window-minibuffer-p)
+              (window-dedicated-p))
+    (window--display-buffer buffer (selected-window) 'reuse alist)))
 #+end_src

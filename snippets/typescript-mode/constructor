@@ -1,5 +1,7 @@
 # -*- mode: snippet -*-
 # name: constructor
-# key: cons
+# key: c
 # --
-constructor($0){}
+constructor($1) {
+                $0
+}

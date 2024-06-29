@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: restclient
+# key: <api
+# --
+#+begin_src restclient :var host=host :var header=header
+${1:$$(yas-choose-value '("GET" "POST" "PUT" "PATCH"))} :host $0
+#+end_src

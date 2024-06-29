@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: impl From<..> for ..
+# key: From
+# --
+impl From<$1> for $2 {
+     $0
+}

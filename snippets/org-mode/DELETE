@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: DELETE
+# key: DEL
+# --
+#+begin_src restclient :var host=host :var header=header
+DELETE :host $0
+#+end_src

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Account<>
+# key: Ac
+# --
+Account<$0>

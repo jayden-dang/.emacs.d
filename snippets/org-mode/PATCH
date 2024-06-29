@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: PATCH
+# key: PATCH
+# --
+#+begin_src restclient :var host=host :var header=header
+PATCH :host $0
+#+end_src

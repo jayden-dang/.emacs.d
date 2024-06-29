@@ -58,9 +58,9 @@
 (require 'oauth2)
 (require 'screenshot)
 
-  ;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
-  (setq user-emacs-directory (expand-file-name "~/.emacs.d/")
-        url-history-file (expand-file-name "url/history" user-emacs-directory))
+;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
+(setq user-emacs-directory (expand-file-name "~/.emacs.d/")
+      url-history-file (expand-file-name "url/history" user-emacs-directory))
 
 (add-hook 'before-save-hook #'whitespace-cleanup)
 (server-start)
@@ -68,6 +68,8 @@
 (setq-default sentence-end-double-space nil)
 
 (setq-default initial-major-mode 'emacs-lisp-mode)
+
+(setq switch-to-buffer-obey-display-actions t)
 
 (dolist (mode '(prog-mode-hook latex-mode-hook))
   (add-hook mode #'display-line-numbers-mode))
@@ -101,12 +103,12 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-  ;; Keep customization settings in a temporary file (thanks Ambrevar!)
-  (setq custom-file
-        (if (boundp 'server-socket-dir)
-            (expand-file-name "custom.el" server-socket-dir)
-          (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-  (load custom-file t)
+;; Keep customization settings in a temporary file (thanks Ambrevar!)
+(setq custom-file
+      (if (boundp 'server-socket-dir)
+          (expand-file-name "custom.el" server-socket-dir)
+        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+(load custom-file t)
 
 ;; (defun dqv/org-mode-visual-fill ()
 ;;   (setq visual-fill-column-width 150
@@ -128,7 +130,7 @@
 (setq x-stretch-cursor t)
 
 (with-eval-after-load 'mule-util
- (setq truncate-string-ellipsis "…"))
+  (setq truncate-string-ellipsis "…"))
 
 ;; (require 'time)
 ;; (setq display-time-format "%Y-%m-%d %H:%M")
@@ -165,38 +167,39 @@ the user."
 
 (add-hook 'after-change-major-mode-hook #'modeline-contitional-buffer-encoding)
 
-  (set-face-attribute 'default nil
-                      ;; :font "JetBrains Mono"
-                      :font "Victor Mono"
-                      :weight 'regular
-                      :height 135)
+    (set-face-attribute 'default nil
+                        ;; :font "JetBrains Mono"
+                        :font "Iosevka"
+                        :weight 'Light
+                        :height 150)
 
-  ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil
-                      ;; :font "JetBrains Mono"
-                      :font "Victor Mono"
-                      :weight 'regular
-                      :height 135)
+    ;; Set the fixed pitch face
+    (set-face-attribute 'fixed-pitch nil
+                        ;; :font "JetBrains Mono"
+                        :font "Iosevka"
+                        :weight 'Light
+                        :height 150)
 
-  ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil
-                      ;; :font "Cantarell"
-                      :font "Victor Mono"
-                      :height 135
-                      :weight 'light)
 
-  ;;(set-fontset-font t 'symbol "Noto Color Emoji")
-  ;;(set-fontset-font t 'symbol "Symbola" nil 'append)
+    ;; Set the variable pitch face
+    (set-face-attribute 'variable-pitch nil
+                        ;; :font "Cantarell"
+                        :font "Iosevka Aile"
+                        :weight 'Light
+                        :height 150)
 
-  (use-package emojify
-    :straight (:build t)
-    :custom
-    (emojify-emoji-set "emojione-v2.2.6")
-    (emojify-emojis-dir (concat user-emacs-directory "emojify/"))
-    (emojify-display-style 'image)
-    (emojify-download-emojis-p t)
-    :config
-    (global-emojify-mode 1))
+;;(set-fontset-font t 'symbol "Noto Color Emoji")
+;;(set-fontset-font t 'symbol "Symbola" nil 'append)
+
+(use-package emojify
+  :straight (:build t)
+  :custom
+  (emojify-emoji-set "emojione-v2.2.6")
+  (emojify-emojis-dir (concat user-emacs-directory "emojify/"))
+  (emojify-display-style 'image)
+  (emojify-download-emojis-p t)
+  :config
+  (global-emojify-mode 1))
 
 ;; Use moody for the mode bar
 (use-package moody
@@ -340,7 +343,7 @@ The return value of `csetq' is the value of the last VAL.
         modus-themes-custom-auto-reload t
         modus-themes-disable-other-themes t
         modus-themes-common-palette-overrides '((bg-mode-line-active bg-yellow-subtle)
-                                               ;; (bg-main #120B11)
+                                                (bg-main "#120B11")
                                                 (border-mode-line-active yellow)
                                                 (comment yellow-faint)
                                                 (constant magenta-cooler)
@@ -348,8 +351,8 @@ The return value of `csetq' is the value of the last VAL.
                                                 (docstring green-faint)
                                                 (fg-mode-line-active fg-main)
                                                 (fnname magenta-warmer)
-                                                ;; (fnname green-cooler)
-                                                ;; (keyword cyan)
+                                                (fnname green-cooler)
+                                                (keyword cyan)
                                                 (keyword yellow)
                                                 (preprocessor cyan-cooler)
                                                 (rx-backslash blue-cooler)
@@ -379,13 +382,13 @@ The return value of `csetq' is the value of the last VAL.
   ;; (load-theme 'catppuccin-latte t)
   ;; (load-theme 'catppuccin-frappe t)
   ;; (load-theme 'catppuccin-macchiato t)
-  ;; (load-theme 'catppuccin-mocha t)
+  (load-theme 'catppuccin-mocha t)
   ;; (load-theme 'rose-pine t)
   ;; (load-theme 'amarena t)
   ;; (load-theme 'oxocarbon t)
   ;; (load-theme 'kman t)
   ;; (load-theme 'kanagawa t)
-  (load-theme 'doom-tokyo-night t)
+  ;; (load-theme 'doom-tokyo-night t)
   ;; (load-theme 'modus-vivendi t)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
@@ -402,10 +405,10 @@ The return value of `csetq' is the value of the last VAL.
   ;; FIX Add some padding to the right
   (doom-modeline-def-modeline 'main
     '(bar workspace-name window-number modals matches follow buffer-info
-      remote-host buffer-position word-count parrot selection-info)
+          remote-host buffer-position word-count parrot selection-info)
     '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug
-      repl lsp minor-modes input-method indent-info buffer-encoding major-mode
-      process vcs checker time "   ")))
+                  repl lsp minor-modes input-method indent-info buffer-encoding major-mode
+                  process vcs checker time "   ")))
 (setq evil-normal-state-tag   (propertize "[NORMAL]" 'face '((:background "lightgreen" :foreground "black")))
       evil-emacs-state-tag    (propertize "[EMACS]" 'face '((:background "yellow" :foreground "black")))
       evil-insert-state-tag   (propertize "[INSERT]" 'face '((:background "red") :foreground "white"))
@@ -432,41 +435,9 @@ The return value of `csetq' is the value of the last VAL.
                       (if (equal major-mode "dired-mode")
                           (dired-get-marked-files)
                         (list (buffer-file-name))))))
-   (mapc (lambda (file-path)
-           (find-file file-path))
-         (file-list))))
-
-(defun split-window-right-and-focus ()
-  "Spawn a new window right of the current one and focus it."
-  (interactive)
-  (split-window-right)
-  (windmove-right))
-
-(defun jd/eldoc-and-focus ()
-  "Spawn a new window right of the current one and focus it."
-  (interactive)
-  (eldoc-doc-buffer)
-  (windmove-right))
-
-(defun split-window-below-and-focus ()
-  "Spawn a new window below the current one and focus it."
-  (interactive)
-  (split-window-below)
-  (windmove-down))
-
-(defun split-window-right-and-open-point ()
-  "Spawn a new window right of the current one and focus it."
-  (interactive)
-  (split-window-right)
-  (org-open-at-point))
-
-
-(defun kill-buffer-and-delete-window ()
-  "Kill the current buffer and delete its window."
-  (interactive)
-  (progn
-    (kill-this-buffer)
-    (delete-window)))
+    (mapc (lambda (file-path)
+            (find-file file-path))
+          (file-list))))
 
 (defun add-all-to-list (list-var elements &optional append compare-fn)
   "Add ELEMENTS to the value of LIST-VAR if it isn’t there yet.
@@ -487,14 +458,14 @@ APPEND and COMPARE-FN, see `add-to-list'."
   (interactive)
   (scroll-up (/ (window-body-height) 2)))
 
-  (defun dqv/switch-to-previous-buffer ()
-    "Switch to previously open buffer.
+(defun dqv/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
         Repeated invocations toggle between the two most recently open buffers."
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer) 1)))
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
- (defun my-smarter-move-beginning-of-line (arg)
-   "Move point back to indentation of beginning of line.
+(defun my-smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
 
         Move point to the first non-whitespace character on this line.
         If point is already there, move to the beginning of the line.
@@ -503,20 +474,20 @@ APPEND and COMPARE-FN, see `add-to-list'."
 
         If ARG is not nil or 1, move forward ARG - 1 lines first.  If
         point reaches the beginning or end of the buffer, stop there."
-   (interactive "^p")
-   (setq arg (or arg 1))
+  (interactive "^p")
+  (setq arg (or arg 1))
 
-   ;; Move lines first
-   (when (/= arg 1)
-     (let ((line-move-visual nil))
-        (forward-line (1- arg))))
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
 
-   (let ((orig-point (point)))
-     (back-to-indentation)
-     (when (= orig-point (point))
-        (move-beginning-of-line 1))))
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
 
- ;; remap C-a to `smarter-move-beginning-of-line'
+;; remap C-a to `smarter-move-beginning-of-line'
 
 (defun dqv/goto-match-paren (arg)
   "Go to the matching if on (){}[], similar to vi style of % ."
@@ -526,7 +497,7 @@ APPEND and COMPARE-FN, see `add-to-list'."
         ((looking-at "[\]\)\}]") (forward-char) (evil-jump-item))
         ((looking-back "[\[\(\{]" 1) (backward-char) (evil-jump-item))
         (t nil)))
-  (global-set-key (kbd "s-;") #'dqv/goto-match-paren)
+(global-set-key (kbd "s-;") #'dqv/goto-match-paren)
 
 (defun dqv/delete-this-file (&optional trash)
   "Delete this file.
@@ -543,10 +514,10 @@ With a prefix argument, TRASH is nil."
         (kill-buffer (current-buffer)))
     (user-error "Current buffer is not visiting a file")))
 
-    (defun dqv/kill-other-buffers ()
-      "Kill all other buffers."
-      (interactive)
-      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+(defun dqv/kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
 (use-package which-key
   :straight (:build t)
@@ -637,25 +608,25 @@ With a prefix argument, TRASH is nil."
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-  (use-package evil-collection
-    :after evil
-    :straight (:build t)
-    :config
-    ;; jayden conversion
-    ;; (defun my/jd-rotate-evil-collection (_mode mode-keymaps &rest _rest)
-    ;;   (evil-collection-translate-key 'normal mode-keymaps
-    ;;     ;; jd ctsr is qwerty hjkl
-    ;;     "c" "h"
-    ;;     "t" "j"
-    ;;     "s" "k"
-    ;;     "r" "l"
-    ;;     ;; add back ctsr
-    ;;     "h" "c"
-    ;;     "j" "t"
-    ;;     "k" "s"
-    ;;     "l" "r"))
-    ;; (add-hook 'evil-collection-setup-hook #'my/jd-rotate-evil-collection)
-    (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :straight (:build t)
+  :config
+  ;; jayden conversion
+  ;; (defun my/jd-rotate-evil-collection (_mode mode-keymaps &rest _rest)
+  ;;   (evil-collection-translate-key 'normal mode-keymaps
+  ;;     ;; jd ctsr is qwerty hjkl
+  ;;     "c" "h"
+  ;;     "t" "j"
+  ;;     "s" "k"
+  ;;     "r" "l"
+  ;;     ;; add back ctsr
+  ;;     "h" "c"
+  ;;     "j" "t"
+  ;;     "k" "s"
+  ;;     "l" "r"))
+  ;; (add-hook 'evil-collection-setup-hook #'my/jd-rotate-evil-collection)
+  (evil-collection-init))
 
 (use-package undo-tree
   :defer t
@@ -704,290 +675,290 @@ With a prefix argument, TRASH is nil."
   :defer t
   :straight (:build t))
 
-  (use-package org
-    :straight t
-    :defer t
-    :commands (orgtbl-mode)
-    :hook (org-mode . visual-line-mode)
-           ;; (org-mode . org-num-mode))
-    :custom-face
-    (org-macro ((t (:foreground "#b48ead"))))
-    :init
-    (auto-fill-mode -1)
-    :config
-    (defhydra org-babel-transient ()
-      "
-    ^Navigate^                    ^Interact
-    ^^^^^^^^^^^------------------------------------------
-    [_j_/_k_] navigate src blocs  [_x_] execute src block
-    [_g_]^^   goto named block    [_'_] edit src block
-    [_z_]^^   recenter screen     [_q_] quit
+(use-package org
+  :straight t
+  :defer t
+  :commands (orgtbl-mode)
+  :hook (org-mode . visual-line-mode)
+  ;; (org-mode . org-num-mode))
+  :custom-face
+  (org-macro ((t (:foreground "#b48ead"))))
+  :init
+  (auto-fill-mode -1)
+  :config
+  (defhydra org-babel-transient ()
     "
-      ("q" nil :exit t)
-      ("j" org-babel-next-src-block)
-      ("k" org-babel-previous-src-block)
-      ("g" org-babel-goto-named-src-block)
-      ("z" recenter-top-bottom)
-      ("x" org-babel-execute-maybe)
-      ("'" org-edit-special :exit t))
-    (require 'ox-beamer)
-    (require 'org-protocol)
-    (setq org-hide-leading-stars             nil
-          org-hide-macro-markers             t
-          org-ellipsis                       " ⤵"
-          org-image-actual-width             1200
-          org-image-actual-height            1000
-          org-redisplay-inline-images        t
-          org-display-inline-images          t
-          org-startup-with-inline-images     "inlineimages"
-          org-pretty-entities                t
-          org-fontify-whole-heading-line     t
-          org-fontify-done-headline          t
-          org-fontify-quote-and-verse-blocks t
-          org-startup-indented               t
-          org-startup-align-all-tables       t
-          org-use-property-inheritance       t
-          org-list-allow-alphabetical        t
-          org-M-RET-may-split-line           nil
-          org-src-window-setup               'split-window-right
-          org-src-fontify-natively           t
-          org-src-tab-acts-natively          t
-          org-src-preserve-indentation       t
-          org-log-done                       'time
-          org-directory                      "~/Dropbox/Org"
-          org-default-notes-file             (expand-file-name "notes.org" org-directory))
-    (with-eval-after-load 'oc
-     (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
-    (setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
-    (add-hook 'org-mode-hook (lambda ()
-                               (interactive)
-                               (electric-indent-local-mode -1)))
-    (defvar org-personal-file "~/Dropbox/Org/Personal.org")
-    (defvar org-vocabulary-file "~/Dropbox/Org/Vocabulary.org")
-    (setq org-capture-templates
-          '(
-            ("p" "Personal" entry
-              (file+headline org-personal-file "Personal")
-              (file "~/.emacs.d/capture/schedule.orgcaptmpl"))
-            ("v" "Vocabulary")))
-    (defun org-emphasize-bold ()
-      "Emphasize as bold the current region."
-      (interactive)
-      (org-emphasize 42))
-    (defun org-emphasize-italic ()
-      "Emphasize as italic the current region."
-      (interactive)
-      (org-emphasize 47))
-    (defun org-emphasize-underline ()
-      "Emphasize as underline the current region."
-      (interactive)
-      (org-emphasize 95))
-    (defun org-emphasize-verbatim ()
-      "Emphasize as verbatim the current region."
-      (interactive)
-      (org-emphasize 61))
-    (defun org-emphasize-code ()
-      "Emphasize as code the current region."
-      (interactive)
-      (org-emphasize 126))
-    (defun org-emphasize-strike-through ()
-      "Emphasize as strike-through the current region."
-      (interactive)
-      (org-emphasize 43))
-    
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((C . t)
-       (emacs-lisp . t)
-       (gnuplot . t)
-       (latex . t)
-       (makefile . t)
-       (restclient . t)
-       (js . t)
-       (plantuml . t)
-       (python . t)
-       (sass . t)
-       (shell . t)
-       (sql . t)))
-    (setq org-use-sub-superscripts (quote {}))
-    (setq org-latex-compiler "xelatex")
-    (require 'engrave-faces)
-    (csetq org-latex-src-block-backend 'engraved)
-    (dolist (package '(("AUTO" "inputenc" t ("pdflatex"))
-                       ("T1"   "fontenc"  t ("pdflatex"))
-                       (""     "grffile"  t)))
-      (delete package org-latex-default-packages-alist))
-    
-    (dolist (package '(("capitalize" "cleveref")
-                       (""           "booktabs")
-                       (""           "tabularx")))
-      (add-to-list 'org-latex-default-packages-alist package t))
-    
-    (setq org-latex-reference-command "\\cref{%s}")
-    (setq org-export-latex-hyperref-format "\\ref{%s}")
-    ;; (setq org-latex-pdf-process
-    ;;       '("tectonic -Z shell-escape --synctex --outdir=%o %f"))
-    (setq org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                "%bibtex -output-directory %o %f"
-                "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
-          org-latex-remove-logfiles t
-          org-latex-logfiles-extensions '("aux" "bcf" "blg" "fdb_latexmk" "fls"
-                  "figlist" "idx" "log" "nav" "out" "ptc"
-                  "run.xml" "snm" "toc" "vrb" "xdv"))
-    (dolist (ext '("bbl" "lot"))
-      (add-to-list 'org-latex-logfiles-extensions ext t))
-    (use-package org-re-reveal
-      :defer t
-      :after org
-      :straight (:build t)
-      :init
-      (add-hook 'org-mode-hook (lambda () (require 'org-re-reveal)))
-      :config
-      (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
-            org-re-reveal-revealjs-version "4"))
-    (setq org-html-validation-link nil)
-    (eval-after-load "ox-latex"
-      '(progn
-         (add-to-list 'org-latex-classes
-                      '("conlang"
-                        "\\documentclass{book}"
-                        ("\\chapter{%s}" . "\\chapter*{%s}")
-                        ("\\section{%s}" . "\\section*{%s}")
-                        ("\\subsection{%s}" . "\\subsection*{%s}")
-                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-         (add-to-list 'org-latex-classes
-                      `("beamer"
-                        ,(concat "\\documentclass[presentation]{beamer}\n"
-                                 "[DEFAULT-PACKAGES]"
-                                 "[PACKAGES]"
-                                 "[EXTRA]\n")
-                        ("\\section{%s}" . "\\section*{%s}")
-                        ("\\subsection{%s}" . "\\subsection*{%s}")
-                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
-    
-    
-    (setq org-publish-project-alist
-          `(
-            
-            
-            
-            
-            
-            
-            ))
-    :general
-    (dqv/evil
-      :keymaps 'org-mode-map
-      :packages 'org
-      "RET" 'org-open-at-point)
-    (dqv/major-leader-key
-      :keymaps 'org-mode-map
-      :packages 'org
-      ;; Various
-      "RET" #'org-ctrl-c-ret
-      "*" #'org-ctrl-c-star
-      "'" #'org-edit-special
-      "-" #'org-ctrl-c-minus
-      "a" #'org-agenda
-      "c" #'org-capture
-      "C" #'org-columns
-      "e" #'org-export-dispatch
-      "l" #'org-store-link
-      "p" #'org-priority
-      "r" #'org-reload
-      ;; Babels
-      "b" '(:ignore t :which-key "babel")
-      "b." #'org-babel-transient/body
-      "bb" #'org-babel-execute-buffer
-      "bc" #'org-babel-check-src-block
-      "bC" #'org-babel-tangle-clean
-      "be" #'org-babel-execute-maybe
-      "bf" #'org-babel-tangle-file
-      "bn" #'org-babel-next-src-block
-      "bo" #'org-babel-open-src-block-result
-      "bp" #'org-babel-previous-src-block
-      "br" #'org-babel-remove-result-one-or-many
-      "bR" #'org-babel-goto-named-result
-      "bt" #'org-babel-tangle
-      "bi" #'org-babel-view-src-block-info
-      ;; Dates
-      "d" '(:ignore t :which-key "Dates")
-      "dd" #'org-deadline
-      "ds" #'org-schedule
-      "dt" #'org-time-stamp
-      "dT" #'org-time-stramp-inactive
-      ;; Insert
-      "i" '(:ignore t :which-key "Insert")
-      "ib" #'org-insert-structure-template
-      "id" #'org-insert-drawer
-      "ie" '(:ignore t :which-key "Emphasis")
-      "ieb" #'org-emphasize-bold
-      "iec" #'org-emphasize-code
-      "iei" #'org-emphasize-italic
-      "ies" #'org-emphasize-strike-through
-      "ieu" #'org-emphasize-underline
-      "iev" #'org-emphasize-verbatim
-      "iE" #'org-set-effort
-      "if" #'org-footnote-new
-      "ih" #'org-insert-heading
-      "iH" #'counsel-org-link
-      "ii" #'org-insert-item
-      "il" #'org-insert-link
-      "in" #'org-add-note
-      "ip" #'org-set-property
-      "is" #'org-insert-subheading
-      "it" #'org-set-tags-command
-      ;; Tables
-      "t" '(:ignore t :which-key "Table")
-      "th" #'org-table-move-column-left
-      "tj" #'org-table-move-row-down
-      "tk" #'org-table-move-row-up
-      "tl" #'org-table-move-column-right
-      "ta" #'org-table-align
-      "te" #'org-table-eval-formula
-      "tf" #'org-table-field-info
-      "tF" #'org-table-edit-formulas
-      "th" #'org-table-convert
-      "tl" #'org-table-recalculate
-      "tp" #'org-plot/gnuplot
-      "tS" #'org-table-sort-lines
-      "tw" #'org-table-wrap-region
-      "tx" #'org-table-shrink
-      "tN" #'org-table-create-with-table.el
-      "td" '(:ignore t :which-key "Delete")
-      "tdc" #'org-table-delete-column
-      "tdr" #'org-table-kill-row
-      "ti" '(:ignore t :which-key "Insert")
-      "tic" #'org-table-insert-column
-      "tih" #'org-table-insert-hline
-      "tir" #'org-table-insert-row
-      "tiH" #'org-table-hline-and-move
-      "tt" '(:ignore t :which-key "Toggle")
-      "ttf" #'org-table-toggle-formula-debugger
-      "tto" #'org-table-toggle-coordinate-overlays
-      ;; Toggle
-      "T" '(:ignore t :which-key "Toggle")
-      "Tc" #'org-toggle-checkbox
-      "Ti" #'org-toggle-inline-images
-      "Tl" #'org-latex-preview
-      "Tn" #'org-num-mode
-      "Ts" #'dqv/toggle-org-src-window-split
-      "Tt" #'org-show-todo-tree
-      "<SPC>" #'org-todo
-      )
+  ^Navigate^                    ^Interact
+  ^^^^^^^^^^^------------------------------------------
+  [_j_/_k_] navigate src blocs  [_x_] execute src block
+  [_g_]^^   goto named block    [_'_] edit src block
+  [_z_]^^   recenter screen     [_q_] quit
+  "
+    ("q" nil :exit t)
+    ("j" org-babel-next-src-block)
+    ("k" org-babel-previous-src-block)
+    ("g" org-babel-goto-named-src-block)
+    ("z" recenter-top-bottom)
+    ("x" org-babel-execute-maybe)
+    ("'" org-edit-special :exit t))
+  (require 'ox-beamer)
+  (require 'org-protocol)
+  (setq org-hide-leading-stars             nil
+        org-hide-macro-markers             t
+        org-ellipsis                       " ⤵"
+        org-image-actual-width             1200
+        org-image-actual-height            1000
+        org-redisplay-inline-images        t
+        org-display-inline-images          t
+        org-startup-with-inline-images     "inlineimages"
+        org-pretty-entities                t
+        org-fontify-whole-heading-line     t
+        org-fontify-done-headline          t
+        org-fontify-quote-and-verse-blocks t
+        org-startup-indented               t
+        org-startup-align-all-tables       t
+        org-use-property-inheritance       t
+        org-list-allow-alphabetical        t
+        org-M-RET-may-split-line           nil
+        org-src-window-setup               'split-window-right
+        org-src-fontify-natively           t
+        org-src-tab-acts-natively          t
+        org-src-preserve-indentation       t
+        org-log-done                       'time
+        org-directory                      "~/Dropbox/Org"
+        org-default-notes-file             (expand-file-name "notes.org" org-directory))
+  (with-eval-after-load 'oc
+    (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
+  (setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
+  (add-hook 'org-mode-hook (lambda ()
+                             (interactive)
+                             (electric-indent-local-mode -1)))
+  (defvar org-personal-file "~/Dropbox/Org/Personal.org")
+  (defvar org-vocabulary-file "~/Dropbox/Org/Vocabulary.org")
+  (setq org-capture-templates
+        '(
+          ("p" "Personal" entry
+            (file+headline org-personal-file "Personal")
+            (file "~/.emacs.d/capture/schedule.orgcaptmpl"))
+          ("v" "Vocabulary")))
+  (defun org-emphasize-bold ()
+    "Emphasize as bold the current region."
+    (interactive)
+    (org-emphasize 42))
+  (defun org-emphasize-italic ()
+    "Emphasize as italic the current region."
+    (interactive)
+    (org-emphasize 47))
+  (defun org-emphasize-underline ()
+    "Emphasize as underline the current region."
+    (interactive)
+    (org-emphasize 95))
+  (defun org-emphasize-verbatim ()
+    "Emphasize as verbatim the current region."
+    (interactive)
+    (org-emphasize 61))
+  (defun org-emphasize-code ()
+    "Emphasize as code the current region."
+    (interactive)
+    (org-emphasize 126))
+  (defun org-emphasize-strike-through ()
+    "Emphasize as strike-through the current region."
+    (interactive)
+    (org-emphasize 43))
+  
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t)
+     (emacs-lisp . t)
+     (gnuplot . t)
+     (latex . t)
+     (makefile . t)
+     (restclient . t)
+     (js . t)
+     (plantuml . t)
+     (python . t)
+     (sass . t)
+     (shell . t)
+     (sql . t)))
+  (setq org-use-sub-superscripts (quote {}))
+  (setq org-latex-compiler "xelatex")
+  (require 'engrave-faces)
+  (csetq org-latex-src-block-backend 'engraved)
+  (dolist (package '(("AUTO" "inputenc" t ("pdflatex"))
+                     ("T1"   "fontenc"  t ("pdflatex"))
+                     (""     "grffile"  t)))
+    (delete package org-latex-default-packages-alist))
+  
+  (dolist (package '(("capitalize" "cleveref")
+                     (""           "booktabs")
+                     (""           "tabularx")))
+    (add-to-list 'org-latex-default-packages-alist package t))
+  
+  (setq org-latex-reference-command "\\cref{%s}")
+  (setq org-export-latex-hyperref-format "\\ref{%s}")
+  ;; (setq org-latex-pdf-process
+  ;;       '("tectonic -Z shell-escape --synctex --outdir=%o %f"))
+  (setq org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                "%bibtex -output-directory %o %f"
+                                "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
+        org-latex-remove-logfiles t
+        org-latex-logfiles-extensions '("aux" "bcf" "blg" "fdb_latexmk" "fls"
+                                        "figlist" "idx" "log" "nav" "out" "ptc"
+                                        "run.xml" "snm" "toc" "vrb" "xdv"))
+  (dolist (ext '("bbl" "lot"))
+    (add-to-list 'org-latex-logfiles-extensions ext t))
+  (use-package org-re-reveal
+    :defer t
+    :after org
+    :straight (:build t)
+    :init
+    (add-hook 'org-mode-hook (lambda () (require 'org-re-reveal)))
+    :config
+    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+          org-re-reveal-revealjs-version "4"))
+  (setq org-html-validation-link nil)
+  (eval-after-load "ox-latex"
+    '(progn
+       (add-to-list 'org-latex-classes
+                    '("conlang"
+                      "\\documentclass{book}"
+                      ("\\chapter{%s}" . "\\chapter*{%s}")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+       (add-to-list 'org-latex-classes
+                    `("beamer"
+                      ,(concat "\\documentclass[presentation]{beamer}\n"
+                               "[DEFAULT-PACKAGES]"
+                               "[PACKAGES]"
+                               "[EXTRA]\n")
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
+  
+  
+  (setq org-publish-project-alist
+        `(
+          
+          
+          
+          
+          
+          
+          ))
+  :general
+  (dqv/evil
+    :keymaps 'org-mode-map
+    :packages 'org
+    "RET" 'org-open-at-point)
+  (dqv/major-leader-key
+    :keymaps 'org-mode-map
+    :packages 'org
+    ;; Various
+    "RET" #'org-ctrl-c-ret
+    "*" #'org-ctrl-c-star
+    "'" #'org-edit-special
+    "-" #'org-ctrl-c-minus
+    "a" #'org-agenda
+    "c" #'org-capture
+    "C" #'org-columns
+    "e" #'org-export-dispatch
+    "l" #'org-store-link
+    "p" #'org-priority
+    "r" #'org-reload
+    ;; Babels
+    "b" '(:ignore t :which-key "babel")
+    "b." #'org-babel-transient/body
+    "bb" #'org-babel-execute-buffer
+    "bc" #'org-babel-check-src-block
+    "bC" #'org-babel-tangle-clean
+    "be" #'org-babel-execute-maybe
+    "bf" #'org-babel-tangle-file
+    "bn" #'org-babel-next-src-block
+    "bo" #'org-babel-open-src-block-result
+    "bp" #'org-babel-previous-src-block
+    "br" #'org-babel-remove-result-one-or-many
+    "bR" #'org-babel-goto-named-result
+    "bt" #'org-babel-tangle
+    "bi" #'org-babel-view-src-block-info
+    ;; Dates
+    "d" '(:ignore t :which-key "Dates")
+    "dd" #'org-deadline
+    "ds" #'org-schedule
+    "dt" #'org-time-stamp
+    "dT" #'org-time-stramp-inactive
+    ;; Insert
+    "i" '(:ignore t :which-key "Insert")
+    "ib" #'org-insert-structure-template
+    "id" #'org-insert-drawer
+    "ie" '(:ignore t :which-key "Emphasis")
+    "ieb" #'org-emphasize-bold
+    "iec" #'org-emphasize-code
+    "iei" #'org-emphasize-italic
+    "ies" #'org-emphasize-strike-through
+    "ieu" #'org-emphasize-underline
+    "iev" #'org-emphasize-verbatim
+    "iE" #'org-set-effort
+    "if" #'org-footnote-new
+    "ih" #'org-insert-heading
+    "iH" #'counsel-org-link
+    "ii" #'org-insert-item
+    "il" #'org-insert-link
+    "in" #'org-add-note
+    "ip" #'org-set-property
+    "is" #'org-insert-subheading
+    "it" #'org-set-tags-command
+    ;; Tables
+    "t" '(:ignore t :which-key "Table")
+    "th" #'org-table-move-column-left
+    "tj" #'org-table-move-row-down
+    "tk" #'org-table-move-row-up
+    "tl" #'org-table-move-column-right
+    "ta" #'org-table-align
+    "te" #'org-table-eval-formula
+    "tf" #'org-table-field-info
+    "tF" #'org-table-edit-formulas
+    "th" #'org-table-convert
+    "tl" #'org-table-recalculate
+    "tp" #'org-plot/gnuplot
+    "tS" #'org-table-sort-lines
+    "tw" #'org-table-wrap-region
+    "tx" #'org-table-shrink
+    "tN" #'org-table-create-with-table.el
+    "td" '(:ignore t :which-key "Delete")
+    "tdc" #'org-table-delete-column
+    "tdr" #'org-table-kill-row
+    "ti" '(:ignore t :which-key "Insert")
+    "tic" #'org-table-insert-column
+    "tih" #'org-table-insert-hline
+    "tir" #'org-table-insert-row
+    "tiH" #'org-table-hline-and-move
+    "tt" '(:ignore t :which-key "Toggle")
+    "ttf" #'org-table-toggle-formula-debugger
+    "tto" #'org-table-toggle-coordinate-overlays
+    ;; Toggle
+    "T" '(:ignore t :which-key "Toggle")
+    "Tc" #'org-toggle-checkbox
+    "Ti" #'org-toggle-inline-images
+    "Tl" #'org-latex-preview
+    "Tn" #'org-num-mode
+    "Ts" #'dqv/toggle-org-src-window-split
+    "Tt" #'org-show-todo-tree
+    "<SPC>" #'org-todo
+    )
 
 
-    (dqv/leader-key
-      :packages 'org
-      :infix "o"
-      ""  '(:ignore t :which-key "org")
-      "c" #'org-capture)
-    (dqv/major-leader-key
-      :packages 'org
-      :keymaps 'org-src-mode-map
-      "'" #'org-edit-src-exit
-      "k" #'org-edit-src-abort))
+  (dqv/leader-key
+    :packages 'org
+    :infix "o"
+    ""  '(:ignore t :which-key "org")
+    "c" #'org-capture)
+  (dqv/major-leader-key
+    :packages 'org
+    :keymaps 'org-src-mode-map
+    "'" #'org-edit-src-exit
+    "k" #'org-edit-src-abort))
 
 (defun dqv/my-open-urls-in-region (beg end)
   "Open URLs between BEG and END.
@@ -1002,19 +973,19 @@ With a prefix argument, TRASH is nil."
           (backward-char)
           (org-open-at-point))))))
 
-  (use-package evil-org
-    :straight (:build t)
-    :after (org)
-    :hook (org-mode . evil-org-mode)
-    :config
-    (setq-default evil-org-movement-bindings
-                  '((up    . "k")
-                    (down  . "j")
-                    (left  . "h")
-                    (right . "l")))
-    (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
+(use-package evil-org
+  :straight (:build t)
+  :after (org)
+  :hook (org-mode . evil-org-mode)
+  :config
+  (setq-default evil-org-movement-bindings
+                '((up    . "k")
+                  (down  . "j")
+                  (left  . "h")
+                  (right . "l")))
+  (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package org-contrib
   :after (org)
@@ -1090,13 +1061,13 @@ the value `split-window-right', then it will be changed to
                                    :repo "jakebox/preview-org-html-mode")
   :general
   (dqv/major-leader-key
-   :keymaps 'org-mode-map
-   :packages 'preview-org-html-mode
-   :infix "P"
-   ""  '(:ignore t :which-key "preview")
-   "h" #'preview-org-html-mode
-   "r" #'preview-org-html-refresh
-   "p" #'preview-org-html-pop-window-to-frame)
+    :keymaps 'org-mode-map
+    :packages 'preview-org-html-mode
+    :infix "P"
+    ""  '(:ignore t :which-key "preview")
+    "h" #'preview-org-html-mode
+    "r" #'preview-org-html-refresh
+    "p" #'preview-org-html-pop-window-to-frame)
   :config
   (setq preview-org-html-refresh-configuration 'save))
 
@@ -1167,7 +1138,7 @@ the value `split-window-right', then it will be changed to
 (use-package reftex
   :commands turn-on-reftex
   :config (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
-              reftex-plug-into-AUCTeX     t))
+                reftex-plug-into-AUCTeX     t))
 
 (use-package org-ref
   ;; :after (org ox-bibtex pdf-tools)
@@ -1191,39 +1162,39 @@ the value `split-window-right', then it will be changed to
         bibtex-completion-notes-symbol "✎")
   :general
   (dqv/evil
-   :keymaps 'bibtex-mode-map
-   :packages 'org-ref
-   "C-j" #'org-ref-bibtex-next-entry
-   "C-k" #'org-ref-bibtex-previous-entry
-   "gj"  #'org-ref-bibtex-next-entry
-   "gk"  #'org-ref-bibtex-previous-entry)
+    :keymaps 'bibtex-mode-map
+    :packages 'org-ref
+    "C-j" #'org-ref-bibtex-next-entry
+    "C-k" #'org-ref-bibtex-previous-entry
+    "gj"  #'org-ref-bibtex-next-entry
+    "gk"  #'org-ref-bibtex-previous-entry)
   (dqv/major-leader-key
-   :keymaps '(bibtex-mode-map)
-   :packages 'org-ref
-   ;; Navigation
-   "j" #'org-ref-bibtex-next-entry
-   "k" #'org-ref-bibtex-previous-entry
+    :keymaps '(bibtex-mode-map)
+    :packages 'org-ref
+    ;; Navigation
+    "j" #'org-ref-bibtex-next-entry
+    "k" #'org-ref-bibtex-previous-entry
 
-   ;; Open
-   "b" #'org-ref-open-in-browser
-   "n" #'org-ref-open-bibtex-notes
-   "p" #'org-ref-open-bibtex-pdf
+    ;; Open
+    "b" #'org-ref-open-in-browser
+    "n" #'org-ref-open-bibtex-notes
+    "p" #'org-ref-open-bibtex-pdf
 
-   ;; Misc
-   "h" #'org-ref-bibtex-hydra/body
-   "i" #'org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
-   "s" #'org-ref-sort-bibtex-entry
+    ;; Misc
+    "h" #'org-ref-bibtex-hydra/body
+    "i" #'org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
+    "s" #'org-ref-sort-bibtex-entry
 
-   "l" '(:ignore t :which-key "lookup")
-   "la" #'arxiv-add-bibtex-entry
-   "lA" #'arxiv-get-pdf-add-bibtex-entry
-   "ld" #'doi-utils-add-bibtex-entry-from-doi
-   "li" #'isbn-to-bibtex
-   "lp" #'pubmed-insert-bibtex-from-pmid)
+    "l" '(:ignore t :which-key "lookup")
+    "la" #'arxiv-add-bibtex-entry
+    "lA" #'arxiv-get-pdf-add-bibtex-entry
+    "ld" #'doi-utils-add-bibtex-entry-from-doi
+    "li" #'isbn-to-bibtex
+    "lp" #'pubmed-insert-bibtex-from-pmid)
   (dqv/major-leader-key
-   :keymaps 'org-mode-map
-   :pakages 'org-ref
-   "ic" #'org-ref-insert-link))
+    :keymaps 'org-mode-map
+    :pakages 'org-ref
+    "ic" #'org-ref-insert-link))
 
 (use-package ivy-bibtex
   :defer t
@@ -1429,7 +1400,7 @@ the value `split-window-right', then it will be changed to
 (defun my-org-gcal-set-effort (_calendar-id event _update-mode)
   "Set Effort property based on EVENT if not already set."
   (when-let* ((stime (plist-get (plist-get event :start)
-                           :dateTime))
+                                :dateTime))
               (etime (plist-get (plist-get event :end)
                                 :dateTime))
               (diff (float-time
@@ -1478,26 +1449,26 @@ the value `split-window-right', then it will be changed to
 (setq appt-time-msg-list nil)    ;; clear existing appt list
 (setq appt-display-interval '10)  ;; warn every 10 minutes from t - appt-message-warning-time
 (setq
-  appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
-  appt-display-mode-line t     ;; don't show in the modeline
-  appt-display-format 'window)   ;; pass warnings to the designated window function
+ appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
+ appt-display-mode-line t     ;; don't show in the modeline
+ appt-display-format 'window)   ;; pass warnings to the designated window function
 
 
 (defun dqv/send-notification (title msg)
   (let ((notifier-path (executable-find "terminal-notifier")))
-       (start-process
-           "Appointment Alert"
-           "*Appointment Alert*" ; use `nil` to not capture output; this captures output in background
-           notifier-path
-           "-message" msg
-           "-title" title
-           "-sender" "org.gnu.Emacs"
-           "-activate" "org.gnu.Emacs")))
+    (start-process
+     "Appointment Alert"
+     "*Appointment Alert*" ; use `nil` to not capture output; this captures output in background
+     notifier-path
+     "-message" msg
+     "-title" title
+     "-sender" "org.gnu.Emacs"
+     "-activate" "org.gnu.Emacs")))
 
 (defun dqv/appt-display-native (min-to-app new-time msg)
   (dqv/send-notification
-    (format "Appointment in %s minutes" min-to-app) ; Title
-    (format "%s" msg)))                             ; Message/detail text
+   (format "Appointment in %s minutes" min-to-app) ; Title
+   (format "%s" msg)))                             ; Message/detail text
 
 (setq appt-disp-window-function (function dqv/appt-display-native))
 
@@ -1802,20 +1773,20 @@ the value `split-window-right', then it will be changed to
       "s" #'magit-stage))
   :general
   (:keymaps '(git-rebase-mode-map)
-   :packages 'magit
-   "C-j" #'evil-next-line
-   "C-k" #'evil-previous-line)
-  (dqv/major-leader-key
-    :keymaps 'git-rebase-mode-map
-    :packages 'magit
-    "," #'with-editor-finish
-    "k" #'with-editor-cancel
-    "a" #'with-editor-cancel)
-  (dqv/major-leader-key
-    :packages 'magit
-    "," #'with-editor-finish
-    "k" #'with-editor-cancel
-    "a" #'with-editor-cancel)
+            :packages 'magit
+            "C-j" #'evil-next-line
+            "C-k" #'evil-previous-line)
+  ;; (dqv/major-leader-key
+  ;;   :keymaps 'git-rebase-mode-map
+  ;;   :packages 'magit
+  ;;   "," #'with-editor-finish
+  ;;   "k" #'with-editor-cancel
+  ;;   "a" #'with-editor-cancel)
+  ;; (dqv/major-leader-key
+  ;;   :packages 'magit
+  ;;   "," #'with-editor-finish
+  ;;   "k" #'with-editor-cancel
+  ;;   "a" #'with-editor-cancel)
   (dqv/leader-key
     :infix   "g"
     :packages 'magit
@@ -1852,17 +1823,17 @@ the value `split-window-right', then it will be changed to
   :after (magit hl-todo)
   :init
   (with-eval-after-load 'magit
-   (defun my/magit-todos-if-not-yadm ()
-     "Deactivate magit-todos if in yadm Tramp connection.
+    (defun my/magit-todos-if-not-yadm ()
+      "Deactivate magit-todos if in yadm Tramp connection.
 If `magit--default-directory' points to a yadm Tramp directory,
 deactivate `magit-todos-mode', otherwise enable it."
-     (if (string-prefix-p "/yadm:" magit--default-directory)
-         (magit-todos-mode -1)
-       (magit-todos-mode +1)))
-   (add-hook 'magit-mode-hook #'my/magit-todos-if-not-yadm))
+      (if (string-prefix-p "/yadm:" magit--default-directory)
+          (magit-todos-mode -1)
+        (magit-todos-mode +1)))
+    (add-hook 'magit-mode-hook #'my/magit-todos-if-not-yadm))
   :config
   (csetq magit-todos-ignore-case t)
-(setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:"))
+  (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:"))
 
 (use-package magit-gitflow
   :defer t
@@ -1905,37 +1876,37 @@ deactivate `magit-todos-mode', otherwise enable it."
   :straight (:build t)
   :bind (("C-x v m" . git-messenger:popup-message)))
 
- (defun buffer-insert-at-end (string)
-    "Insert STRING at the maximal point in a buffer."
-    (save-excursion
-      (goto-char (point-max))
-      (end-of-line)
-      (insert ?\n string)
-      (unless (string-suffix-p "\n" string)
-        (insert ?\n))))
+(defun buffer-insert-at-end (string)
+  "Insert STRING at the maximal point in a buffer."
+  (save-excursion
+    (goto-char (point-max))
+    (end-of-line)
+    (insert ?\n string)
+    (unless (string-suffix-p "\n" string)
+      (insert ?\n))))
 
-  (defun get-knuth-number-from-string (string)
-    "Return KNUTH issue number from STRING.
+(defun get-knuth-number-from-string (string)
+  "Return KNUTH issue number from STRING.
   Return nil if STRING does not contain a KNUTH issue.
   STRING may be nil."
-    (if (and string (string-match "\\(KNUTH-[[:digit:]]\+\\)" string))
-        (match-string 1 string)
-      nil))
+  (if (and string (string-match "\\(KNUTH-[[:digit:]]\+\\)" string))
+      (match-string 1 string)
+    nil))
 
-  (defun insert-knuth-ticket-number-from-branch ()
-    "If we're on a KNUTH feature branch, insert the ticket number."
-    (interactive)
-    (let ((knuth (get-knuth-number-from-string (magit-get-current-branch))))
-      (if (and knuth (not (buffer-line-matches-p (concat "^" knuth)))) (buffer-insert-at-end knuth))))
+(defun insert-knuth-ticket-number-from-branch ()
+  "If we're on a KNUTH feature branch, insert the ticket number."
+  (interactive)
+  (let ((knuth (get-knuth-number-from-string (magit-get-current-branch))))
+    (if (and knuth (not (buffer-line-matches-p (concat "^" knuth)))) (buffer-insert-at-end knuth))))
 
-  (defun buffer-line-matches-p (needle)
-    "Return t if the last line matches NEEDLE.
+(defun buffer-line-matches-p (needle)
+  "Return t if the last line matches NEEDLE.
   Ignores comments"
-    (save-excursion
-      (goto-char 0)
-      (search-forward-regexp needle nil 'noerror)))
+  (save-excursion
+    (goto-char 0)
+    (search-forward-regexp needle nil 'noerror)))
 
-  (add-hook 'git-commit-setup-hook 'insert-knuth-ticket-number-from-branch)
+(add-hook 'git-commit-setup-hook 'insert-knuth-ticket-number-from-branch)
 
 (defun my-magit-stage-all-and-commit (message)
   (interactive (list (progn (magit-diff-unstaged) (read-string "Commit Message: "))))
@@ -1949,9 +1920,9 @@ deactivate `magit-todos-mode', otherwise enable it."
  if called with a prefix argument. Sets `my-magit-limit-to-directory'
  so that it's still active even after you stage a change. Very experimental."
   (interactive (list (expand-file-name
-                        (if current-prefix-arg
-                            (read-directory-name "Directory: ")
-                          default-directory))))
+                      (if current-prefix-arg
+                          (read-directory-name "Directory: ")
+                        default-directory))))
   (setq my-magit-limit-to-directory directory)
   (magit-status directory))
 
@@ -2031,8 +2002,8 @@ deactivate `magit-todos-mode', otherwise enable it."
   :straight t
   :general
   (dqv/leader-key
-   "ot" '(+popwin:vterm :which-key "vTerm popup")
-   "oT" '(vterm :which-key "vTerm"))
+    "ot" '(+popwin:vterm :which-key "vTerm popup")
+    "oT" '(vterm :which-key "vTerm"))
   :preface
   (when noninteractive
     (advice-add #'vterm-module-compile :override #'ignore)
@@ -2153,103 +2124,103 @@ deactivate `magit-todos-mode', otherwise enable it."
               ;; ("C-p" . maple-iedit-match-previous)
               ("C-t" . maple-iedit-skip-and-match-next)))
 
-  (use-package engine-mode
-    :config
-    (engine/set-keymap-prefix (kbd "C-c s"))
-    (setq browse-url-browser-function 'browse-url-default-macosx-browser
-          engine/browser-function 'browse-url-default-macosx-browser)
+(use-package engine-mode
+  :config
+  (engine/set-keymap-prefix (kbd "C-c s"))
+  (setq browse-url-browser-function 'browse-url-default-macosx-browser
+        engine/browser-function 'browse-url-default-macosx-browser)
 
-    (defengine duckduckgo
-      "https://duckduckgo.com/?q=%s"
-      :keybinding "d")
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
 
-    (defengine github
-      "https://github.com/search?ref=simplesearch&q=%s"
-      :keybinding "1")
+  (defengine github
+    "https://github.com/search?ref=simplesearch&q=%s"
+    :keybinding "1")
 
-    (defengine npm
-      "https://www.npmjs.com/search?q=%s"
-      :keybinding "n")
+  (defengine npm
+    "https://www.npmjs.com/search?q=%s"
+    :keybinding "n")
 
-    (defengine crates
-      "https://crates.io/search?q=%s"
-      :keybinding "c")
+  (defengine crates
+    "https://crates.io/search?q=%s"
+    :keybinding "c")
 
-    (defengine localhost
-      "http://localhost:%s"
-      :keybinding "l")
+  (defengine localhost
+    "http://localhost:%s"
+    :keybinding "l")
 
-    (defengine vocabulary
-      "https://www.vocabulary.com/dictionary/%s"
-      :keybinding "t")
+  (defengine vocabulary
+    "https://www.vocabulary.com/dictionary/%s"
+    :keybinding "t")
 
-    (defengine translate
-      "https://translate.google.com/?hl=vi&sl=en&tl=vi&text=%s&op=translate"
-      :keybinding "T")
+  (defengine translate
+    "https://translate.google.com/?hl=vi&sl=en&tl=vi&text=%s&op=translate"
+    :keybinding "T")
 
-    (defengine youtube
-      "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
-      :keybinding "y")
+  (defengine youtube
+    "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
+    :keybinding "y")
 
-    (defengine google
-      "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
-      :keybinding "g")
+  (defengine google
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+    :keybinding "g")
 
-    (defengine sui-localnet
-      "https://suiexplorer.com/txblock/%s?network=local"
-      :keybinding "s l")
+  (defengine sui-localnet
+    "https://suiexplorer.com/txblock/%s?network=local"
+    :keybinding "s l")
 
-    (defengine sui-devnnet
-      "https://suiexplorer.com/txblock/%s?network=devnet"
-      :keybinding "s d")
+  (defengine sui-devnnet
+    "https://suiexplorer.com/txblock/%s?network=devnet"
+    :keybinding "s d")
 
-    (defengine sui-mainnet
-      "https://suiexplorer.com/txblock/%s?network=mainnet"
-      :keybinding "s m")
+  (defengine sui-mainnet
+    "https://suiexplorer.com/txblock/%s?network=mainnet"
+    :keybinding "s m")
 
-    (engine-mode 1))
+  (engine-mode 1))
 
-  (use-package bm
-    :demand t
-    :init
-    ;; restore on load (even before you require bm)
-    (setq bm-restore-repository-on-load t)
+(use-package bm
+  :demand t
+  :init
+  ;; restore on load (even before you require bm)
+  (setq bm-restore-repository-on-load t)
 
-    :config
-    ;; Allow cross-buffer 'next'
-    (setq bm-cycle-all-buffers t
+  :config
+  ;; Allow cross-buffer 'next'
+  (setq bm-cycle-all-buffers t
 
-          ;; where to store persistant files
-          bm-repository-file "~/.emacs.d/bm-repository")
+        ;; where to store persistant files
+        bm-repository-file "~/.emacs.d/bm-repository")
 
-    ;; save bookmarks
-    (setq-default bm-buffer-persistence t)
+  ;; save bookmarks
+  (setq-default bm-buffer-persistence t)
 
-    ;; Loading the repository from file when on start up.
-    (add-hook 'after-init-hook 'bm-repository-load)
+  ;; Loading the repository from file when on start up.
+  (add-hook 'after-init-hook 'bm-repository-load)
 
-    ;; Saving bookmarks
-    (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  ;; Saving bookmarks
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
 
-    ;; must save all bookmarks first.
-    (add-hook 'kill-emacs-hook #'(lambda nil
-                                   (bm-buffer-save-all)
-                                   (bm-repository-save)))
+  ;; must save all bookmarks first.
+  (add-hook 'kill-emacs-hook #'(lambda nil
+                                 (bm-buffer-save-all)
+                                 (bm-repository-save)))
 
-    (add-hook 'after-save-hook #'bm-buffer-save)
+  (add-hook 'after-save-hook #'bm-buffer-save)
 
-    ;; Restoring bookmarks
-    (add-hook 'find-file-hooks   #'bm-buffer-restore)
-    (add-hook 'after-revert-hook #'bm-buffer-restore)
+  ;; Restoring bookmarks
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
 
-    (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
+  (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
 
-    ;; keys binding
-    :bind (("C-M-s-x" . bm-toggle)
-           ("C-M-s-w" . bm-lifo-next)
-           ("C-M-s-q" . bm-lifo-previous)
-           ("C-M-s-z" . bm-show-all))
-    )
+  ;; keys binding
+  :bind (("C-M-s-x" . bm-toggle)
+         ("C-M-s-w" . bm-lifo-next)
+         ("C-M-s-q" . bm-lifo-previous)
+         ("C-M-s-z" . bm-show-all))
+  )
 
 (use-package move-text
   :straight (:build t))
@@ -2282,44 +2253,44 @@ deactivate `magit-todos-mode', otherwise enable it."
           ('hs-cycle-subtree
            (hs-hide-block))
           (_
-               (hs-hide-block)
-             (hs-hide-level 1)
-             (setq this-command 'hs-cycle-children)))
+           (hs-hide-block)
+           (hs-hide-level 1)
+           (setq this-command 'hs-cycle-children)))
       (hs-hide-level level)
       (setq this-command 'hs-hide-level))))
 
 (defun hs-global-cycle ()
-    (interactive)
-    (pcase last-command
-      ('hs-global-cycle
-       (save-excursion (hs-show-all))
-       (setq this-command 'hs-global-show))
-      (_ (hs-hide-all))))
+  (interactive)
+  (pcase last-command
+    ('hs-global-cycle
+     (save-excursion (hs-show-all))
+     (setq this-command 'hs-global-show))
+    (_ (hs-hide-all))))
 
-  (use-package eyebrowse
-    :straight (:build t)
-    :config
-    (setq eyebrowse-new-workspace t)
-    (eyebrowse-mode 1))
+(use-package eyebrowse
+  :straight (:build t)
+  :config
+  (setq eyebrowse-new-workspace t)
+  (eyebrowse-mode 1))
 
-  (dqv/leader-key
-   "TAB"  '(:ignore t :which-key "Window Management")
-   "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "Select Windown 0")
-   "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "Select Window 1")
-   "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "Select Window 2")
-   "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "Select Window 3")
-   "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "Select Window 4")
-   "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "Select Window 5")
-   "TAB 6" '(eyebrowse-switch-to-window-config-6 :which-key "Select Window 6")
-   "TAB 7" '(eyebrowse-switch-to-window-config-7 :which-key "Select Window 7")
-   "TAB 8" '(eyebrowse-switch-to-window-config-8 :which-key "Select Window 8")
-   "TAB 9" '(eyebrowse-switch-to-window-config-9 :which-key "Select Window 9")
-   "TAB r" '(eyebrowse-rename-window-config :which-key "Rename Window")
-   "TAB n" '(eyebrowse-create-named-window-config :which-key "Create New Window")
-   "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "Switch Window")
-   "TAB d" '(eyebrowse-close-window-config :which-key "Delete Window")
-   "TAB k" '(eyebrowse-next-window-config :which-key "Next Window")
-   "TAB j" '(eyebrowse-prev-window-config :which-key "Previous Window"))
+(dqv/leader-key
+  "TAB"  '(:ignore t :which-key "Window Management")
+  "TAB 0" '(eyebrowse-switch-to-window-config-0 :which-key "Select Windown 0")
+  "TAB 1" '(eyebrowse-switch-to-window-config-1 :which-key "Select Window 1")
+  "TAB 2" '(eyebrowse-switch-to-window-config-2 :which-key "Select Window 2")
+  "TAB 3" '(eyebrowse-switch-to-window-config-3 :which-key "Select Window 3")
+  "TAB 4" '(eyebrowse-switch-to-window-config-4 :which-key "Select Window 4")
+  "TAB 5" '(eyebrowse-switch-to-window-config-5 :which-key "Select Window 5")
+  "TAB 6" '(eyebrowse-switch-to-window-config-6 :which-key "Select Window 6")
+  "TAB 7" '(eyebrowse-switch-to-window-config-7 :which-key "Select Window 7")
+  "TAB 8" '(eyebrowse-switch-to-window-config-8 :which-key "Select Window 8")
+  "TAB 9" '(eyebrowse-switch-to-window-config-9 :which-key "Select Window 9")
+  "TAB r" '(eyebrowse-rename-window-config :which-key "Rename Window")
+  "TAB n" '(eyebrowse-create-named-window-config :which-key "Create New Window")
+  "TAB TAB" '(eyebrowse-switch-to-window-config :which-key "Switch Window")
+  "TAB d" '(eyebrowse-close-window-config :which-key "Delete Window")
+  "TAB k" '(eyebrowse-next-window-config :which-key "Next Window")
+  "TAB j" '(eyebrowse-prev-window-config :which-key "Previous Window"))
 
 (use-package dirvish
   :straight (:build t)
@@ -2335,7 +2306,7 @@ deactivate `magit-todos-mode', otherwise enable it."
      ("C" "~/Documents/conlanging/content" "Conlanging")))
   (dirvish-mode-line-format
    '(:left (sort file-time " " file-size symlink) :right (omit yank index)))
-   (dirvish-attributes '(all-the-icons file-size  subtree-state vc-state  collapse )) ;; git-msg file-time
+  (dirvish-attributes '(all-the-icons file-size  subtree-state vc-state  collapse )) ;; git-msg file-time
   (setq delete-by-moving-to-trash t)
   :config
   (dirvish-peek-mode)
@@ -2740,7 +2711,7 @@ deactivate `magit-todos-mode', otherwise enable it."
   (let ((b (if mark-active (min (point) (mark)) (point-min)))
         (e (if mark-active (max (point) (mark)) (point-max))))
     (shell-command-on-region b e
-     "python -mjson.tool" (current-buffer) t)))
+                             "python -mjson.tool" (current-buffer) t)))
 
 (use-package protobuf-mode
   :mode "\\.proto3")
@@ -2749,8 +2720,8 @@ deactivate `magit-todos-mode', otherwise enable it."
   "Calculate the width of the writing area."
   (if (floatp writeroom-width)
       (progn
-  (message "%s" (window-total-width))
-  (truncate (* (window-total-width) writeroom-width)))
+        (message "%s" (window-total-width))
+        (truncate (* (window-total-width) writeroom-width)))
     writeroom-width))
 
 (use-package writeroom-mode
@@ -2772,7 +2743,34 @@ deactivate `magit-todos-mode', otherwise enable it."
 
 (use-package flycheck
   :straight (:build t)
+  :preface
+  (defun mp-flycheck-eldoc (callback &rest _ignored)
+    "Print flycheck messages at point by calling CALLBACK."
+    (when-let ((flycheck-errors (and flycheck-mode (flycheck-overlay-errors-at (point)))))
+      (mapc
+       (lambda (err)
+         (funcall callback
+           (format "%s: %s"
+                   (let ((level (flycheck-error-level err)))
+                     (pcase level
+                       ('info (propertize "I" 'face 'flycheck-error-list-info))
+                       ('error (propertize "E" 'face 'flycheck-error-list-error))
+                       ('warning (propertize "W" 'face 'flycheck-error-list-warning))
+                       (_ level)))
+                   (flycheck-error-message err))
+           :thing (or (flycheck-error-id err)
+                      (flycheck-error-group err))
+           :face 'font-lock-doc-face))
+       flycheck-errors)))
+
+  (defun mp-flycheck-prefer-eldoc ()
+    (add-hook 'eldoc-documentation-functions #'mp-flycheck-eldoc nil t)
+    (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+    (setq flycheck-display-errors-function nil)
+    (setq flycheck-help-echo-function nil))
+  :hook ((flycheck-mode . mp-flycheck-prefer-eldoc))
   :defer t
+  :ensure t
   :init
   (global-flycheck-mode)
   :config
@@ -2878,8 +2876,11 @@ Spell Commands^^           Add To Dictionary^^              Other
          (move-mode           . lsp-deferred)
          (toml-mode           . lsp-deferred)
          (toml-ts-mode        . lsp-deferred)
+         (python-ts-mode      . lsp-deferred)
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
+         (solidity-mode       . lsp-deferred)
+         (json-ts-mode        . lsp-deferred)
          (zig-mode            . lsp-deferred)
          (typescript-mode     . lsp-deferred)
          (typescript-tsx-mode . lsp-deferred)
@@ -2891,12 +2892,12 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hint-enable nil)
   (lsp-inlay-hints-mode t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-closure-return-type-hints t) ;; Hints
   (lsp-rust-analyzer-display-parameter-hints nil)
   (lsp-rust-analyzer-display-reborrow-hints nil)
   ;; (lsp-rust-analyzer-store-path "~/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rust-analyzer")
@@ -3010,12 +3011,12 @@ Spell Commands^^           Add To Dictionary^^              Other
     :keymaps '(c-mode-map c++-mode-map)
     ";" nil)
   (dqv/major-leader-key
-   :keymaps '(c-mode-map c++-mode-map)
-   "l"  '(:keymap lsp-command-map :which-key "lsp" :package lsp-mode))
+    :keymaps '(c-mode-map c++-mode-map)
+    "l"  '(:keymap lsp-command-map :which-key "lsp" :package lsp-mode))
   (dqv/evil
-   :keymaps '(c-mode-map c++-mode-map)
-   "ga" #'projectile-find-other-file
-   "gA" #'projectile-find-other-file-other-window))
+    :keymaps '(c-mode-map c++-mode-map)
+    "ga" #'projectile-find-other-file
+    "gA" #'projectile-find-other-file-other-window))
 
 (use-package clang-format+
   :straight (:build t)
@@ -3037,26 +3038,24 @@ Spell Commands^^           Add To Dictionary^^              Other
   (put 'defcommand 'lisp-indent-function 'defun)
   (setq inferior-lisp-program "/usr/bin/sbcl --noinform"))
 
-;; (use-package eldoc
-;;   :straight t
-;;   :defer t
-;;   :after company
-;;   :preface
-;;   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-;;   (add-to-list 'display-buffer-alist
-;;             '("^\\*eldoc for" display-buffer-at-bottom
-;;               (window-height . 4)))
-;;   :hook ((eglot-managed-mode . mp-eglot-eldoc))
-;;   :init
-;;   (eldoc-add-command 'company-complete-selection
-;;                      'company-complete-common
-;;                      'company-capf
-;;                      'company-abort)
-;;   :config
-;;   (setq eldoc-echo-area-prefer-doc-buffer t)
-;;   (eldoc-add-command-completions "paredit-")
-;;   (eldoc-add-command-completions "combobulate-")
-;;   (setq eldoc-echo-area-use-multiline-p nil))
+(use-package eldoc
+  :diminish eldoc-mode
+  :commands turn-on-eldoc-mode
+  :preface
+  (add-to-list 'display-buffer-alist
+               '("^\\*eldoc for" display-buffer-at-bottom
+                 (window-height . 4)))
+  (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
+  :defer t
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
+  :config
+  (eldoc-add-command-completions "combobulate-")
+  (eldoc-add-command-completions "paredit-")
+  (eldoc-add-command-completions "lispy-"))
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (smartparens-mode -1)))
 
@@ -3074,26 +3073,26 @@ Spell Commands^^           Add To Dictionary^^              Other
   :defer t)
 
 (dqv/major-leader-key
- :keymaps 'emacs-lisp-mode-map
- "'"   #'ielm
- "c"   '(emacs-lisp-byte-compile :which-key "Byte compile")
- "C"   '(:ignore t :which-key "checkdoc")
- "Cc"  #'checkdoc
- "Cs"  #'checkdoc-start
- "v"   '(:ignore t :which-key "eval")
- "eb"  #'eval-buffer
- "ed"  #'eval-defun
- "ee"  #'eval-last-sexp
- "er"  #'eval-region
+  :keymaps 'emacs-lisp-mode-map
+  "'"   #'ielm
+  "c"   '(emacs-lisp-byte-compile :which-key "Byte compile")
+  "C"   '(:ignore t :which-key "checkdoc")
+  "Cc"  #'checkdoc
+  "Cs"  #'checkdoc-start
+  "v"   '(:ignore t :which-key "eval")
+  "eb"  #'eval-buffer
+  "ed"  #'eval-defun
+  "ee"  #'eval-last-sexp
+  "er"  #'eval-region
 
- "h"   '(:ignore t :which-key "help")
- "hh"  #'helpful-at-point
+  "h"   '(:ignore t :which-key "help")
+  "hh"  #'helpful-at-point
 
- "t"   '(:ignore t :which-key "toggle")
- "tP"  '(:ignore t :which-key "parinfer")
- "tPs" #'parinfer-rust-switch-mode
- "tPd" #'parinfer-rust-mode-disable
- "tPp" #'parinfer-rust-toggle-paren-mode)
+  "t"   '(:ignore t :which-key "toggle")
+  "tP"  '(:ignore t :which-key "parinfer")
+  "tPs" #'parinfer-rust-switch-mode
+  "tPd" #'parinfer-rust-mode-disable
+  "tPp" #'parinfer-rust-toggle-paren-mode)
 
 (use-package package-lint
   :defer t
@@ -3122,7 +3121,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   :config
   (setq python-indent-guess-indent-offset-verbose nil)
   (when (and (executable-find "/usr/local/bin/python3")
-           (string= python-shell-interpreter "/usr/local/bin/python3"))
+             (string= python-shell-interpreter "/usr/local/bin/python3"))
     (setq python-shell-interpreter "/usr/local/bin/python3"))
   (setq python-interpreter "/usr/local/bin/python3"))
 
@@ -3141,17 +3140,17 @@ Spell Commands^^           Add To Dictionary^^              Other
   (add-to-list 'pytest-project-root-files "setup.cfg")
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :infix "t"
-   :packages 'pytest
-   ""  '(:ignore t :which-key "test")
-   "a" #'python-pytest
-   "f" #'python-pytest-file-dwim
-   "F" #'python-pytest-file
-   "t" #'python-pytest-function-dwim
-   "T" #'python-pytest-function
-   "r" #'python-pytest-repeat
-   "p" #'python-pytest-dispatch))
+    :keymaps 'python-mode-map
+    :infix "t"
+    :packages 'pytest
+    ""  '(:ignore t :which-key "test")
+    "a" #'python-pytest
+    "f" #'python-pytest-file-dwim
+    "F" #'python-pytest-file
+    "t" #'python-pytest-function-dwim
+    "T" #'python-pytest-function
+    "r" #'python-pytest-repeat
+    "p" #'python-pytest-dispatch))
 
 (use-package poetry
   :defer t
@@ -3171,9 +3170,9 @@ Spell Commands^^           Add To Dictionary^^              Other
   :straight (:build t)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'pippel
-   "P" #'pippel-list-packages))
+    :keymaps 'python-mode-map
+    :packages 'pippel
+    "P" #'pippel-list-packages))
 
 (use-package pipenv
   :defer t
@@ -3188,18 +3187,18 @@ Spell Commands^^           Add To Dictionary^^              Other
   :init (setq pipenv-with-projectile nil)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'pipenv
-   :infix "e"
-   ""  '(:ignore t :which-key "pipenv")
-   "a" #'pipenv-activate
-   "d" #'pipenv-deactivate
-   "i" #'pipenv-install
-   "l" #'pipenv-lock
-   "o" #'pipenv-open
-   "r" #'pipenv-run
-   "s" #'pipenv-shell
-   "u" #'pipenv-uninstall))
+    :keymaps 'python-mode-map
+    :packages 'pipenv
+    :infix "e"
+    ""  '(:ignore t :which-key "pipenv")
+    "a" #'pipenv-activate
+    "d" #'pipenv-deactivate
+    "i" #'pipenv-install
+    "l" #'pipenv-lock
+    "o" #'pipenv-open
+    "r" #'pipenv-run
+    "s" #'pipenv-shell
+    "u" #'pipenv-uninstall))
 
 (use-package pyenv
   :defer t
@@ -3241,12 +3240,12 @@ Spell Commands^^           Add To Dictionary^^              Other
   :straight (:build t)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'py-isort
-   :infix "i"
-   ""  '(:ignore t :which-key "imports")
-   "s" #'py-isort-buffer
-   "R" #'py-isort-region))
+    :keymaps 'python-mode-map
+    :packages 'py-isort
+    :infix "i"
+    ""  '(:ignore t :which-key "imports")
+    "s" #'py-isort-buffer
+    "R" #'py-isort-region))
 
 (use-package counsel-pydoc
   :defer t
@@ -3259,12 +3258,12 @@ Spell Commands^^           Add To Dictionary^^              Other
   (add-hook 'python-mode-hook #'sphinx-doc-mode)
   :general
   (dqv/major-leader-key
-   :keymaps 'python-mode-map
-   :packages 'sphinx-doc
-   :infix "S"
-   ""  '(:ignore t :which-key "sphinx-doc")
-   "e" #'sphinx-doc-mode
-   "d" #'sphinx-doc))
+    :keymaps 'python-mode-map
+    :packages 'sphinx-doc
+    :infix "S"
+    ""  '(:ignore t :which-key "sphinx-doc")
+    "e" #'sphinx-doc-mode
+    "d" #'sphinx-doc))
 
 (use-package cython-mode
   :defer t
@@ -3274,11 +3273,11 @@ Spell Commands^^           Add To Dictionary^^              Other
   (setq cython-default-compile-format "cython -a %s")
   :general
   (dqv/major-leader-key
-   :keymaps 'cython-mode-map
-   :packages 'cython-mode
-   :infix "c"
-   ""  '(:ignore t :which-key "cython")
-   "c" #'cython-compile))
+    :keymaps 'cython-mode-map
+    :packages 'cython-mode
+    :infix "c"
+    ""  '(:ignore t :which-key "cython")
+    "c" #'cython-compile))
 
 (use-package flycheck-cython
   :defer t
@@ -3310,10 +3309,10 @@ Spell Commands^^           Add To Dictionary^^              Other
   ;; (setq rustic-lsp-client 'eglot)
   (add-hook 'rustic-mode-hook #'tree-sitter-hl-mode)
   (add-hook 'rustic-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil)
-            (setq tab-width 2)
-            (setq rust-indent-offset 2)))
+            (lambda ()
+              (setq indent-tabs-mode nil)
+              (setq tab-width 2)
+              (setq rust-indent-offset 2)))
   :general
   (general-define-key
    :keymaps 'rustic-mode-map
@@ -3341,7 +3340,10 @@ Spell Commands^^           Add To Dictionary^^              Other
     "dd" #'dap-breakpoint-delete
     "dD" #'dap-breakpoint-delete-all
     "D" #'rustic-cargo-doc
-    "f" #'rustic-cargo-fmt
+    "f" '(:ignore t :which-key "LSP Find")
+    "fr" #'lsp-find-references
+    "fd" #'lsp-find-definition
+    "ff" #'lsp-find-declaration
     "a" #'rustic-cargo-add
     "r" #'rustic-cargo-run
     "c" '(:ignore t :which-key "clippy")
@@ -3384,6 +3386,13 @@ Spell Commands^^           Add To Dictionary^^              Other
   (when buffer-file-name
     (setq-local buffer-save-without-query t))
   (add-hook 'before-save-hook 'lsp-format-buffer nil t))
+
+(defun my-rust-mode-auto-switch ()
+  (when (and buffer-file-name
+             (string-match-p "\\.rs\\'" buffer-file-name))
+    (rustic-mode)))
+
+(add-hook 'find-file-hook #'my-rust-mode-auto-switch)
 
 (use-package emmet-mode
   :straight (:build t)
@@ -3444,27 +3453,27 @@ Spell Commands^^           Add To Dictionary^^              Other
          web-mode-script-padding       0)
   :general
   (dqv/major-leader-key
-   :keymaps 'web-mode-map
-   :packages 'web-mode
-   "="  '(:ignore t :which-key "format")
-   "E"  '(:ignore t :which-key "errors")
-   "El" #'web-mode-dom-errors-show
-   "g"  '(:ignore t :which-key "goto")
-   "gb" #'web-mode-element-beginning
-   "ge" #'web-mode-element-end
-   "gc" #'web-mode-element-child
-   "gp" #'web-mode-element-parent
-   "gs" #'web-mode-element-sibling-next
-   "h"  '(:ignore t :which-key "dom")
-   "hp" #'web-mode-dom-xpath
-   "r"  '(:ignore t :which-key "refactor")
-   "j"  '(web-mode-tag-match :which-key "Jump Match")
-   "rc" #'web-mode-element-clone
-   "rd" #'web-mode-element-vanish
-   "rk" #'web-mode-element-kill
-   "rr" #'web-mode-element-rename
-   "rw" #'web-mode-element-wrap
-   "z"  #'web-mode-fold-or-unfold)
+    :keymaps 'web-mode-map
+    :packages 'web-mode
+    "="  '(:ignore t :which-key "format")
+    "E"  '(:ignore t :which-key "errors")
+    "El" #'web-mode-dom-errors-show
+    "g"  '(:ignore t :which-key "goto")
+    "gb" #'web-mode-element-beginning
+    "ge" #'web-mode-element-end
+    "gc" #'web-mode-element-child
+    "gp" #'web-mode-element-parent
+    "gs" #'web-mode-element-sibling-next
+    "h"  '(:ignore t :which-key "dom")
+    "hp" #'web-mode-dom-xpath
+    "r"  '(:ignore t :which-key "refactor")
+    "j"  '(web-mode-tag-match :which-key "Jump Match")
+    "rc" #'web-mode-element-clone
+    "rd" #'web-mode-element-vanish
+    "rk" #'web-mode-element-kill
+    "rr" #'web-mode-element-rename
+    "rw" #'web-mode-element-wrap
+    "z"  #'web-mode-fold-or-unfold)
   (dqv/major-leader-key
     :keymaps 'web-mode-map
     :packages '(lsp-mode web-mode)
@@ -3506,8 +3515,8 @@ Spell Commands^^           Add To Dictionary^^              Other
                                            (scss-mode-map . scss-mode-hook))
            do (add-hook mode-hook #'counsel-css-imenu-setup)
            (dqv/major-leader-key
-            :keymaps mode-map
-            "gh" #'counsel-css)))
+             :keymaps mode-map
+             "gh" #'counsel-css)))
 
 (use-package less-css-mode
   :straight  (:type built-in)
@@ -3562,18 +3571,6 @@ Spell Commands^^           Add To Dictionary^^              Other
   :hook (js2-mode . js2-refactor-mode)
   :hook (rjsx-mode . js2-refactor-mode))
 
-(use-package npm-transient
-  :defer t
-  :straight (npm-transient :build t
-                           :type git
-                           :host github
-                           :repo "Phundrak/npm-transient"))
-  ;; :general
-  ;; (dqv/major-leader-key
-  ;;   :packages '(npm-transient rjsx-mode web-mode)
-  ;;   :keymaps '(rjsx-mode-map web-mode-map)
-  ;;   "n" #'npm-transient))
-
 (use-package prettier-js
   :defer t
   :straight (:build t)
@@ -3623,13 +3620,13 @@ Spell Commands^^           Add To Dictionary^^              Other
   (autoload 'js2-line-break "js2-mode" nil t))
 
 (defun my-tsx-mode-auto-switch ()
-  "Auto convert go-mode"
+  "Auto convert tsx-mode"
   (when (and buffer-file-name
              (string-match-p "\\.tsx\\'" buffer-file-name))
     (typescript-tsx-mode)))
 
 (defun my-ts-mode-auto-switch ()
-  "Auto convert go-mode"
+  "Auto convert typescript-mode"
   (when (and buffer-file-name
              (string-match-p "\\.ts\\'" buffer-file-name))
     (typescript-mode)))
@@ -3709,6 +3706,7 @@ Spell Commands^^           Add To Dictionary^^              Other
              (string-match-p "\\.go\\'" buffer-file-name))
     (go-mode)))
 
+
 (add-hook 'find-file-hook #'my-go-mode-auto-switch)
 
 (cl-defmethod project-root ((project (head go-module)))
@@ -3726,12 +3724,59 @@ Spell Commands^^           Add To Dictionary^^              Other
 (use-package dotenv-mode
   :defer t
   :straight (:build t))
+(add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode)) ;; for optionally supporting additional file extensions such as `.env.test' with this major mode
+
+
+;; (defun my-env-mode-auto-switch ()
+;;   (when (and buffer-file-name
+;;              (string-match-p "\\.env\\..*\\'" buffer-file-name))
+;;     (dotenv-mode)))
+
+;; (add-hook 'find-file-hook #'my-env-mode-auto-switch)
+
+(add-hook 'solidity-mode-hook
+  (lambda ()
+  (set (make-local-variable 'company-backends)
+    (append '((company-solidity company-capf company-dabbrev-code))
+      company-backends))))
 
 (use-package solidity-mode
   :defer t
   :straight (:build t)
   :config
-  (csetq solidity-comment-style 'slash))
+  (csetq solidity-comment-style 'star))
+
+;; (setq solidity-solc-path "/opt/homebrew/bin/solc")
+(setq solidity-solium-path "/home/lefteris/.nvm/versions/node/v22.3.0/bin/solium")
+
+(use-package solidity-flycheck
+  :defer t
+  :straight (:build t)
+  :ensure t
+  :config
+  ;; (setq solidity-flycheck-solc-checker-active t)
+  (setq solidity-flycheck-solium-checker-active t))
+
+(use-package company-solidity
+  :straight (:build t)
+  :ensure t
+  :defer t
+)
+
+(add-hook 'solidity-mode-hook
+            (lambda ()
+              (require 'lsp-mode)
+              (add-to-list 'lsp-language-id-configuration '(solidity-mode . "soldity"))
+              (add-to-list 'lsp-language-id-configuration '("\\.sol$" . "solidity"))
+              (lsp-register-client
+               (make-lsp-client :new-connection (lsp-stdio-connection '("solidity-ls" "--stdio"))
+                                :activation-fn (lsp-activate-on "solidity")
+                                :notification-handlers
+                                (ht ("textDocument/didOpen" #'ignore))
+                                :server-id 'solidity))
+              (lsp)
+              )
+            )
 
 (use-package json-mode
   :straight (:build t)
@@ -3743,6 +3788,19 @@ Spell Commands^^           Add To Dictionary^^              Other
     :packages 'json-mode
     :keymaps 'json-mode-map
     "f" #'json-pretty-print-buffer))
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq tab-width 2)
+            (setq js-indent-level 2)))
+
+(defun my-json-ts-mode-auto-switch ()
+  (when (and buffer-file-name
+             (string-match-p "\\.json\\'" buffer-file-name))
+    (json-ts-mode)))
+
+;; (add-hook 'find-file-hook #'my-json-ts-mode-auto-switch)
 
 (use-package toml-mode
   :straight (:build t)
@@ -3781,22 +3839,24 @@ Spell Commands^^           Add To Dictionary^^              Other
     :server-id 'move-analyzer)))
 
 (use-package eglot
- :config
- (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer")))
+  :config
+  (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer")))
 
-  (dqv/evil
-    ;;:packages '(counsel)
-    "s" '(window-configuration-to-register :wk "Register Window")
-    "f" '(jump-to-register :wk "Jump Register")
-    "K"   #'lsp-ui-doc-glance
-    "U"   #'evil-redo
-    "C-a" #'my-smarter-move-beginning-of-line
-    "C-e" #'end-of-line
-    "*"   #'dired-create-empty-file
-    "C-y" #'yank
-    "C-M-s-p"    #'scroll-half-page-up
-    "C-M-s-n"    #'scroll-half-page-down
-    "M-y" #'counsel-yank-pop)
+(dqv/evil
+  ;;:packages '(counsel)
+  "s" '(window-configuration-to-register :wk "Register Window")
+  "f" '(jump-to-register :wk "Jump Register")
+  "K"   #'lsp-ui-doc-glance
+  "+"   #'evil-goto-last-change
+  "_"   #'evil-search-unbounded-word-forward
+  "-"   #'evil-search-unbounded-word-backward
+  "U"   #'evil-redo
+  "C-a" #'my-smarter-move-beginning-of-line
+  "C-e" #'end-of-line
+  "C-y" #'yank
+  "C-M-s-p"    #'scroll-half-page-up
+  "C-M-s-n"    #'scroll-half-page-down
+  "M-y" #'counsel-yank-pop)
 
 (dqv/leader-key
   "SPC" '(counsel-M-x :which-key "M-x")
@@ -3988,12 +4048,15 @@ Spell Commands^^           Add To Dictionary^^              Other
   "l"   '(:ignore t :wk "Lsp")
   "ll"  #'lsp
   "lm"  #'lsp-ui-imenu
-  "lR"  #'lsp-workspace-restart
+  "lwr"  #'lsp-workspace-restart
   "ls"  #'lsp-treemacs-symbols
-  "le"  #'lsp-treemacs-errors-list
-  "ld"  #'xref-find-definitions-other-window
+  "lE"  #'lsp-treemacs-errors-list
+  "le"  #'lsp-ui-flycheck-list
+  "ld"  #'lsp-find-definition
+  "lr"  #'lsp-find-references
   "lD"  #'xref-find-definitions
-  "lr"  #'lsp-rename
+  "lr"  #'xref-find-definitions
+  "lR"  #'lsp-rename
 
   "all" #'leetcode
   "ald" #'leetcode-daily
@@ -4050,13 +4113,13 @@ Spell Commands^^           Add To Dictionary^^              Other
           :which-key "straight package")
 
   "owgp"  '((lambda ()
-             (interactive)
-             (browse-url "https://github.com/jayden_dangvu"))
+              (interactive)
+              (browse-url "https://github.com/jayden_dangvu"))
             :wk "My Github")
 
   "owgw"  '((lambda ()
-             (interactive)
-             (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
+              (interactive)
+              (browse-url "https://github.com/orgs/TOCE-Team/repositories"))
             :wk "Work Github")
 
   "owe"  '((lambda ()
@@ -4085,13 +4148,50 @@ Spell Commands^^           Add To Dictionary^^              Other
   "dV" '(docker-volumes :which-key "Docker Volumes")
   "dC" '(docker-containers :which-key "Docker Containers")
   "dN" '(docker-networks :which-key "Docker Networks")
-)
+  )
 
 (use-package lsp-grammarly
   :straight (:build t))
-  ;; :ensure nil
-  ;; :hook (text-mode . (lambda ()
-  ;;                      (require 'lsp-grammarly)
-  ;;                      (lsp-deferred))))  ; or lsp-deferred
+;; :ensure nil
+;; :hook (text-mode . (lambda ()
+;;                      (require 'lsp-grammarly)
+;;                      (lsp-deferred))))  ; or lsp-deferred
 
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
+
+(defun split-window-right-and-focus ()
+  "Spawn a new window right of the current one and focus it."
+  (interactive)
+  (split-window-right)
+  (windmove-right))
+
+(defun jd/eldoc-and-focus ()
+  (interactive)
+  (eldoc-print-current-symbol-info)
+  (evil-window-next))
+
+(defun split-window-below-and-focus ()
+  "Spawn a new window below the current one and focus it."
+  (interactive)
+  (split-window-below)
+  (windmove-down))
+
+(defun split-window-right-and-open-point ()
+  "Spawn a new window right of the current one and focus it."
+  (interactive)
+  (split-window-right)
+  (org-open-at-point))
+
+
+(defun kill-buffer-and-delete-window ()
+  "Kill the current buffer and delete its window."
+  (interactive)
+  (progn
+    (kill-this-buffer)
+    (delete-window)))
+
+(defun display-buffer-same-window (buffer alist)
+  (unless (or (cdr (assq 'inhibit-same-window alist))
+              (window-minibuffer-p)
+              (window-dedicated-p))
+    (window--display-buffer buffer (selected-window) 'reuse alist)))

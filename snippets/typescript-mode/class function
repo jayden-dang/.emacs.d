@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: class function
+# key: cafn
+# --
+${1:functionName} = async (req: Request, res: Response, next: NextFunction) => {
+                  $0
+}
