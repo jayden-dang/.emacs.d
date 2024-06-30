@@ -4138,3 +4138,9 @@ Spell Commands^^           Add To Dictionary^^              Other
   (progn
     (kill-this-buffer)
     (delete-window)))
+
+(defun display-buffer-same-window (buffer alist)
+  (unless (or (cdr (assq 'inhibit-same-window alist))
+              (window-minibuffer-p)
+              (window-dedicated-p))
+    (window--display-buffer buffer (selected-window) 'reuse alist)))
