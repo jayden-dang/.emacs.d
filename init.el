@@ -219,32 +219,6 @@ the user."
 (setq evil-insert-state-cursor '((bar . 2) "orange")
       evil-normal-state-cursor '(box "orange"))
 
-(defmacro csetq (&rest forms)
-  "Bind each custom variable FORM to the value of its VAL.
-
-FORMS is a list of pairs of values [FORM VAL].
-`customize-set-variable' is called sequentially on each pair
-contained in FORMS. This means `csetq' has a similar behavior as
-`setq': each VAL expression is evaluated sequentially, i.e., the
-first VAL is evaluated before the second, and so on. This means
-the value of the first FORM can be used to set the second FORM.
-
-The return value of `csetq' is the value of the last VAL.
-
-\(fn [FORM VAL]...)"
-  (declare (debug (&rest sexp form))
-           (indent 1))
-  ;; Check if we have an even number of arguments
-  (when (= (mod (length forms) 2) 1)
-    (signal 'wrong-number-of-arguments (list 'csetq (1+ (length forms)))))
-  ;; Transform FORMS into a list of pairs (FORM . VALUE)
-  (let (sexps)
-    (while forms
-      (let ((form  (pop forms))
-            (value (pop forms)))
-        (push `(customize-set-variable ',form ,value)
-              sexps)))
-    `(progn ,@(nreverse sexps))))
 
 (use-package git-gutter-fringe
   :straight (:build t)
@@ -2744,31 +2718,6 @@ deactivate `magit-todos-mode', otherwise enable it."
 (use-package flycheck
   :straight (:build t)
   :preface
-  (defun mp-flycheck-eldoc (callback &rest _ignored)
-    "Print flycheck messages at point by calling CALLBACK."
-    (when-let ((flycheck-errors (and flycheck-mode (flycheck-overlay-errors-at (point)))))
-      (mapc
-       (lambda (err)
-         (funcall callback
-           (format "%s: %s"
-                   (let ((level (flycheck-error-level err)))
-                     (pcase level
-                       ('info (propertize "I" 'face 'flycheck-error-list-info))
-                       ('error (propertize "E" 'face 'flycheck-error-list-error))
-                       ('warning (propertize "W" 'face 'flycheck-error-list-warning))
-                       (_ level)))
-                   (flycheck-error-message err))
-           :thing (or (flycheck-error-id err)
-                      (flycheck-error-group err))
-           :face 'font-lock-doc-face))
-       flycheck-errors)))
-
-  (defun mp-flycheck-prefer-eldoc ()
-    (add-hook 'eldoc-documentation-functions #'mp-flycheck-eldoc nil t)
-    (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-    (setq flycheck-display-errors-function nil)
-    (setq flycheck-help-echo-function nil))
-  :hook ((flycheck-mode . mp-flycheck-prefer-eldoc))
   :defer t
   :ensure t
   :init

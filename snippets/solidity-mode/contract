@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: contract
+# key: contract
+# --
+// SPDX-License-Identifier: MIT
+pragma solidity ${1:0.8.21};
+
+contract $2 {
+         $0
+         contructor() {}
+}
