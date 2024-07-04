@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pytest
+# key: pyt
+# --
+@pytest.fixture(${1:scope="session"})
+def $0() -> None:
+    pass

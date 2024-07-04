@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: @abimethod
+# key: abi
+# --
+@arc4.abimethod($1)
+def $0() -> None:
+    pass

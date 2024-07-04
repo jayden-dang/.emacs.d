@@ -2358,10 +2358,10 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
 (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
 (appt-activate 1)                ;; activate appointment notification
 (setq appt-time-msg-list nil)    ;; clear existing appt list
-(setq appt-display-interval '10)  ;; warn every 10 minutes from t - appt-message-warning-time
+(setq appt-display-interval '60)  ;; warn every 10 minutes from t - appt-message-warning-time
 (setq
- appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
- appt-display-mode-line t     ;; don't show in the modeline
+ appt-message-warning-time '720
+ appt-display-mode-line nil     ;; don't show in the modeline
  appt-display-format 'window)   ;; pass warnings to the designated window function
 
 
@@ -2396,8 +2396,8 @@ Company is, in my opinion, the best autocompleting engine for Emacs, and it is o
   :init (global-company-mode)
   :config
   (setq company-minimum-prefix-length     2
-        company-toolsip-limit             14
-        company-idle-delay                0.1
+        company-toolsip-limit             5
+        company-idle-delay                0.2
         company-tooltip-align-annotations t
         company-require-match             'never
         company-global-modes              '(not erc-mode message-mode help-mode gud-mode)
@@ -3005,8 +3005,7 @@ First, I need to install ~ripgrep~, a faster reimplementation of ~grep~, which w
   :defer t)
 #+end_src
 
-Now, I can use projectile, which is sort of the /de facto/ standard
-project manager in Emacs. I know there’s ~project.el~, but,… Eh…
+Now, I can use projectile, which is sort of the /de facto/ standard project manager in Emacs. I know there’s ~project.el~, but,… Eh…
 #+begin_src emacs-lisp
 (use-package projectile
   :straight (:build t)
@@ -3017,7 +3016,13 @@ project manager in Emacs. I know there’s ~project.el~, but,… Eh…
   :config
   (projectile-mode)
   (add-to-list 'projectile-ignored-projects "~/")
+  (add-to-list 'projectile-ignored-projects "^/.algokit")
   (add-to-list 'projectile-globally-ignored-directories "^node_modules$")
+  (add-to-list 'projectile-globally-ignored-directories "^/.algokit")
+  (add-to-list 'projectile-globally-ignored-directories "~/.rustup")
+  (add-to-list 'projectile-globally-ignored-directories "~/.cargo")
+  (add-to-list 'projectile-globally-ignored-directories "~/.cache")
+  (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d")
   :general
   (dqv/leader-key
     "p" '(:keymap projectile-command-map :which-key "projectile")))
@@ -4138,8 +4143,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable nil)
-  (lsp-inlay-hints-mode t)
+  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hints-mode nil)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
@@ -5310,7 +5315,7 @@ Undefining some stuff to make keybind prefixes work correctly.
   ;;:packages '(counsel)
   "s" '(window-configuration-to-register :wk "Register Window")
   "f" '(jump-to-register :wk "Jump Register")
-  "K"   #'lsp-ui-doc-glance
+  "K"   #'eldoc-print-current-symbol-info
   "+"   #'evil-goto-last-change
   "_"   #'evil-search-unbounded-word-forward
   "-"   #'evil-search-unbounded-word-backward
@@ -5516,8 +5521,8 @@ Undefining some stuff to make keybind prefixes work correctly.
   "lm"  #'lsp-ui-imenu
   "lwr"  #'lsp-workspace-restart
   "ls"  #'lsp-treemacs-symbols
-  "lE"  #'lsp-treemacs-errors-list
-  "le"  #'lsp-ui-flycheck-list
+  "le"  #'lsp-treemacs-errors-list
+  "lE"  #'lsp-ui-flycheck-list
   "ld"  #'lsp-find-definition
   "lr"  #'lsp-find-references
   "lD"  #'xref-find-definitions
@@ -5540,6 +5545,7 @@ Undefining some stuff to make keybind prefixes work correctly.
   "pd" #'counsel-projectile-find-dir
   "pe" #'projectile-edit-dir-locals
   "pf" #'counsel-projectile-find-file
+  "pF" #'counsel-projectile-switch-to-buffer
   "pg" #'projectile-find-tag
   "pk" #'project-kill-buffers
   "pp" #'counsel-projectile-switch-project
@@ -5711,15 +5717,15 @@ shift + alt - p : yabai -m window --space prev;
 shift + alt - n : yabai -m window --space next;
 
 # Move window to space #
-shift + alt - 1 : yabai -m window --space 1;
-shift + alt - 2 : yabai -m window --space 2;
-shift + alt - 3 : yabai -m window --space 3;
-shift + alt - 4 : yabai -m window --space 4;
-shift + alt - 5 : yabai -m window --space 5;
-shift + alt - 6 : yabai -m window --space 6;
-shift + alt - 7 : yabai -m window --space 7;
-shift + alt - 8 : yabai -m window --space 8;
-shift + alt - 9 : yabai -m window --space 9;
+shift + alt - 1 : yabai -m window --space 1 --focus;
+shift + alt - 2 : yabai -m window --space 2 --focus;
+shift + alt - 3 : yabai -m window --space 3 --focus;
+shift + alt - 4 : yabai -m window --space 4 --focus;
+shift + alt - 5 : yabai -m window --space 5 --focus;
+shift + alt - 6 : yabai -m window --space 6 --focus;
+shift + alt - 7 : yabai -m window --space 7 --focus;
+shift + alt - 8 : yabai -m window --space 8 --focus;
+shift + alt - 9 : yabai -m window --space 9 --focus;
 
 # Start/Stop yabai
 ctrl + alt - q : yabai --stop-service

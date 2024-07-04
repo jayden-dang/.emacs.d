@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: UInt64
+# key: UI
+# --
+UInt64$0

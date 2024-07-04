@@ -219,6 +219,32 @@ the user."
 (setq evil-insert-state-cursor '((bar . 2) "orange")
       evil-normal-state-cursor '(box "orange"))
 
+(defmacro csetq (&rest forms)
+  "Bind each custom variable FORM to the value of its VAL.
+
+FORMS is a list of pairs of values [FORM VAL].
+`customize-set-variable' is called sequentially on each pair
+contained in FORMS. This means `csetq' has a similar behavior as
+`setq': each VAL expression is evaluated sequentially, i.e., the
+first VAL is evaluated before the second, and so on. This means
+the value of the first FORM can be used to set the second FORM.
+
+The return value of `csetq' is the value of the last VAL.
+
+\(fn [FORM VAL]...)"
+  (declare (debug (&rest sexp form))
+           (indent 1))
+  ;; Check if we have an even number of arguments
+  (when (= (mod (length forms) 2) 1)
+    (signal 'wrong-number-of-arguments (list 'csetq (1+ (length forms)))))
+  ;; Transform FORMS into a list of pairs (FORM . VALUE)
+  (let (sexps)
+    (while forms
+      (let ((form  (pop forms))
+            (value (pop forms)))
+        (push `(customize-set-variable ',form ,value)
+              sexps)))
+    `(progn ,@(nreverse sexps))))
 
 (use-package git-gutter-fringe
   :straight (:build t)
@@ -1421,10 +1447,10 @@ the value `split-window-right', then it will be changed to
 (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
 (appt-activate 1)                ;; activate appointment notification
 (setq appt-time-msg-list nil)    ;; clear existing appt list
-(setq appt-display-interval '10)  ;; warn every 10 minutes from t - appt-message-warning-time
+(setq appt-display-interval '60)  ;; warn every 10 minutes from t - appt-message-warning-time
 (setq
- appt-message-warning-time '30  ;; send first warning 15 minutes before appointment
- appt-display-mode-line t     ;; don't show in the modeline
+ appt-message-warning-time '720
+ appt-display-mode-line nil     ;; don't show in the modeline
  appt-display-format 'window)   ;; pass warnings to the designated window function
 
 
@@ -1453,8 +1479,8 @@ the value `split-window-right', then it will be changed to
   :init (global-company-mode)
   :config
   (setq company-minimum-prefix-length     2
-        company-toolsip-limit             14
-        company-idle-delay                0.1
+        company-toolsip-limit             5
+        company-idle-delay                0.2
         company-tooltip-align-annotations t
         company-require-match             'never
         company-global-modes              '(not erc-mode message-mode help-mode gud-mode)
@@ -1914,7 +1940,13 @@ deactivate `magit-todos-mode', otherwise enable it."
   :config
   (projectile-mode)
   (add-to-list 'projectile-ignored-projects "~/")
+  (add-to-list 'projectile-ignored-projects "^/.algokit$")
   (add-to-list 'projectile-globally-ignored-directories "^node_modules$")
+  (add-to-list 'projectile-globally-ignored-directories "^/.algokit$")
+  (add-to-list 'projectile-globally-ignored-directories "~/.rustup$")
+  (add-to-list 'projectile-globally-ignored-directories "~/.cargo$")
+  (add-to-list 'projectile-globally-ignored-directories "~/.cache$")
+  (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d$")
   :general
   (dqv/leader-key
     "p" '(:keymap projectile-command-map :which-key "projectile")))
@@ -2841,8 +2873,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable nil)
-  (lsp-inlay-hints-mode t)
+  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hints-mode nil)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
@@ -3723,9 +3755,7 @@ Spell Commands^^           Add To Dictionary^^              Other
                                 :notification-handlers
                                 (ht ("textDocument/didOpen" #'ignore))
                                 :server-id 'solidity))
-              (lsp)
-              )
-            )
+              (lsp)))
 
 (use-package json-mode
   :straight (:build t)
@@ -3795,7 +3825,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   ;;:packages '(counsel)
   "s" '(window-configuration-to-register :wk "Register Window")
   "f" '(jump-to-register :wk "Jump Register")
-  "K"   #'lsp-ui-doc-glance
+  "K"   #'eldoc-print-current-symbol-info
   "+"   #'evil-goto-last-change
   "_"   #'evil-search-unbounded-word-forward
   "-"   #'evil-search-unbounded-word-backward
@@ -3999,8 +4029,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   "lm"  #'lsp-ui-imenu
   "lwr"  #'lsp-workspace-restart
   "ls"  #'lsp-treemacs-symbols
-  "lE"  #'lsp-treemacs-errors-list
-  "le"  #'lsp-ui-flycheck-list
+  "le"  #'lsp-treemacs-errors-list
+  "lE"  #'lsp-ui-flycheck-list
   "ld"  #'lsp-find-definition
   "lr"  #'lsp-find-references
   "lD"  #'xref-find-definitions
@@ -4023,6 +4053,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   "pd" #'counsel-projectile-find-dir
   "pe" #'projectile-edit-dir-locals
   "pf" #'counsel-projectile-find-file
+  "pF" #'counsel-projectile-switch-to-buffer
   "pg" #'projectile-find-tag
   "pk" #'project-kill-buffers
   "pp" #'counsel-projectile-switch-project

@@ -2,6 +2,6 @@
 # name: pub fn self
 # key: pfs
 # --
-pub fn $1($2) -> Self {
-    $0
+pub fn $1($0) -> Self {
+    todo!()
 }
