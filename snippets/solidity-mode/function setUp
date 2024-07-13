@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: function setUp
+# key: setup
+# --
+function setUp() public {}

@@ -51,10 +51,12 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/oauth2.el")
 (add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode")
 (add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode/cadence-mode.el")
+(add-to-list 'load-path "~/.emacs.d/lisp/solidity/solidity-mode.el")
 (add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
 (add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
 
 (require 'cadence-mode)
+(require 'solidity-mode)
 (require 'oauth2)
 (require 'screenshot)
 
@@ -1940,13 +1942,13 @@ deactivate `magit-todos-mode', otherwise enable it."
   :config
   (projectile-mode)
   (add-to-list 'projectile-ignored-projects "~/")
-  (add-to-list 'projectile-ignored-projects "^/.algokit$")
+  (add-to-list 'projectile-ignored-projects "^/.algokit")
   (add-to-list 'projectile-globally-ignored-directories "^node_modules$")
-  (add-to-list 'projectile-globally-ignored-directories "^/.algokit$")
-  (add-to-list 'projectile-globally-ignored-directories "~/.rustup$")
-  (add-to-list 'projectile-globally-ignored-directories "~/.cargo$")
-  (add-to-list 'projectile-globally-ignored-directories "~/.cache$")
-  (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d$")
+  (add-to-list 'projectile-globally-ignored-directories "^/.algokit")
+  (add-to-list 'projectile-globally-ignored-directories "~/.rustup")
+  (add-to-list 'projectile-globally-ignored-directories "~/.cargo")
+  (add-to-list 'projectile-globally-ignored-directories "~/.cache")
+  (add-to-list 'projectile-globally-ignored-directories "~/.emacs.d")
   :general
   (dqv/leader-key
     "p" '(:keymap projectile-command-map :which-key "projectile")))
@@ -2027,7 +2029,7 @@ deactivate `magit-todos-mode', otherwise enable it."
        (or (get-buffer "*vterm*")
            (save-window-excursion
              (call-interactively 'vterm)))
-       :default-config-keywords '(:position :bottom :height 14)))))
+       :default-config-keywords '(:position :bottom :height 15)))))
 
 (use-package multi-vterm
   :after vterm
@@ -2873,8 +2875,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable t)
-  (lsp-inlay-hints-mode nil)
+  (lsp-inlay-hint-enable nil)
+  (lsp-inlay-hints-mode t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
@@ -2892,6 +2894,15 @@ Spell Commands^^           Add To Dictionary^^              Other
 
 (setq lsp-sqls-workspace-config-path nil)
 (setq lsp-enable-indentation nil)
+
+(defun toggle-lsp-inlay-hints ()
+  "Toggle LSP inlay hints."
+  (interactive)
+  (setq lsp-inlay-hint-enable (not lsp-inlay-hint-enable))
+  (lsp-inlay-hints-mode (if lsp-inlay-hint-enable 1 -1))
+  (message "LSP inlay hints %s" (if lsp-inlay-hint-enable "enabled" "disabled"))
+  (when lsp-inlay-hint-enable
+    (lsp-restart-workspace)))
 
 (use-package lsp-ui
   :after lsp
@@ -3327,6 +3338,7 @@ Spell Commands^^           Add To Dictionary^^              Other
     "ff" #'lsp-find-declaration
     "a" #'rustic-cargo-add
     "r" #'rustic-cargo-run
+    "s" #'toggle-lsp-inlay-hints
     "c" '(:ignore t :which-key "clippy")
     "cf" #'rustic-cargo-clippy-fix
     "cr" #'rustic-cargo-clippy-run
@@ -3721,11 +3733,11 @@ Spell Commands^^           Add To Dictionary^^              Other
     (append '((company-solidity company-capf company-dabbrev-code))
       company-backends))))
 
-(use-package solidity-mode
-  :defer t
-  :straight (:build t)
-  :config
-  (csetq solidity-comment-style 'star))
+;; (require 'solidity-mode
+;;   :defer t
+;;   :straight (:build t)
+;;   :config
+;;   (csetq solidity-comment-style 'star))
 
 ;; (setq solidity-solc-path "/opt/homebrew/bin/solc")
 (setq solidity-solium-path "/home/lefteris/.nvm/versions/node/v22.3.0/bin/solium")
@@ -3848,6 +3860,9 @@ Spell Commands^^           Add To Dictionary^^              Other
   "oa" '(org-agenda :color blue :which-key "Agenda")
   "ol" '(my/avy-open-url :color blue :which-key "Open Url")
   "of" '(browse-file-directory :which-key "Open File in Directory")
+  "h" '(:ignore t :which-key "Hash function")
+  "hk" '(hash-keccak256 :which-key "Hash Region Keccak256")
+  "hf" '(hash-keccak256-function-id :which-key "Hash Region Keccak256 FnId")
   "1" '(treemacs :which-key "Open Treemacs")
 
   "a" '(:ignore t :which-key "Application")
@@ -3949,14 +3964,14 @@ Spell Commands^^           Add To Dictionary^^              Other
   "fr" '(counsel-recentf :wk "Recentf Files"))
 
 (dqv/leader-key
-  "h"   '(:ignore t :wk "Help")
-  "hi" '(info :wk "Info")
-  "hI" '(info-display-manual :wk "Info Display")
-  "hd"   '(:ignore t :wk "Describe")
-  "hdk" '(helpful-key :wk "Key")
-  "hdm" '(helpful-macro :wk "Macro")
-  "hds" '(helpful-symbol :wk "Symbol")
-  "hdv" '(helpful-variable :wk "Variable")
+  ;; "h"   '(:ignore t :wk "Help")
+  ;; "hi" '(info :wk "Info")
+  ;; "hI" '(info-display-manual :wk "Info Display")
+  ;; "hd"   '(:ignore t :wk "Describe")
+  ;; "hdk" '(helpful-key :wk "Key")
+  ;; "hdm" '(helpful-macro :wk "Macro")
+  ;; "hds" '(helpful-symbol :wk "Symbol")
+  ;; "hdv" '(helpful-variable :wk "Variable")
 
   "i"   '(:ignore t :wk "insert")
   "iu"  #'counsel-unicode-char
@@ -4175,3 +4190,42 @@ Spell Commands^^           Add To Dictionary^^              Other
               (window-minibuffer-p)
               (window-dedicated-p))
     (window--display-buffer buffer (selected-window) 'reuse alist)))
+
+(defun hash-keccak256 (start end)
+  "Prompt for input text, show the Keccak-256 hash in a Popwin popup (if enabled), and copy it to the clipboard."
+  (interactive "r")
+  (let* ((selected-text (buffer-substring-no-properties start end))
+         (input (read-string "Input text: " selected-text))
+         (temp-file (make-temp-file "keccak256")))
+    (with-temp-file temp-file
+      (insert input))
+    (let ((hash (shell-command-to-string (format "keccak-256sum %s | awk '{print $1}'" temp-file))))
+      (delete-file temp-file)
+      (kill-new hash)
+      ;; Uncomment the following block to use popwin
+      ;; (let ((popwin:special-display-config '(("*Keccak-256 Hash*"
+      ;;                                        :position bottom
+      ;;                                        :height 15))))
+      ;;   (popwin:display-buffer (get-buffer-create "*Keccak-256 Hash*"))
+      ;;   (with-current-buffer "*Keccak-256 Hash*"
+      ;;     (erase-buffer)
+      ;;     (insert hash)
+      ;;     (goto-char (point-min))))
+      (message "Original text: %s\nKeccak-256 hash: %s" input hash))))
+
+(defun hash-keccak256-function-id (start end)
+  "Prompt for input function signature, hash the cleaned function signature using Keccak-256, and copy the hash to the clipboard."
+  (interactive "r")
+  (let* ((selected-text (buffer-substring-no-properties start end))
+         (input (read-string "Input function signature: " selected-text))
+         ;; Remove spaces around commas for uniformity
+         (clean-input (replace-regexp-in-string "\\s-*\\(,\\)\\s-*" "," input))
+         ;; Remove function parameters names and leave only types
+         (cleaned-signature (replace-regexp-in-string "\\(\\w+\\)\\s-+\\(\\w+\\)" "\\1" clean-input))
+         (temp-file (make-temp-file "keccak256")))
+    (with-temp-file temp-file
+      (insert cleaned-signature))
+    (let ((hash (shell-command-to-string (format "keccak-256sum %s | awk '{print $1}'" temp-file))))
+      (delete-file temp-file)
+      (kill-new hash)
+      (message "Cleaned function signature: %s\nKeccak-256 hash of function ID: %s" cleaned-signature hash))))

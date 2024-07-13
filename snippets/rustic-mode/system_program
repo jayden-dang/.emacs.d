@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: system_program
+# key: SYS
+# --
+system_program: Program<'info, System>,$0

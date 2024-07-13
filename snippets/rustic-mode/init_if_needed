@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: init_if_needed
+# key: init
+# --
+init_if_needed,$0

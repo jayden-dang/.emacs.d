@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pub mint
+# key: MINT
+# --
+mint: Account<'info, Mint>,$0

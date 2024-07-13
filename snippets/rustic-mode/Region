@@ -2,6 +2,6 @@
 # name: Region Code
 # key: <r
 # --
-// Region:     --- $1
+// Region:     >>> $1
 $0
-// End-Region: --- $1
+// End-Region: <<< $1

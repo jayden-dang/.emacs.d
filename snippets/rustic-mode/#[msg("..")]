@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: #[msg("..")]
+# key: #msg
+# --
+#[msg("$0")]
+${1:YourError}

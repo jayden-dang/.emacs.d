@@ -2,4 +2,4 @@
 # name: <'info >
 # key: <i
 # --
-<'info ${1: ,}>
+<'info $0>

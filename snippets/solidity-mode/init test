@@ -1,11 +1,12 @@
 # -*- mode: snippet -*-
-# name: contract
-# key: contract
+# name: init test
+# key: init
 # --
 // SPDX-License-Identifier: MIT
 pragma solidity ${1:0.8.21};
 
-contract $2 {
+import "forge-std/Test.sol";
+
+contract ${2:Name} is Test {
          $0
-         constructor() {}
 }

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: #[account()]
+# key: #acc
+# --
+#[account($0)]

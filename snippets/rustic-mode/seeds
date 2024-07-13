@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: seeds
+# key: seeds
+# --
+seeds = [$0]

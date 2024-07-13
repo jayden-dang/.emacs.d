@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pub name: Account
+# key: PA
+# --
+pub $1: Account<'info, ${1:$(capitalize yas-text)}>

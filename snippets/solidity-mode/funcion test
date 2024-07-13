@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: funcion test
+# key: fnt
+# --
+function test${1:name}_Should${2:BeSomething}_When${3:SomethingHappens}() public {
+         // Execute
+         $0
+         // Asset
+}

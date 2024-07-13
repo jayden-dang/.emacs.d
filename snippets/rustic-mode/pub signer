@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pub signer
+# key: signer:
+# --
+signer: Signer<'info>,$0

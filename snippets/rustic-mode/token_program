@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: token_program
+# key: TOKEN
+# --
+token_program: Program<'info, System>,$0

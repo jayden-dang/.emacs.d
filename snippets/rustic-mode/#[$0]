@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: #![allow(..)]
-# key: #a
+# key: #allow
 # --
 #![allow($0)]

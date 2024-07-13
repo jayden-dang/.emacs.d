@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: impl From
+# key: fre
+# --
+impl From<$1::Error> for Error {
+     fn from(value: $1::Error) -> Self {
+        Self::$2(value)
+     }
+}
