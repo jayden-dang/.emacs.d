@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: abi
+# key: abi
+# --
+abi.${1:$$(yas-choose-value '("decode()" "encode()" "encodePacked()"))}

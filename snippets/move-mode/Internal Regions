@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Internal Regions
+# key: <ri
+# --
+// -->>> Internal:: START  --->>>  $1
+$0
+// <<<-- Internal:: END    <<<---  $1

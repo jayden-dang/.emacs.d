@@ -45,20 +45,20 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
-;; Add my library path to load-path
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.emacs.d/lisp/screenshot.el")
-(add-to-list 'load-path "~/.emacs.d/lisp/oauth2.el")
-(add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode")
-(add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode/cadence-mode.el")
-(add-to-list 'load-path "~/.emacs.d/lisp/solidity/solidity-mode.el")
-(add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
-(add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
+  ;; Add my library path to load-path
+  (add-to-list 'load-path "~/.emacs.d/lisp/")
+  (add-to-list 'load-path "~/.emacs.d/lisp/screenshot.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/oauth2.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode")
+  (add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode/cadence-mode.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/solidity/solidity-mode.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
+  (add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
 
-(require 'cadence-mode)
-(require 'solidity-mode)
-(require 'oauth2)
-(require 'screenshot)
+  (require 'cadence-mode)
+  (require 'solidity-mode)
+  (require 'oauth2)
+  (require 'screenshot)
 
 ;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
 (setq user-emacs-directory (expand-file-name "~/.emacs.d/")
@@ -3032,22 +3032,25 @@ Spell Commands^^           Add To Dictionary^^              Other
 
 (use-package eldoc
   :diminish eldoc-mode
-  :commands turn-on-eldoc-mode
+  ;; :commands turn-on-eldoc-mode
   :preface
   (add-to-list 'display-buffer-alist
                '("^\\*eldoc for" display-buffer-at-bottom
                  (window-height . 4)))
   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
-  :defer t
-  :init
-  (progn
-    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
+  ;; :init
+  ;; (progn
+  ;;   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  ;;   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+  ;;   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode))
   :config
   (eldoc-add-command-completions "combobulate-")
   (eldoc-add-command-completions "paredit-")
   (eldoc-add-command-completions "lispy-"))
+
+;; (use-package eldoc-box
+;;   :straight (:build t)
+;;   :defer t)
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (smartparens-mode -1)))
 

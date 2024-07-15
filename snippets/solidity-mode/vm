@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: vm
+# key: vm
+# --
+vm.${1:$$(yas-choose-value '("roll(uint256)"))}
