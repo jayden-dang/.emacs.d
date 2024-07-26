@@ -52,10 +52,13 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode")
   (add-to-list 'load-path "~/.emacs.d/lisp/cadence-mode/cadence-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/solidity/solidity-mode.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/move-mode/move-mode.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/move-mode")
   (add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
   (add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
 
   (require 'cadence-mode)
+  (require 'move-mode)
   (require 'solidity-mode)
   (require 'oauth2)
   (require 'screenshot)
@@ -1316,13 +1319,15 @@ the value `split-window-right', then it will be changed to
 
 (setq org-modern-priority
       (quote ((65 . "❗")
-              (66 . "⬆")
-              (67 . "⬇"))))
+              (66 . "🔥")
+              (67 . "⬆")
+              (68 . "⬇"))))
 
 (setq org-modern-priority-faces
       (quote '((65 :background "red" :foreground "yellow")
                (66 :background "orange" :foreground "white")
-               (67 :background "DarkGreen" :foreground "black"))))
+               (67 :background "orange" :foreground "white")
+               (68 :background "DarkGreen" :foreground "black"))))
 
 ;; Add frame borders and window dividers
 (modify-all-frames-parameters
@@ -2135,8 +2140,21 @@ deactivate `magit-todos-mode', otherwise enable it."
 (use-package engine-mode
   :config
   (engine/set-keymap-prefix (kbd "C-c s"))
+
   (setq browse-url-browser-function 'browse-url-default-macosx-browser
         engine/browser-function 'browse-url-default-macosx-browser)
+
+  (defengine solana-localnet
+    "https://explorer.solana.com/tx/%s?cluster=custom&customUrl=http://localhost:8899"
+    :keybinding "s")
+
+  (defengine near-testnet
+    "https://testnet.nearblocks.io/txns/%s"
+    :keybinding "n")
+
+  (defengine sui-localnet
+    "https://suiexplorer.com/txblock/%s?network=local"
+    :keybinding "S")
 
   (defengine duckduckgo
     "https://duckduckgo.com/?q=%s"
@@ -2145,10 +2163,6 @@ deactivate `magit-todos-mode', otherwise enable it."
   (defengine github
     "https://github.com/search?ref=simplesearch&q=%s"
     :keybinding "1")
-
-  (defengine npm
-    "https://www.npmjs.com/search?q=%s"
-    :keybinding "n")
 
   (defengine crates
     "https://crates.io/search?q=%s"
@@ -2173,18 +2187,6 @@ deactivate `magit-todos-mode', otherwise enable it."
   (defengine google
     "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
     :keybinding "g")
-
-  (defengine sui-localnet
-    "https://suiexplorer.com/txblock/%s?network=local"
-    :keybinding "s l")
-
-  (defengine sui-devnnet
-    "https://suiexplorer.com/txblock/%s?network=devnet"
-    :keybinding "s d")
-
-  (defengine sui-mainnet
-    "https://suiexplorer.com/txblock/%s?network=mainnet"
-    :keybinding "s m")
 
   (engine-mode 1))
 
@@ -2856,13 +2858,17 @@ Spell Commands^^           Add To Dictionary^^              Other
          (rustic-mode         . lsp-deferred)
          (go-mode             . lsp-deferred)
          (go-mod-ts-mode      . lsp-deferred)
-         (move-mode           . lsp-deferred)
+         (move-mode           . (lambda ()
+                         (setq-local lsp-enabled-clients '(semgrep-ls))
+                         (lsp-deferred)))
          (toml-mode           . lsp-deferred)
          (toml-ts-mode        . lsp-deferred)
          (python-ts-mode      . lsp-deferred)
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
-         (solidity-mode       . lsp-deferred)
+         (solidity-mode       . (lambda ()
+                                  (setq-local lsp-enabled-clients '(semgrep-ls))
+                                  (lsp-deferred)))
          (json-ts-mode        . lsp-deferred)
          (zig-mode            . lsp-deferred)
          (typescript-mode     . lsp-deferred)
@@ -2875,8 +2881,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable nil)
-  (lsp-inlay-hints-mode t)
+  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hints-mode nil)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
@@ -2895,6 +2901,12 @@ Spell Commands^^           Add To Dictionary^^              Other
 (setq lsp-sqls-workspace-config-path nil)
 (setq lsp-enable-indentation nil)
 
+;; (use-package semgrep
+;;   :ensure t
+;;   :config
+;;   (setq semgrep-ls-binary "/Library/Frameworks/Python.framework/Versions/3.12/bin/semgrep")
+;; )
+
 (defun toggle-lsp-inlay-hints ()
   "Toggle LSP inlay hints."
   (interactive)
@@ -2910,7 +2922,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   :straight (:build t)
   :commands lsp-ui-mode
   :custom
-  (lsp-ui-peek-always-show t)
+  (lsp-ui-peek-always-show nil)
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable nil)
   :general
@@ -3807,12 +3819,6 @@ Spell Commands^^           Add To Dictionary^^              Other
   :mode "\\.yml\\'"
   :mode "\\.yaml\\'")
 
-(use-package move-mode
-  :straight (:build t :host github :repo "amnn/move-mode" :branch "main"))
-
-(add-hook 'move-mode-hook #'eglot-ensure)
-;;           (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer"))
-
 (defun my/move-lsp-project-root (dir)
   (and-let* (((boundp 'eglot-lsp-context))
              (eglot-lsp-context)
@@ -3827,14 +3833,17 @@ Spell Commands^^           Add To Dictionary^^              Other
   (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
   (lsp-register-client
    (make-lsp-client
-    :new-connection (lsp-stdio-connection "sui-move-analyzer")
+    :new-connection (lsp-stdio-connection "move-analyzer")
     :activation-fn (lsp-activate-on "move")
     :priority -1
     :server-id 'move-analyzer)))
 
 (use-package eglot
   :config
-  (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer")))
+  (add-to-list 'eglot-server-programs '(move-mode "aptos-move-analyzer"))
+  (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer"))
+  (add-to-list 'eglot-server-programs '(move-mode "move-analyzer"))
+)
 
 (dqv/evil
   ;;:packages '(counsel)
@@ -3871,13 +3880,13 @@ Spell Commands^^           Add To Dictionary^^              Other
   "a" '(:ignore t :which-key "Application")
   "ac" '(calendar :which-key "Calendar")
 
-  "s" '(:ignore t :which-key "Set Timer")
-  "st" '(org-timer :which-key "Timer")
-  "si" '(org-timer-item :which-key "Timer")
-  "ss" '(org-timer-set-timer :which-key "Set Timer")
-  "sp" '(org-timer-pause-or-continue :which-key "Pause / Continue")
-  "s1" '(org-timer-start :which-key "Start")
-  "s2" '(org-timer-stop :which-key "Stop")
+  ;; "s" '(:ignore t :which-key "Set Timer")
+  ;; "st" '(org-timer :which-key "Timer")
+  ;; "si" '(org-timer-item :which-key "Timer")
+  ;; "ss" '(org-timer-set-timer :which-key "Set Timer")
+  ;; "sp" '(org-timer-pause-or-continue :which-key "Pause / Continue")
+  ;; "s1" '(org-timer-start :which-key "Start")
+  ;; "s2" '(org-timer-stop :which-key "Stop")
   "wr" '(writeroom-mode :which-key "Write Room")
 
   "d" '(:ignore t :which-key "Dirvish")
@@ -4051,6 +4060,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   "lE"  #'lsp-ui-flycheck-list
   "ld"  #'lsp-find-definition
   "lr"  #'lsp-find-references
+  "lh"  #'lsp-inlay-hints-mode
   "lD"  #'xref-find-definitions
   "lr"  #'xref-find-definitions
   "lR"  #'lsp-rename

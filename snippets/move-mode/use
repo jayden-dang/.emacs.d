@@ -2,4 +2,4 @@
 # name: use
 # key: use
 # --
-use ${1:$$(yas-choose-value '("sui::" "std::"))}$0
+use ${1:$$(yas-choose-value '("sui" "std" "aptos_framework"))}::$0

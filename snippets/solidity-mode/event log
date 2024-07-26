@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: event log
+# key: log
+# --
+log_${1:$$(yas-choose-value '("named_address" "named_bytes" "named_decimal_int" "named_decimal_uint" "named_int" "named_uint" "named_bytes" "named_string" "bytes32" "address" "int" "uint" "bytes" "string"))}($0)
