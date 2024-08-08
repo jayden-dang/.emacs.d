@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: bcs function
+# key: bcs::
+# --
+bcs::${1:$$(yas-choose-value '(
+"to_bytes"
+"serialized_size"
+))}<$0>()

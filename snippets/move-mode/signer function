@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: signer function
+# key: sig
+# --
+signer::${1:$$(yas-choose-value '("address_of" "borrow_address"))};

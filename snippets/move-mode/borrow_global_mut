@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: borrow_global_mut
+# key: brm
+# --
+borrow_global_mut<$0>(${1:address})

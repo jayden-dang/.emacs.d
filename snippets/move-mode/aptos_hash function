@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: aptos_hash function
+# key: ah
+# --
+aptos_hash::${1:$$(yas-choose-value '("keccak256" "sha2_512" "sha3_512" "repemd160"))}($0);

@@ -1,7 +1,5 @@
 # -*- mode: snippet -*-
 # name: public fun
-# key: pfn
+# key: pf
 # --
-public fun $1() {
-       $0
-}
+public fun $1($0) {}

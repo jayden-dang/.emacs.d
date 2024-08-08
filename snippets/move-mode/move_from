@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: move_from
+# key: mf
+# --
+move_from<$0>(${1:address})

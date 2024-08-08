@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: #[event]
+# key: #e
+# --
+#[event]$0

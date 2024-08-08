@@ -2,4 +2,5 @@
 # name: #[test]
 # key: #t
 # --
-#[test]$0
+#[${1:$$(yas-choose-value '("test" "test_only" "expected_failure"))}]
+$0

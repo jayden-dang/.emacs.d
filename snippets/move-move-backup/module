@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: module
-# key: mod
+# key: md
 # --
-module ${1:addr}::${Name} {
+module $1 {
        $0
 }

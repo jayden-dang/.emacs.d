@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: aptos_std
+# key: aptos_std::
+# --
+aptos_std::${1:$$(yas-choose-value '("table" "smart_vector"))}$0

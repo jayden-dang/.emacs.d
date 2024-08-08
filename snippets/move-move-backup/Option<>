@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: Object
+# name: Option<>
 # key: O
 # --
-Object<$0>
+Option<$0>

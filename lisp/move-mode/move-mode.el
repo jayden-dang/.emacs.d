@@ -1,9 +1,9 @@
 ;;; move-mode.el --- A major-mode for editing Move language -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2022 Ashok Menon
+;; Copyright (c) 2024 Jayden Dang <jayden.dangvu@gmail.com>
 
-;; Author: Ashok Menon
-;; URL: https://github.com/amnn/move-mode
+;; Author: Jayden
+;; URL: https://github.com/jayden/move-mode
 ;; Version: 1.0.0
 ;; Package-Requires: ((emacs "25.1"))
 ;; Keywords: languages
@@ -17,9 +17,9 @@
 
 ;;; Code:
 
-
 
 (require 'compile)
+(require 'eldoc)
 
 ;;; Constants for use with Customization =================================== ;;;
 
@@ -29,6 +29,15 @@
     "freeze"
     "move_from"
     "move_to"
+    "timestamp"
+    "signer"
+    "simple_map"
+    "hash"
+    "bcs"
+    "borrow"
+    "borrow_mut"
+    "borrow_global"
+    "borrow_global_mut"
     )
   "Built-in functions from Core Move.")
 
@@ -315,6 +324,8 @@ Defines regexps for matching file names in compiler output, replacing defaults."
     "match"
     "sui"
     "aptos_framework"
+    "aptos_token_objects"
+    "aptos_std"
     ))
 
 (defconst move-integer-types
@@ -332,10 +343,6 @@ Defines regexps for matching file names in compiler output, replacing defaults."
                                "bool"
                                "vector"
                                "outer"
-                               "borrow"
-                               "borrow_mut"
-                               "borrow_global"
-                               "borrow_global_mut"
                                )))
 
 (defconst move-abilities
@@ -641,5 +648,42 @@ offset."
     (ansi-color-apply-on-region compilation-filter-start (point))))
 
 (provide 'move-mode)
+;;; move-mode eldocs <<<
 
-;;; move-mode.el ends here
+(defvar move-function-docs
+  '(("aptos_framework" . "This is the reference documentation of the Aptos framework.")
+    ("key" . "Value can be used as a key for global storage operations")
+    ("copy" . "Value can be copied ( or cloned by value )")
+    ("drop" . "Value can be dropped by the end of scope")
+    ("store" . "value can be stored inside global storage")
+    ;; Object
+    ("Object" . "A pointer to an object -- these can only provide guarantees based upon the underlying data type, that is the validity of T existing at an address is something that cannot be verified by any other module than the module that defined T. Similarly, the module that defines T can remove it from storage at any point in time")
+    ("ConstructorRef" . "This is a one time ability given to the creator to configure the object as necessary")
+    ("DeleteRef" . "Used to remove an object from storage")
+    ("ExtendRef" . "Used to create events or move additional resources into object storage")
+    ("TransferRef" . "Used to create LinearTransferRef, hence ownership transfer.")
+    ("LinearTransferRef" . "Used to perform transfers. This locks transferring ability to a single time use bound to the current owner")
+    ("DeriveRef" . "Used to create derived objects from a given objects.")
+    ("TransferEvent" . "Emitted whenever the object's owner field is changed.")
+    ("Transfer" . "Emitted whenever the object's owner field is changed.")
+    ("object_from_constructor_ref" . "Returns an Object from within a ConstructorRef\n
+public fun object_from_constructor_ref<T: key>(ref: &object::ConstructorRef): object::Object<T>")
+
+    ("address_from_constructor_ref" . "Returns the address associated with the constructor\n
+public fun address_from_constructor_ref(ref: &object::ConstructorRef): address")
+    ))
+
+(defun move-get-function-doc (symbol)
+  "Lấy mô tả của hàm SYMBOL từ move-function-docs."
+  (cdr (assoc symbol move-function-docs)))
+
+(defun move-eldoc-function ()
+  "Hàm để lấy thông tin eldoc cho `move-mode`."
+  (let ((symbol (thing-at-point 'symbol)))
+    (move-get-function-doc symbol)))
+
+(add-hook 'move-mode-hook
+          (lambda ()
+            (setq-local eldoc-documentation-function #'move-eldoc-function)
+            (eldoc-mode 1)))
+;;; move-mode eldocs <<<

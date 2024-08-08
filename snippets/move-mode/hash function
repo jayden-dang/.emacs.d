@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hash function
+# key: hash::
+# --
+hash::${1:$$(yas-choose-value '("sha2_256" "sha3_256"))}($0);

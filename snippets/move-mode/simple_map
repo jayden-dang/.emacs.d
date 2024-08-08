@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: simple_map
+# key: sm
+# --
+simple_map::${1:$$(yas-choose-value '("add" "length" "contains_key" "borrow" "borrow_mut"))}($0);

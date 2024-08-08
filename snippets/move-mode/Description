@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Description
+# key: <d
+# --
+// -->>> Description::START  --->>>  $1
+$0
+// <<<-- Description::END    <<<---  $1

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: table::
+# key: tb
+# --
+table::${1:$$(yas-choose-value '("new" "add" "remove" "upsert" "borrow" "borrow_with_default" "borrow_mut" "borrow_mut_with_default"))}<$0>()

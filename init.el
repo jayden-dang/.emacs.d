@@ -680,290 +680,290 @@ With a prefix argument, TRASH is nil."
   :defer t
   :straight (:build t))
 
-(use-package org
-  :straight t
-  :defer t
-  :commands (orgtbl-mode)
-  :hook (org-mode . visual-line-mode)
-  ;; (org-mode . org-num-mode))
-  :custom-face
-  (org-macro ((t (:foreground "#b48ead"))))
-  :init
-  (auto-fill-mode -1)
-  :config
-  (defhydra org-babel-transient ()
-    "
-  ^Navigate^                    ^Interact
-  ^^^^^^^^^^^------------------------------------------
-  [_j_/_k_] navigate src blocs  [_x_] execute src block
-  [_g_]^^   goto named block    [_'_] edit src block
-  [_z_]^^   recenter screen     [_q_] quit
-  "
-    ("q" nil :exit t)
-    ("j" org-babel-next-src-block)
-    ("k" org-babel-previous-src-block)
-    ("g" org-babel-goto-named-src-block)
-    ("z" recenter-top-bottom)
-    ("x" org-babel-execute-maybe)
-    ("'" org-edit-special :exit t))
-  (require 'ox-beamer)
-  (require 'org-protocol)
-  (setq org-hide-leading-stars             nil
-        org-hide-macro-markers             t
-        org-ellipsis                       " ⤵"
-        org-image-actual-width             1200
-        org-image-actual-height            1000
-        org-redisplay-inline-images        t
-        org-display-inline-images          t
-        org-startup-with-inline-images     "inlineimages"
-        org-pretty-entities                t
-        org-fontify-whole-heading-line     t
-        org-fontify-done-headline          t
-        org-fontify-quote-and-verse-blocks t
-        org-startup-indented               t
-        org-startup-align-all-tables       t
-        org-use-property-inheritance       t
-        org-list-allow-alphabetical        t
-        org-M-RET-may-split-line           nil
-        org-src-window-setup               'split-window-right
-        org-src-fontify-natively           t
-        org-src-tab-acts-natively          t
-        org-src-preserve-indentation       t
-        org-log-done                       'time
-        org-directory                      "~/Dropbox/Org"
-        org-default-notes-file             (expand-file-name "notes.org" org-directory))
-  (with-eval-after-load 'oc
-    (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
-  (setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
-  (add-hook 'org-mode-hook (lambda ()
-                             (interactive)
-                             (electric-indent-local-mode -1)))
-  (defvar org-personal-file "~/Dropbox/Org/Personal.org")
-  (defvar org-vocabulary-file "~/Dropbox/Org/Vocabulary.org")
-  (setq org-capture-templates
-        '(
-          ("p" "Personal" entry
-            (file+headline org-personal-file "Personal")
-            (file "~/.emacs.d/capture/schedule.orgcaptmpl"))
-          ("v" "Vocabulary")))
-  (defun org-emphasize-bold ()
-    "Emphasize as bold the current region."
-    (interactive)
-    (org-emphasize 42))
-  (defun org-emphasize-italic ()
-    "Emphasize as italic the current region."
-    (interactive)
-    (org-emphasize 47))
-  (defun org-emphasize-underline ()
-    "Emphasize as underline the current region."
-    (interactive)
-    (org-emphasize 95))
-  (defun org-emphasize-verbatim ()
-    "Emphasize as verbatim the current region."
-    (interactive)
-    (org-emphasize 61))
-  (defun org-emphasize-code ()
-    "Emphasize as code the current region."
-    (interactive)
-    (org-emphasize 126))
-  (defun org-emphasize-strike-through ()
-    "Emphasize as strike-through the current region."
-    (interactive)
-    (org-emphasize 43))
-  
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((C . t)
-     (emacs-lisp . t)
-     (gnuplot . t)
-     (latex . t)
-     (makefile . t)
-     (restclient . t)
-     (js . t)
-     (plantuml . t)
-     (python . t)
-     (sass . t)
-     (shell . t)
-     (sql . t)))
-  (setq org-use-sub-superscripts (quote {}))
-  (setq org-latex-compiler "xelatex")
-  (require 'engrave-faces)
-  (csetq org-latex-src-block-backend 'engraved)
-  (dolist (package '(("AUTO" "inputenc" t ("pdflatex"))
-                     ("T1"   "fontenc"  t ("pdflatex"))
-                     (""     "grffile"  t)))
-    (delete package org-latex-default-packages-alist))
-  
-  (dolist (package '(("capitalize" "cleveref")
-                     (""           "booktabs")
-                     (""           "tabularx")))
-    (add-to-list 'org-latex-default-packages-alist package t))
-  
-  (setq org-latex-reference-command "\\cref{%s}")
-  (setq org-export-latex-hyperref-format "\\ref{%s}")
-  ;; (setq org-latex-pdf-process
-  ;;       '("tectonic -Z shell-escape --synctex --outdir=%o %f"))
-  (setq org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                                "%bibtex -output-directory %o %f"
-                                "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                                "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
-        org-latex-remove-logfiles t
-        org-latex-logfiles-extensions '("aux" "bcf" "blg" "fdb_latexmk" "fls"
-                                        "figlist" "idx" "log" "nav" "out" "ptc"
-                                        "run.xml" "snm" "toc" "vrb" "xdv"))
-  (dolist (ext '("bbl" "lot"))
-    (add-to-list 'org-latex-logfiles-extensions ext t))
-  (use-package org-re-reveal
-    :defer t
-    :after org
-    :straight (:build t)
-    :init
-    (add-hook 'org-mode-hook (lambda () (require 'org-re-reveal)))
-    :config
-    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
-          org-re-reveal-revealjs-version "4"))
-  (setq org-html-validation-link nil)
-  (eval-after-load "ox-latex"
-    '(progn
-       (add-to-list 'org-latex-classes
-                    '("conlang"
-                      "\\documentclass{book}"
-                      ("\\chapter{%s}" . "\\chapter*{%s}")
-                      ("\\section{%s}" . "\\section*{%s}")
-                      ("\\subsection{%s}" . "\\subsection*{%s}")
-                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-       (add-to-list 'org-latex-classes
-                    `("beamer"
-                      ,(concat "\\documentclass[presentation]{beamer}\n"
-                               "[DEFAULT-PACKAGES]"
-                               "[PACKAGES]"
-                               "[EXTRA]\n")
-                      ("\\section{%s}" . "\\section*{%s}")
-                      ("\\subsection{%s}" . "\\subsection*{%s}")
-                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
-  
-  
-  (setq org-publish-project-alist
-        `(
-          
-          
-          
-          
-          
-          
-          ))
-  :general
-  (dqv/evil
-    :keymaps 'org-mode-map
-    :packages 'org
-    "RET" 'org-open-at-point)
-  (dqv/major-leader-key
-    :keymaps 'org-mode-map
-    :packages 'org
-    ;; Various
-    "RET" #'org-ctrl-c-ret
-    "*" #'org-ctrl-c-star
-    "'" #'org-edit-special
-    "-" #'org-ctrl-c-minus
-    "a" #'org-agenda
-    "c" #'org-capture
-    "C" #'org-columns
-    "e" #'org-export-dispatch
-    "l" #'org-store-link
-    "p" #'org-priority
-    "r" #'org-reload
-    ;; Babels
-    "b" '(:ignore t :which-key "babel")
-    "b." #'org-babel-transient/body
-    "bb" #'org-babel-execute-buffer
-    "bc" #'org-babel-check-src-block
-    "bC" #'org-babel-tangle-clean
-    "be" #'org-babel-execute-maybe
-    "bf" #'org-babel-tangle-file
-    "bn" #'org-babel-next-src-block
-    "bo" #'org-babel-open-src-block-result
-    "bp" #'org-babel-previous-src-block
-    "br" #'org-babel-remove-result-one-or-many
-    "bR" #'org-babel-goto-named-result
-    "bt" #'org-babel-tangle
-    "bi" #'org-babel-view-src-block-info
-    ;; Dates
-    "d" '(:ignore t :which-key "Dates")
-    "dd" #'org-deadline
-    "ds" #'org-schedule
-    "dt" #'org-time-stamp
-    "dT" #'org-time-stramp-inactive
-    ;; Insert
-    "i" '(:ignore t :which-key "Insert")
-    "ib" #'org-insert-structure-template
-    "id" #'org-insert-drawer
-    "ie" '(:ignore t :which-key "Emphasis")
-    "ieb" #'org-emphasize-bold
-    "iec" #'org-emphasize-code
-    "iei" #'org-emphasize-italic
-    "ies" #'org-emphasize-strike-through
-    "ieu" #'org-emphasize-underline
-    "iev" #'org-emphasize-verbatim
-    "iE" #'org-set-effort
-    "if" #'org-footnote-new
-    "ih" #'org-insert-heading
-    "iH" #'counsel-org-link
-    "ii" #'org-insert-item
-    "il" #'org-insert-link
-    "in" #'org-add-note
-    "ip" #'org-set-property
-    "is" #'org-insert-subheading
-    "it" #'org-set-tags-command
-    ;; Tables
-    "t" '(:ignore t :which-key "Table")
-    "th" #'org-table-move-column-left
-    "tj" #'org-table-move-row-down
-    "tk" #'org-table-move-row-up
-    "tl" #'org-table-move-column-right
-    "ta" #'org-table-align
-    "te" #'org-table-eval-formula
-    "tf" #'org-table-field-info
-    "tF" #'org-table-edit-formulas
-    "th" #'org-table-convert
-    "tl" #'org-table-recalculate
-    "tp" #'org-plot/gnuplot
-    "tS" #'org-table-sort-lines
-    "tw" #'org-table-wrap-region
-    "tx" #'org-table-shrink
-    "tN" #'org-table-create-with-table.el
-    "td" '(:ignore t :which-key "Delete")
-    "tdc" #'org-table-delete-column
-    "tdr" #'org-table-kill-row
-    "ti" '(:ignore t :which-key "Insert")
-    "tic" #'org-table-insert-column
-    "tih" #'org-table-insert-hline
-    "tir" #'org-table-insert-row
-    "tiH" #'org-table-hline-and-move
-    "tt" '(:ignore t :which-key "Toggle")
-    "ttf" #'org-table-toggle-formula-debugger
-    "tto" #'org-table-toggle-coordinate-overlays
-    ;; Toggle
-    "T" '(:ignore t :which-key "Toggle")
-    "Tc" #'org-toggle-checkbox
-    "Ti" #'org-toggle-inline-images
-    "Tl" #'org-latex-preview
-    "Tn" #'org-num-mode
-    "Ts" #'dqv/toggle-org-src-window-split
-    "Tt" #'org-show-todo-tree
-    "<SPC>" #'org-todo
-    )
+  (use-package org
+      :straight t
+      :defer t
+      :commands (orgtbl-mode)
+      :hook (org-mode . visual-line-mode)
+      ;; (org-mode . org-num-mode))
+      :custom-face
+      (org-macro ((t (:foreground "#b48ead"))))
+      :init
+      (auto-fill-mode -1)
+      :config
+      (defhydra org-babel-transient ()
+        "
+      ^Navigate^                    ^Interact
+      ^^^^^^^^^^^------------------------------------------
+      [_j_/_k_] navigate src blocs  [_x_] execute src block
+      [_g_]^^   goto named block    [_'_] edit src block
+      [_z_]^^   recenter screen     [_q_] quit
+      "
+        ("q" nil :exit t)
+        ("j" org-babel-next-src-block)
+        ("k" org-babel-previous-src-block)
+        ("g" org-babel-goto-named-src-block)
+        ("z" recenter-top-bottom)
+        ("x" org-babel-execute-maybe)
+        ("'" org-edit-special :exit t))
+      (require 'ox-beamer)
+      (require 'org-protocol)
+      (setq org-hide-leading-stars             nil
+            org-hide-macro-markers             t
+            org-ellipsis                       " ⤵"
+            org-image-actual-width             1200
+            org-image-actual-height            1000
+            org-redisplay-inline-images        t
+            org-display-inline-images          t
+            org-startup-with-inline-images     "inlineimages"
+            org-pretty-entities                t
+            org-fontify-whole-heading-line     t
+            org-fontify-done-headline          t
+            org-fontify-quote-and-verse-blocks t
+            org-startup-indented               t
+            org-startup-align-all-tables       t
+            org-use-property-inheritance       t
+            org-list-allow-alphabetical        t
+            org-M-RET-may-split-line           nil
+            org-src-window-setup               'split-window-right
+            org-src-fontify-natively           t
+            org-src-tab-acts-natively          t
+            org-src-preserve-indentation       t
+            org-log-done                       'time
+            org-directory                      "~/Dropbox/Org"
+            org-default-notes-file             (expand-file-name "notes.org" org-directory))
+      (with-eval-after-load 'oc
+        (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
+      (setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
+      (add-hook 'org-mode-hook (lambda ()
+                                 (interactive)
+                                 (electric-indent-local-mode -1)))
+      (defvar org-personal-file "~/Dropbox/Org/Personal.org")
+      (defvar org-vocabulary-file "~/Dropbox/Org/Vocabulary.org")
+      (setq org-capture-templates
+            '(
+              ("p" "Personal" entry
+                (file+headline org-personal-file "Personal")
+                (file "~/.emacs.d/capture/schedule.orgcaptmpl"))
+              ("v" "Vocabulary")))
+      (defun org-emphasize-bold ()
+        "Emphasize as bold the current region."
+        (interactive)
+        (org-emphasize 42))
+      (defun org-emphasize-italic ()
+        "Emphasize as italic the current region."
+        (interactive)
+        (org-emphasize 47))
+      (defun org-emphasize-underline ()
+        "Emphasize as underline the current region."
+        (interactive)
+        (org-emphasize 95))
+      (defun org-emphasize-verbatim ()
+        "Emphasize as verbatim the current region."
+        (interactive)
+        (org-emphasize 61))
+      (defun org-emphasize-code ()
+        "Emphasize as code the current region."
+        (interactive)
+        (org-emphasize 126))
+      (defun org-emphasize-strike-through ()
+        "Emphasize as strike-through the current region."
+        (interactive)
+        (org-emphasize 43))
+      
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((C . t)
+         (emacs-lisp . t)
+         (gnuplot . t)
+         (latex . t)
+         (makefile . t)
+         (restclient . t)
+         (js . t)
+         (plantuml . t)
+         (python . t)
+         (sass . t)
+         (shell . t)
+         (sql . t)))
+      (setq org-use-sub-superscripts (quote {}))
+      (setq org-latex-compiler "xelatex")
+      (require 'engrave-faces)
+      (csetq org-latex-src-block-backend 'engraved)
+      (dolist (package '(("AUTO" "inputenc" t ("pdflatex"))
+                         ("T1"   "fontenc"  t ("pdflatex"))
+                         (""     "grffile"  t)))
+        (delete package org-latex-default-packages-alist))
+      
+      (dolist (package '(("capitalize" "cleveref")
+                         (""           "booktabs")
+                         (""           "tabularx")))
+        (add-to-list 'org-latex-default-packages-alist package t))
+      
+      (setq org-latex-reference-command "\\cref{%s}")
+      (setq org-export-latex-hyperref-format "\\ref{%s}")
+      ;; (setq org-latex-pdf-process
+      ;;       '("tectonic -Z shell-escape --synctex --outdir=%o %f"))
+      (setq org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                    "%bibtex -output-directory %o %f"
+                                    "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                    "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
+            org-latex-remove-logfiles t
+            org-latex-logfiles-extensions '("aux" "bcf" "blg" "fdb_latexmk" "fls"
+                                            "figlist" "idx" "log" "nav" "out" "ptc"
+                                            "run.xml" "snm" "toc" "vrb" "xdv"))
+      (dolist (ext '("bbl" "lot"))
+        (add-to-list 'org-latex-logfiles-extensions ext t))
+      (use-package org-re-reveal
+        :defer t
+        :after org
+        :straight (:build t)
+        :init
+        (add-hook 'org-mode-hook (lambda () (require 'org-re-reveal)))
+        :config
+        (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+              org-re-reveal-revealjs-version "4"))
+      (setq org-html-validation-link nil)
+      (eval-after-load "ox-latex"
+        '(progn
+           (add-to-list 'org-latex-classes
+                        '("conlang"
+                          "\\documentclass{book}"
+                          ("\\chapter{%s}" . "\\chapter*{%s}")
+                          ("\\section{%s}" . "\\section*{%s}")
+                          ("\\subsection{%s}" . "\\subsection*{%s}")
+                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+           (add-to-list 'org-latex-classes
+                        `("beamer"
+                          ,(concat "\\documentclass[presentation]{beamer}\n"
+                                   "[DEFAULT-PACKAGES]"
+                                   "[PACKAGES]"
+                                   "[EXTRA]\n")
+                          ("\\section{%s}" . "\\section*{%s}")
+                          ("\\subsection{%s}" . "\\subsection*{%s}")
+                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
+      
+      
+      (setq org-publish-project-alist
+            `(
+              
+              
+              
+              
+              
+              
+              ))
+      :general
+      (dqv/evil
+        :keymaps 'org-mode-map
+        :packages 'org
+        "RET" 'org-open-at-point)
+      (dqv/major-leader-key
+        :keymaps 'org-mode-map
+        :packages 'org
+        ;; Various
+        "RET" #'org-ctrl-c-ret
+        "*" #'org-ctrl-c-star
+        "'" #'org-edit-special
+        "-" #'org-ctrl-c-minus
+        "a" #'org-agenda
+        "c" #'org-capture
+        "C" #'org-columns
+        "e" #'org-export-dispatch
+        "l" #'org-store-link
+        "p" #'org-priority
+        "r" #'org-reload
+        ;; Babels
+        "b" '(:ignore t :which-key "babel")
+        "b." #'org-babel-transient/body
+        "bb" #'org-babel-execute-buffer
+        "bc" #'org-babel-check-src-block
+        "bC" #'org-babel-tangle-clean
+        "be" #'org-babel-execute-maybe
+        "bf" #'org-babel-tangle-file
+        "bn" #'org-babel-next-src-block
+        "bo" #'org-babel-open-src-block-result
+        "bp" #'org-babel-previous-src-block
+        "br" #'org-babel-remove-result-one-or-many
+        "bR" #'org-babel-goto-named-result
+        "bt" #'org-babel-tangle
+        "bi" #'org-babel-view-src-block-info
+        ;; Dates
+        "d" '(:ignore t :which-key "Dates")
+        "dd" #'org-deadline
+        "ds" #'org-schedule
+        "dt" #'org-time-stamp
+        "dT" #'org-time-stramp-inactive
+        ;; Insert
+        "i" '(:ignore t :which-key "Insert")
+        "ib" #'org-insert-structure-template
+        "id" #'org-insert-drawer
+        "ie" '(:ignore t :which-key "Emphasis")
+        "ieb" #'org-emphasize-bold
+        "iec" #'org-emphasize-code
+        "iei" #'org-emphasize-italic
+        "ies" #'org-emphasize-strike-through
+        "ieu" #'org-emphasize-underline
+        "iev" #'org-emphasize-verbatim
+        "iE" #'org-set-effort
+        "if" #'org-footnote-new
+        "ih" #'org-insert-heading
+        "iH" #'counsel-org-link
+        "ii" #'org-insert-item
+        "il" #'org-insert-link
+        "in" #'org-add-note
+        "ip" #'org-set-property
+        "is" #'org-insert-subheading
+        "it" #'org-set-tags-command
+        ;; Tables
+        "t" '(:ignore t :which-key "Table")
+        "th" #'org-table-move-column-left
+        "tj" #'org-table-move-row-down
+        "tk" #'org-table-move-row-up
+        "tl" #'org-table-move-column-right
+        "ta" #'org-table-align
+        "te" #'org-table-eval-formula
+        "tf" #'org-table-field-info
+        "tF" #'org-table-edit-formulas
+        "th" #'org-table-convert
+        "tl" #'org-table-recalculate
+        "tp" #'org-plot/gnuplot
+        "tS" #'org-table-sort-lines
+        "tw" #'org-table-wrap-region
+        "tx" #'org-table-shrink
+        "tN" #'org-table-create-with-table.el
+        "td" '(:ignore t :which-key "Delete")
+        "tdc" #'org-table-delete-column
+        "tdr" #'org-table-kill-row
+        "ti" '(:ignore t :which-key "Insert")
+        "tic" #'org-table-insert-column
+        "tih" #'org-table-insert-hline
+        "tir" #'org-table-insert-row
+        "tiH" #'org-table-hline-and-move
+        "tt" '(:ignore t :which-key "Toggle")
+        "ttf" #'org-table-toggle-formula-debugger
+        "tto" #'org-table-toggle-coordinate-overlays
+        ;; Toggle
+        "T" '(:ignore t :which-key "Toggle")
+        "Tc" #'org-toggle-checkbox
+        "Ti" #'org-toggle-inline-images
+        "Tl" #'org-latex-preview
+        "Tn" #'org-num-mode
+        "Ts" #'dqv/toggle-org-src-window-split
+        "Tt" #'org-show-todo-tree
+        "<SPC>" #'org-todo
+        )
 
 
-  (dqv/leader-key
-    :packages 'org
-    :infix "o"
-    ""  '(:ignore t :which-key "org")
-    "c" #'org-capture)
-  (dqv/major-leader-key
-    :packages 'org
-    :keymaps 'org-src-mode-map
-    "'" #'org-edit-src-exit
-    "k" #'org-edit-src-abort))
+      (dqv/leader-key
+        :packages 'org
+        :infix "o"
+        ""  '(:ignore t :which-key "org")
+        "c" #'org-capture)
+      (dqv/major-leader-key
+        :packages 'org
+        :keymaps 'org-src-mode-map
+        "'" #'org-edit-src-exit
+        "k" #'org-edit-src-abort))
 
 (defun dqv/my-open-urls-in-region (beg end)
   "Open URLs between BEG and END.
@@ -1012,6 +1012,7 @@ With a prefix argument, TRASH is nil."
 (use-package restclient
   :straight (:build t)
   :defer t)
+(setq url-debug t)
 
 (use-package ob-restclient
   :straight (:build t)
@@ -2858,17 +2859,13 @@ Spell Commands^^           Add To Dictionary^^              Other
          (rustic-mode         . lsp-deferred)
          (go-mode             . lsp-deferred)
          (go-mod-ts-mode      . lsp-deferred)
-         (move-mode           . (lambda ()
-                         (setq-local lsp-enabled-clients '(semgrep-ls))
-                         (lsp-deferred)))
+         (move-mode           . lsp-deferred)
          (toml-mode           . lsp-deferred)
          (toml-ts-mode        . lsp-deferred)
          (python-ts-mode      . lsp-deferred)
          (sql-mode            . lsp-deferred)
          (json-mode           . lsp-deferred)
-         (solidity-mode       . (lambda ()
-                                  (setq-local lsp-enabled-clients '(semgrep-ls))
-                                  (lsp-deferred)))
+         (solidity-mode       . lsp-deferred)
          (json-ts-mode        . lsp-deferred)
          (zig-mode            . lsp-deferred)
          (typescript-mode     . lsp-deferred)
@@ -2881,7 +2878,7 @@ Spell Commands^^           Add To Dictionary^^              Other
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   (lsp-use-plist t)
-  (lsp-inlay-hint-enable t)
+  (lsp-inlay-hint-enable nil)
   (lsp-inlay-hints-mode nil)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-chaining-hints t)
@@ -3819,13 +3816,13 @@ Spell Commands^^           Add To Dictionary^^              Other
   :mode "\\.yml\\'"
   :mode "\\.yaml\\'")
 
-(defun my/move-lsp-project-root (dir)
+(defun jd/move-lsp-project-root (dir)
   (and-let* (((boundp 'eglot-lsp-context))
              (eglot-lsp-context)
              (override (locate-dominating-file dir "Move.toml")))
     (cons 'Move.toml override)))
 
-(add-hook 'project-find-functions #'my/move-lsp-project-root)
+(add-hook 'project-find-functions #'jd/move-lsp-project-root)
 (cl-defmethod project-root ((project (head Move.toml)))
   (cdr project))
 
@@ -4166,6 +4163,9 @@ Spell Commands^^           Add To Dictionary^^              Other
 ;;                      (lsp-deferred))))  ; or lsp-deferred
 
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
+
+(use-package markdown-mode
+  :straight t)
 
 (defun split-window-right-and-focus ()
   "Spawn a new window right of the current one and focus it."

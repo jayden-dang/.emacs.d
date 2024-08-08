@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: borrow_global
+# key: br
+# --
+borrow_global<$0>(${1:address})

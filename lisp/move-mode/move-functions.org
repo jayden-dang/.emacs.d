@@ -1,0 +1,18 @@
+#+TITLE: Tài liệu các hàm trong Move
+
+* aptos_framework
+  :PROPERTIES:
+  :doc: This is the reference documentation of the Aptos framework
+  :END:
+
+* freeze
+  :PROPERTIES:
+  :doc: document freeze
+  :example:
+  rust fn main() { hello }
+  :END:
+
+* function
+  :PROPERTIES:
+  :doc: test function
+  :END:

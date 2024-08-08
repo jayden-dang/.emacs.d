@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fun
+# key: fn
+# --
+fun $1() {
+    $0
+}

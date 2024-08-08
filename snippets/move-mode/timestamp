@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: timestamp
+# key: time
+# --
+timestamp::${1:$$(yas-choose-value '("now_microseconds" "new_seconds"))}();$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use aptos_framework
+# key: uap
+# --
+use aptos_framework$0

@@ -1,5 +1,12 @@
 # -*- mode: snippet -*-
 # name: use
-# key: use
+# key: u
 # --
-use ${1:$$(yas-choose-value '("sui" "std" "aptos_framework"))}::$0
+use ${1:$$(yas-choose-value '(
+"aptos_framework"
+"aptos_std"
+"aptos_token"
+"aptos_token_objects"
+"std"
+"sui"
+))}::$0
