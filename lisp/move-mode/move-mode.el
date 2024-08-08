@@ -599,16 +599,18 @@ character, and NIL otherwise with the point at an indeterminate position."
            (move--next-terminator bound))))
 
 (defun move--indent-column ()
-  "Calculates the column to indent the current line to.
+  "calculates the column to indent the current line to.
 
-The default indent is `move-indent-offset' greater than the indent of the line
+the default indent is `move-indent-offset' greater than the indent of the line
 containing the innermost parenthesis at point, or 0 if there is no such
 innermost paren.
 
-This column is modified for closing parens, which are dedented by the offset,
+this column is modified for closing parens, which are dedented by the offset,
 continuation lines of `/*'-style comments, which are indented by 1 to line up
 their `*', and assignment continuation lines, which are indented by a further
-offset."
+offset.
+
+Additionally, it now accounts for #[...] macros and blocks enclosed in curly braces to prevent unintended indentation."
   (save-excursion
     (back-to-indentation)
     (let* ((current-posn   (point))
@@ -624,21 +626,33 @@ offset."
              (looking-at "*"))
         (+ default-indent 1))
 
-       ;; Top-level items will remain completely unindented.
+       ;; top-level items will remain completely unindented.
        ((= default-indent 0) 0)
 
-       ;; Closing parentheses
+       ;; closing parentheses
        ((looking-at "[]})]")
         (- default-indent move-indent-offset))
 
-       ;; Assignment continuation lines
+       ;; assignment continuation lines (corrected handling for braces)
        ((save-excursion
           (and parent-paren
-               (save-excursion (goto-char parent-paren)
-                               (looking-at "{"))
+               (not (save-excursion (goto-char parent-paren)
+                                   (looking-at "{")))
                (move--prev-assignment parent-paren)
                (not (move--next-terminator current-posn))))
         (+ default-indent move-indent-offset))
+
+       ;; #[...] macro handling
+       ((and (save-excursion (goto-char parent-paren)
+                              (looking-at "#\\["))
+               (save-excursion (goto-char parent-paren)
+                              (looking-back "[^#]*#[^[]*"))
+               (looking-at "{"))
+        default-indent)
+
+       ;; Brace handling
+       ((looking-at "{")
+        default-indent)
 
        (t default-indent)))))
 
