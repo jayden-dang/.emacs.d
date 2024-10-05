@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: aggregator_factory
+# key: aggregator_factory
+# --
+aggregator_factory::${1:$$(yas-choose-value '(
+"initialize_aggregator_factory"
+"create_aggregator_internal"
+"create_aggregator"
+"new_aggregator"
+"AggregatorFactory"
+))}

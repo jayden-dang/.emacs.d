@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: consensus_config
+# key: consensus_config
+# --
+consensus_config::${1:$$(yas-choose-value '(
+"initialize"
+"set"
+"set_for_next_epoch"
+"on_new_epoch"
+"validator_txn_enabled"
+"validator_txn_enabled_internal"
+))}($0)

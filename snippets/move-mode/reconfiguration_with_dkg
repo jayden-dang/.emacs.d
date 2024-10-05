@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: reconfiguration_with_dkg
+# key: reconfiguration_with_dkg
+# --
+reconfiguration_with_dkg::${1:$$(yas-choose-value '(
+"try_start"
+"finish"
+"finish_with_dkg_result"
+))}$0

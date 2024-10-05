@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: primary_fungible_store
+# key: primary_fungible_store
+# --
+primary_fungible_store::${1:$$(yas-choose-value '(
+"create_primary_store_enabled_fungible_asset"
+"ensure_primary_store_exists"
+"create_primary_store"
+"primary_store_address"
+"primary_store"
+"primary_store_exists"
+"primary_store_address_inlined"
+"primary_store_inlined"
+"primary_store_exists_inlined"
+"balance"
+"is_balance_at_least"
+"is_frozen"
+"withdraw"
+"deposit"
+"force_deposit"
+"transfer"
+"transfer_assert_minimum_deposit"
+"mint"
+"burn"
+"set_frozen_flag"
+"withdraw_with_ref"
+"deposit_with_ref"
+"transfer_with_ref"
+"may_be_unburn"
+))}$0

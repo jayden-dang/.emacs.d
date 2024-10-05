@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: function_info
+# key: function_info
+# --
+function_info::${1:$$(yas-choose-value '(
+"new_function_info"
+"new_function_info_from_address"
+"check_dispatch_type_compatibility"
+"load_module_from_function"
+"check_dispatch_type_compatibility_impl"
+"is_identifier"
+"load_function_impl"
+"FunctionInfo"
+))}($0)

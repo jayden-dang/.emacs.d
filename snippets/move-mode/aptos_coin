@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: aptos_coin
+# key: aptos_coin
+# --
+aptos_coin::${1:$$(yas-choose-value '(
+"initialize"
+"has_mint_capability"
+"destroy_mint_cap"
+"configure_accounts_for_test"
+"mint"
+"delegate_mint_capability"
+"claim_mint_capability"
+"find_delegation"
+"DelegatedMintCapability"
+))}

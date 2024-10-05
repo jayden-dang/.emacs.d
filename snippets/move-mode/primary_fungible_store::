@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: primary_fungible_store::
+# key: primary_fungible_store::
+# --
+primary_fungible_store::${1:$$(yas-choose-value '(
+"create_primary_store_enabled_fungible_asset"
+))}

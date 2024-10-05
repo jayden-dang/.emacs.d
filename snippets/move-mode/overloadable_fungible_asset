@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: overloadable_fungible_asset
+# key: overloadable_fungible_asset
+# --
+overloadable_fungible_asset::${1:$$(yas-choose-value '(
+"register_overload_functions"
+"withdraw"
+"deposit"
+"transfer_fixed_send"
+"transfer_fixed_receive"
+"dispatchable_withdraw"
+"dispatchable_deposit"
+))}$0

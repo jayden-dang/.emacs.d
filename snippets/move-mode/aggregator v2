@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: aggregator v2
+# key: aggregator_v2
+# --
+aggregator_v2::${1:$$(yas-choose-value '(
+"max_value"
+"create_aggregator"
+"create_aggregator_with_value"
+"create_unbounded_aggregator"
+"create_unbounded_aggregator_with_value"
+"try_add"
+"add"
+"try_sub"
+"sub"
+"is_at_least_impl"
+"is_at_least"
+"read"
+"snapshot"
+"create_snapshot"
+"read_snapshot"
+"read_derived_string"
+"create_derived_string"
+"derive_string_concat"
+"copy_snapshot"
+"string_concat"
+"Aggregator"
+"AggregatorSnapshot"
+"DerivedStringSnapshot"
+))}($0);

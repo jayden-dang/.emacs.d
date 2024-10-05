@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: jwk_consensus_config
+# key: jwk_consensus_config
+# --
+jwk_consensus_config::${1:$$(yas-choose-value '(
+"initialize"
+"set_for_next_epoch"
+"on_new_epoch"
+"new_off"
+"new_v1"
+"new_oidc_provider"
+"ConfigOff"
+"OIDCProvider"
+"ConfigV1"
+))}($0)

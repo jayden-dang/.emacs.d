@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: collection
+# key: col
+# --
+collection::${1:$$(yas-choose-value '(
+"create_fixed_collection"
+"create_fixed_collection_as_owner"
+"create_unlimited_collection"
+"create_unlimited_collection_as_owner"
+"create_untracked_collection"
+"create_collection_internal"
+"enable_ungated_transfer"
+"create_collection_address"
+"create_collection_seed"
+"increment_supply"
+"decrement_supply"
+"generate_mutator_ref"
+"upgrade_to_concurrent"
+"check_collection_exists"
+"borrow"
+"count"
+"creator"
+"description"
+"name"
+"uri"
+"borrow_mut"
+"set_name"
+"set_description"
+"set_uri"
+"set_max_supply"
+))}($0);

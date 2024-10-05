@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: reconfiguration_state
+# key: reconfiguration_state
+# --
+reconfiguration_state::${1:$$(yas-choose-value '(
+"StateInactive"
+"StateActive"
+"is_initialized"
+"initialize"
+"initialize_for_testing"
+"is_in_progress"
+"on_reconfig_start"
+"start_time_secs"
+"on_reconfig_finish"
+))}$0

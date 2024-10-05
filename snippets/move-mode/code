@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: code
+# key: code
+# --
+code::${1:$$(yas-choose-value '(
+"PackageMetadata"
+"PackageDep"
+"ModuleMetadata"
+"UpgradePolicy"
+"PublishPackage"
+"AllowedDep"
+"upgrade_policy_arbitrary"
+"upgrade_policy_compat"
+"upgrade_policy_immutable"
+"can_change_upgrade_policy_to"
+"initialize"
+"publish_package"
+"freeze_code_object"
+"publish_package_txn"
+"check_upgradability"
+"check_coexistence"
+"check_dependencies"
+"is_policy_exempted_address"
+"get_module_names"
+"request_publish"
+"request_publish_with_allowed_deps"
+))}($0)

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: managed_coin
+# key: managed_coin
+# --
+managed_coin::${1:$$(yas-choose-value '(
+"burn"
+"initialize"
+"mint"
+"register"
+"destroy_caps"
+"remove_caps"
+))}($0)

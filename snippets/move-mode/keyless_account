@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: keyless_account
+# key: keyless_account
+# --
+keyless_account::${1:$$(yas-choose-value '(
+"Group"
+"new_groth16_verification_key"
+"new_configuration"
+"validate_groth16_vk"
+"update_groth16_verification_key"
+"update_configuration"
+"update_training_wheels"
+"update_max_exp_horizon"
+"remove_all_override_auds"
+"add_override_aud"
+"set_groth16_verification_key_for_next_epoch"
+"set_configuration_for_next_epoch"
+"update_training_wheels_for_next_epoch"
+"update_max_exp_horizon_for_next_epoch"
+"remove_all_override_auds_for_next_epoch"
+"add_override_aud_for_next_epoch"
+"on_new_epoch"
+))}($0)

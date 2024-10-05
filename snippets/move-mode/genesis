@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: genesis
+# key: genesis
+# --
+genesis::${1:$$(yas-choose-value '(
+"AccountMap"
+"EmployeeAccountMap"
+"ValidatorConfiguration"
+"ValidatorConfigurationWithCommission"
+"initialize"
+"initialize_aptos_coin"
+"initialize_core_resources_and_aptos_coin"
+"create_accounts"
+"create_account"
+"create_employee_validators"
+"create_initialize_validators_with_commission"
+"create_initialize_validators"
+"create_initialize_validator"
+"initialize_validator"
+"set_genesis_end"
+"initialize_for_verification"
+))}($0)

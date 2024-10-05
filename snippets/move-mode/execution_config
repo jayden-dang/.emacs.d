@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: execution_config
+# key: execution_config
+# --
+execution_config::${1:$$(yas-choose-value '(
+"set"
+"set_for_next_epoch"
+"on_new_epoch"
+))}($0)

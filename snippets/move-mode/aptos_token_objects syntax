@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: aptos_token_objects syntax
+# key: ato
+# --
+aptos_token_objects::${1:$$(yas-choose-value '(
+"token"
+"royalty"
+"property_map"
+"collection"
+"aptos_token"
+))}$0;

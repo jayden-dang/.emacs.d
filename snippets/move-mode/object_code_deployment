@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: object_code_deployment
+# key: object_code_deployment
+# --
+object_code_deployment::${1:$$(yas-choose-value '(
+"publish"
+"object_seed"
+"upgrade"
+"freeze_code_object"
+"Publish"
+"Upgrade"
+"Freeze"
+))}$0

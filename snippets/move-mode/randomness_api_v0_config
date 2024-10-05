@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: randomness_api_v0_config
+# key: randomness_api_v0_config
+# --
+randomness_api_v0_config::${1:$$(yas-choose-value '(
+"initialize"
+"set_for_next_epoch"
+"set_allow_max_gas_flag_for_next_epoch"
+"on_new_epoch"
+))}$0

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: chain_status
+# key: chain_status
+# --
+chain_status::${1:$$(yas-choose-value '(
+"set_genesis_end"
+"is_genesis"
+"is_operating"
+"assert_operating"
+"assert_genesis"
+))}($0)

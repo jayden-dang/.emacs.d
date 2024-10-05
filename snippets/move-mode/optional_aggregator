@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: optional_aggregator
+# key: optional_aggregator
+# --
+optional_aggregator::${1:$$(yas-choose-value '(
+"Integer"
+"OptionalAggregator"
+"new_integer"
+"add_integer"
+"sub_integer"
+"limit"
+"read_integer"
+"destroy_integer"
+"new"
+"switch"
+"switch_and_zero_out"
+"switch_to_integer_and_zero_out"
+"switch_to_aggregator_and_zero_out"
+"destroy"
+"destroy_optional_aggregator"
+"destroy_optional_integer"
+"add"
+"sub"
+"read"
+"is_parallelizable"
+))}$0

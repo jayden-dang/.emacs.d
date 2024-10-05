@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: aggregator
+# key: aggregator
+# --
+aggregator::${1:$$(yas-choose-value '(
+"limit"
+"add"
+"sub"
+"read"
+"destroy"
+"Aggregator"
+))}

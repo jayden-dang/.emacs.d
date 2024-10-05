@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: resgion
+# key: <r
+# --
+<!-- START:>>> $1 >>> -->
+$0
+<!-- END:<<< $1 <<< -->

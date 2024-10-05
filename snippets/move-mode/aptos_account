@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: aptos_account
+# key: aptos_account
+# --
+aptos_account::${1:$$(yas-choose-value '(
+"create_account"
+"batch_transfer"
+"transfer"
+"batch_transfer_coins"
+"transfer_coins"
+"deposit_coins"
+"assert_account_exists"
+"assert_account_is_registered_for_apt"
+"set_allow_direct_coin_transfers"
+"can_receive_direct_coin_transfers"
+"register_apt"
+"fungible_transfer_only"
+"is_fungible_balance_at_least"
+"burn_from_fungible_store"
+"ensure_primary_fungible_store_exists"
+"primary_fungible_store_address"
+"DirectCoinTransferConfigUpdatedEvent"
+"DirectCoinTransferConfigUpdated"
+))}

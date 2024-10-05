@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: reconfiguration
+# key: reconfiguration
+# --
+reconfiguration::${1:$$(yas-choose-value '(
+"initialize"
+"disable_reconfiguration"
+"enable_reconfiguration"
+"reconfiguration_enabled"
+"reconfigure"
+"last_reconfiguration_time"
+"current_epoch"
+"emit_genesis_reconfiguration_event"
+"NewEpochEvent"
+"NewEpoch"
+))}$0

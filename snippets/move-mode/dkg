@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: dkg
+# key: dkg
+# --
+dkg::${1:$$(yas-choose-value '(
+"DKGSessionMetadata"
+"DKGStartEvent"
+"DKGSessionState"
+"initialize"
+"start"
+"finish"
+"try_clear_incomplete_session"
+"incomplete_session"
+"session_dealer_epoch"
+))}($0)

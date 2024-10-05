@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # name: object::...
-# key: oj
+# key: &oj
 # --
-object::${1:$$(yas-choose-value '(
+&object::${1:$$(yas-choose-value '(
 "is_untransferable"
 "is_burnt"
 "address_to_object"

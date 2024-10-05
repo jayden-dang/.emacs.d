@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: event
+# key: event
+# --
+event::${1:$$(yas-choose-value '(
+"EventHandle"
+"emit"
+"write_module_event_to_store"
+"new_event_handle"
+"emit_event"
+"guid"
+"counter"
+"write_to_event_store"
+"destroy_handle"
+))}($0)

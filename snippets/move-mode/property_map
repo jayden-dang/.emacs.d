@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# name: property_map
+# key: pm
+# --
+property_map::${1:$$(yas-choose-value '(
+"init"
+"extend"
+"burn"
+"prepare_input"
+"to_external_type"
+"to_internal_type"
+"type_info_to_internal_type"
+"validate_type"
+"generate_mutator_ref"
+"contains_key"
+"length"
+"read"
+"assert_exists"
+"read_typed"
+"read_bool"
+"read_u8"
+"read_u16"
+"read_u32"
+"read_u64"
+"read_u128"
+"read_u256"
+"read_address"
+"read_bytes"
+"read_string"
+"add"
+"add_typed"
+"add_internal"
+"update"
+"update_typed"
+"update_internal"
+"remove"
+"assert_end_to_end_input"
+))}($0);

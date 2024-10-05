@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: governance_proposal
+# key: governance_proposal
+# --
+governance_proposal::${1:$$(yas-choose-value '(
+"GovernanceProposal"
+"create_proposal"
+"create_empty_proposal"
+))}($0)

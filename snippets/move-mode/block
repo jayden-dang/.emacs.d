@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: block
+# key: block
+# --
+block::${1:$$(yas-choose-value '(
+"initialize"
+"initialize_commit_history"
+"update_epoch_interval_microsecs"
+"get_epoch_interval_secs"
+"block_prologue_common"
+"block_prologue"
+"block_prologue_ext"
+"get_current_block_height"
+"emit_new_block_event"
+"emit_genesis_block_event"
+"emit_writeset_block_event"
+"NewBlockEvent"
+"UpdateEpochIntervalEvent"
+"NewBlock"
+"UpdateEpochInterval"
+))}($0)

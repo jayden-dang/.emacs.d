@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: staking_config
+# key: staking_config
+# --
+staking_config::${1:$$(yas-choose-value '(
+"initialize"
+"reward_rate"
+"initialize_rewards"
+"get"
+"get_allow_validator_set_change"
+"get_required_stake"
+"get_recurring_lockup_duration"
+"get_reward_rate"
+"get_voting_power_increase_limit"
+"calculate_and_save_latest_epoch_rewards_rate"
+"calculate_and_save_latest_rewards_config"
+"update_required_stake"
+"update_recurring_lockup_duration_secs"
+"update_rewards_rate"
+"update_rewards_config"
+"update_voting_power_increase_limit"
+"validate_required_stake"
+"validate_rewards_config"
+))}$0

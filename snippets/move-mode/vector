@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: vector
-# key: v
+# key: vector::
 # --
-vector<${1:u8}>$0
+vector::${1:$$(yas-choose-value '("empty" "singleton" "push_back" "pop_back" "borrow" "borrow_mut" "destroy_empty" "append" "contains" "swap" "reverse" "index_of" "remove" "swap_remove"))}($0)

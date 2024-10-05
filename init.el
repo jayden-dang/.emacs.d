@@ -1000,6 +1000,7 @@ With a prefix argument, TRASH is nil."
   (require 'ox-extra)
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 
+(setq ob-mermaid-cli-path "/Users/dangeamon/.nvm/versions/node/v22.5.1/bin/mmdc")
 (use-package ob-async
   :straight (:build t)
   :defer t

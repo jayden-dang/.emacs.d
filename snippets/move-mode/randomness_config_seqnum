@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: randomness_config_seqnum
+# key: randomness_config_seqnum
+# --
+randomness_config_seqnum::${1:$$(yas-choose-value '(
+"set_for_next_epoch"
+"initialize"
+"on_new_epoch"
+))}$0

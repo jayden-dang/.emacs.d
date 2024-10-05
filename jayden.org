@@ -1398,6 +1398,8 @@ One of the amazing features of org-mode is its literary programming capacities b
   (gnuplot . t)
   (latex . t)
   (makefile . t)
+  (mermaid . t)
+  (scheme . t)
   (js . t)
   (plantuml . t)
   (restclient . t)
@@ -1417,6 +1419,7 @@ The corresponding code is as follows:
 
 Some languages can run asynchronously with the help of ~ob-async~.
 #+begin_src emacs-lisp
+(setq ob-mermaid-cli-path "/Users/dangeamon/.nvm/versions/node/v22.5.1/bin/mmdc")
 (use-package ob-async
   :straight (:build t)
   :defer t
@@ -5689,40 +5692,50 @@ yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Telegram$" manage=off
 yabai -m rule --add app="^iTerm2$" manage=off
+yabai -m rule --add app="^Warp$" manage=off
 #+end_src
 
 ** skdh
+- fn
+- cmd
+- shift
+- alt
+- ctrl
+- hyper (cmd + shift + alt + ctrl)
+- meh (shift + alt + ctrl)
+
 #+begin_src emacs-lisp :mkdirp yes :tangle ~/.config/skhd/skhdrc :export code :results silent :lexical t
 # Changing Window Focus
 
 # Change Window FOcus Within Space
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - h : yabai -m window --focus west
-alt - l : yabai -m window --focus east
+ctrl + alt + cmd - j : yabai -m window --focus south
+ctrl + alt + cmd - k : yabai -m window --focus north
+ctrl + alt + cmd - h : yabai -m window --focus west
+ctrl + alt + cmd - l : yabai -m window --focus east
 
 # Change focus between external displays (left and right)
-alt - n : yabai -m display --focus west
-alt - p : yabai -m display --focus east
+ctrl + alt + cmd - u : yabai -m display --focus west
+ctrl + alt + cmd - i : yabai -m display --focus east
 
 # Modifying the layout
 # Rotate layout clockwise
-shift + alt - r : yabai -m space --rotate 270
+ctrl + alt + cmd - r : yabai -m space --rotate 270
 
 # Flip along y-axis
-shift + alt - y : yabai -m space --mirror y-axis
+ctrl + alt + cmd - y : yabai -m space --mirror y-axis
+ctrl + alt + cmd - s : yabai -m space --mirror y-axis
 
 # Flip along x-axis
-shift + alt - x : yabai -m space --mirror x-axis
+ctrl + alt + cmd - x : yabai -m space --mirror x-axis
 
 # Toggle window float
-shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+ctrl + alt + cmd - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # Maximize a window
-shift + alt - m : yabai -m window --toggle zoom-fullscreen
+ctrl + alt + cmd - m : yabai -m window --toggle zoom-fullscreen
 
 # balance out tree of windows (resize to occupy same area)
-shift + alt - e : yabai -m space --balance
+ctrl + alt + cmd - b : yabai -m space --balance
 
 # swap windows
 shift + alt - j : yabai -m window --swap south
@@ -5745,28 +5758,28 @@ shift + alt - p : yabai -m window --space prev;
 shift + alt - n : yabai -m window --space next;
 
 # Move window to space #
-shift + alt - 1 : yabai -m window --space 1 --focus;
-shift + alt - 2 : yabai -m window --space 2 --focus;
-shift + alt - 3 : yabai -m window --space 3 --focus;
-shift + alt - 4 : yabai -m window --space 4 --focus;
-shift + alt - 5 : yabai -m window --space 5 --focus;
-shift + alt - 6 : yabai -m window --space 6 --focus;
-shift + alt - 7 : yabai -m window --space 7 --focus;
-shift + alt - 8 : yabai -m window --space 8 --focus;
-shift + alt - 9 : yabai -m window --space 9 --focus;
+ctrl + alt + cmd - 1 : yabai -m window --space 1 --focus;
+ctrl + alt + cmd - 2 : yabai -m window --space 2 --focus;
+ctrl + alt + cmd - 3 : yabai -m window --space 3 --focus;
+ctrl + alt + cmd - 4 : yabai -m window --space 4 --focus;
+ctrl + alt + cmd - 5 : yabai -m window --space 5 --focus;
+ctrl + alt + cmd - 6 : yabai -m window --space 6 --focus;
+ctrl + alt + cmd - 7 : yabai -m window --space 7 --focus;
+ctrl + alt + cmd - 8 : yabai -m window --space 8 --focus;
+ctrl + alt + cmd - 9 : yabai -m window --space 9 --focus;
 
 # Start/Stop yabai
-ctrl + alt - q : yabai --stop-service
-ctrl + alt - s : yabai --start-service
+ctrl + alt - q : yabai --stop-service;
+ctrl + alt - s : yabai --start-service;
 #+end_src
 
 ** Zsh
 #+begin_src emacs-lisp :mkdirp yes :tangle no :export code :results silent :lexical t
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
-                                                               # confirmations, etc.) must go above this block; everything else may go below.
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # PATH
@@ -5782,7 +5795,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 
-plugins=(zsh-syntax-highlighting rust)
+plugins=(zsh-syntax-highlighting z)
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff4f00, bold, underline"
 
@@ -5831,6 +5844,62 @@ export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 fpath=(/opt/vagrant/embedded/gems/gems/vagrant-2.4.0/contrib/zsh $fpath)
 compinit
 # <<<<  Vagrant command completion (end)
+
+alias cprod='ssh -i "~/.ssh/openecosystem.pem" ubuntu@ec2-3-1-235-20.ap-southeast-1.compute.amazonaws.com'
+alias cdb='ssh -i "~/.ssh/openedu.pem" ec2-user@ec2-3-0-94-222.ap-southeast-1.compute.amazonaws.com'
+alias cdev='ssh -i "~/.ssh/openedu.pem" ubuntu@ec2-13-251-137-136.ap-southeast-1.compute.amazonaws.com'
+alias cstag='ssh -i "~/.ssh/openedu.pem" ubuntu@ec2-13-212-32-218.ap-southeast-1.compute.amazonaws.com'
+alias ck3n2='ssh -i "~/.ssh/jayden-edu.pem" ubuntu@ec2-47-128-219-236.ap-southeast-1.compute.amazonaws.com'
+alias e='emacs'
+
+# >>>> Alias for Algoran
+alias ak='algokit'
+alias ap='algokit project'
+alias ar='algokit project run'
+# <<<< Alias for Algoran
+
+# >>> Near Configuration
+alias local_near='NEAR_ENV="local" NEAR_CLI_LOCALNET_NETWORK_ID="localnet" NEAR_NODE_URL="http://127.0.0.1:62285" NEAR_CLI_LOCALNET_KEY_PATH="/Users/benjaminkurrek/.neartosis/2021-12-02T13.37.41/validator-key.json" NEAR_WALLET_URL="http://127.0.0.1:62292" NEAR_HELPER_URL="http://127.0.0.1:62286" NEAR_HELPER_ACCOUNT="test.near" NEAR_EXPLORER_URL="http://127.0.0.1:62290" near'
+# <<<< Near Configuration
+
+# >>>> Alias for Anchor Solana
+alias ab='anchor build'
+alias at='anchor test'
+# <<<< Alias for Anchor Solana
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+
+# bun completions
+[ -s "/Users/dangeamon/.bun/_bun" ] && source "/Users/dangeamon/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+fpath=(/Users/dangeamon/.local/share/zsh-completion/completions $fpath) # avalanche completion
+rm -f ~/.zcompdump; compinit # avalanche completion
+
+# Created by `pipx` on 2024-05-07 03:53:28
+export PATH="$PATH:/Users/dangeamon/.local/bin"
+export GOPATH="$(go env GOPATH)"
+export PATH="${PATH}:${GOPATH}/bin"
+
+# fnm
+FNM_PATH="/Users/dangeamon/Library/Application Support/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/dangeamon/Library/Application Support/fnm:$PATH"
+  eval "`fnm env`"
+fi
+
+# pnpm
+export PNPM_HOME="/Users/dangeamon/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
 #+end_src
 
 ** Grammarly

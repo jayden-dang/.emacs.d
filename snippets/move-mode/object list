@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: object::...
-# key: oj
+# name: object list
+# key: object
 # --
 object::${1:$$(yas-choose-value '(
 "is_untransferable"
@@ -57,4 +57,14 @@ object::${1:$$(yas-choose-value '(
 "is_owner"
 "owns"
 "root_owner"
+"ObjectGroup"
+"Object"
+"ConstructorRef"
+"DeleteRef"
+"ExtendRef"
+"TransferRef"
+"LinearTransferRef"
+"DeriveRef"
+"TransferEvent"
+"Transfer"
 ))}$0

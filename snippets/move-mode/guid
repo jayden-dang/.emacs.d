@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: guid
+# key: guid
+# --
+guid::${1:$$(yas-choose-value '(
+"GUID"
+"ID"
+"create"
+"create_id"
+"id"
+"creator_address"
+"id_creator_address"
+"creation_num"
+"id_creation_num"
+"eq_id"
+))}($0)

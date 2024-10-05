@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: dispatchable_fungible_asset
+# key: dispatchable
+# --
+dispatchable_fungible_asset::${1:$$(yas-choose-value '(
+"register_dispatch_functions"
+"register_derive_supply_dispatch_function"
+"withdraw"
+"deposit"
+"transfer"
+"transfer_assert_minimum_deposit"
+"derived_balance"
+"derived_supply"
+"borrow_transfer_ref"
+"dispatchable_withdraw"
+"dispatchable_deposit"
+"dispatchable_derived_balance"
+"dispatchable_derived_supply"
+))}($0)

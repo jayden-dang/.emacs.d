@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# name: randomness
+# key: randomness
+# --
+randomness::${1:$$(yas-choose-value '(
+"RandomnessGeneratedEvent"
+"initialize"
+"on_new_block"
+"next_32_bytes"
+"bytes"
+"u8_integer"
+"u16_integer"
+"u32_integer"
+"u64_integer"
+"u128_integer"
+"u256_integer"
+"u256_integer_internal"
+"u8_range"
+"u16_range"
+"u32_range"
+"u64_range"
+"u64_range_internal"
+"u128_range"
+"u256_range"
+"permutation"
+"safe_add_mod"
+"take_first"
+"safe_add_mod_for_verification"
+"fetch_and_increment_txn_counter"
+"is_unbiasable"
+))}$0

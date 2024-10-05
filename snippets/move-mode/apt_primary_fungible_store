@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: apt_primary_fungible_store
+# key: apt_primary_fungible_store
+# --
+apt_primary_fungible_store::${1:$$(yas-choose-value '(
+"store_address"
+"is_balance_at_least"
+"burn_from"
+"ensure_primary_store_exists"
+"transfer"
+))}

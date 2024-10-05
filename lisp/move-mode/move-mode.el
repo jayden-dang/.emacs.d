@@ -150,12 +150,12 @@ Inherits from `default' face to avoid interfering with the ANSI colour filter."
       (modify-syntax-entry op "." table))
 
     ;; Parentheses
-    (modify-syntax-entry ?\(  "()" table)
-    (modify-syntax-entry ?\)  ")(" table)
-    (modify-syntax-entry ?\{  "(}" table)
-    (modify-syntax-entry ?\}  "){" table)
-    (modify-syntax-entry ?\[  "(]" table)
-    (modify-syntax-entry ?\]  ")[" table)
+    (modify-syntax-entry ?\(  "\(\)" table)
+    (modify-syntax-entry ?\)  "\)\(" table)
+    (modify-syntax-entry ?\{  "\(\}" table)
+    (modify-syntax-entry ?\}  "\)\{" table)
+    (modify-syntax-entry ?\[  "\(\]" table)
+    (modify-syntax-entry ?\]  "\)\[" table)
 
     ;; Comments
     (modify-syntax-entry ?/   ". 124b" table)
@@ -217,28 +217,43 @@ For use in detecting generic paramters.")
   :group 'move-lang
   :syntax-table move-mode-syntax-table
 
+  ;; (setq-local font-lock-defaults
+  ;;             '(move-mode-font-lock-keywords
+  ;;               nil ;; KEYWORDS-ONLY
+  ;;               nil ;; CASE-FOLD
+  ;;               nil ;; SYNTAX-ALIST
+  ;;               ;;;;;; VARIABLES
+  ;;               (font-lock-syntactic-face-function
+  ;;                . move-mode-distinguish-comments)))
+
   (setq-local font-lock-defaults
               '(move-mode-font-lock-keywords
                 nil ;; KEYWORDS-ONLY
                 nil ;; CASE-FOLD
                 nil ;; SYNTAX-ALIST
-                ;;;;;; VARIABLES
+                nil ;; SYNTAX-BEGIN
                 (font-lock-syntactic-face-function
                  . move-mode-distinguish-comments)))
 
   ;; ! is punctuation unless it's at the end of a word, in which case,
   ;; it should be treated like piece of the preceding word.
+  ;; (setq-local syntax-propertize-function
+  ;;             (syntax-propertize-rules ("\\sw\\(!\\)" (1 "w"))))
   (setq-local syntax-propertize-function
-              (syntax-propertize-rules ("\\sw\\(!\\)" (1 "w"))))
+              (syntax-propertize-rules
+               ("\\(\\sw\\|\\s_\\)\\(!\\)"
+                (2 "w"))))
+
+
 
   ;; This is a weirdly lisp-specific variable
   (setq-local open-paren-in-column-0-is-defun-start nil)
 
   ;; Indentation
   (setq-local indent-line-function #'move-mode-indent-line)
-  (setq-local electric-indent-chars
-              (cons ?} (and (boundp 'electric-indent-chars)
-                            electric-indent-chars)))
+  ;; (setq-local electric-indent-chars
+  ;;             (cons ?} (and (boundp 'electric-indent-chars)
+  ;;                           electric-indent-chars)))
 
   ;; Comments
   (setq-local comment-end        "")
@@ -338,12 +353,10 @@ Defines regexps for matching file names in compiler output, replacing defaults."
     ))
 
 (defconst move-builtin-types
-  (append move-integer-types '(
-                               "address"
+  (append move-integer-types '("address"
                                "bool"
                                "vector"
-                               "outer"
-                               )))
+                               "outer")))
 
 (defconst move-abilities
   '(
@@ -359,6 +372,7 @@ Defines regexps for matching file names in compiler output, replacing defaults."
           "[[:digit:]a-fA-F]*"
           (regexp-opt move-integer-types t)
           "\\_>"))
+
 
 (defconst move-ident-re
   "[a-zA-Z][a-zA-Z0-9_]*\\|_[a-zA-Z0-9_]+")
@@ -384,52 +398,38 @@ Generic type parameters are enclosed by type parameters.")
 
 (defvar move-mode-font-lock-keywords
   `((,(regexp-opt move-keywords 'symbols)      . font-lock-keyword-face)
-    (,(regexp-opt move-builtin-types 'symbols) . font-lock-type-face)
+    (,(regexp-opt move-builtin-types 'symbols) . font-lock-type-face) ;; Line 388
     ("\\(#\\[[^]]*\\]\\)"                      1 font-lock-preprocessor-face keep)
     (,move-integer-with-type-re                1 font-lock-type-face)
-
-    ;; "Types" heuristic -- CapitalizedIdentifiers.
     (,move-type-re                             . font-lock-type-face)
 
-    ;; Module components
     (,(concat "\\(" move-ident-re "\\)::")     1 font-lock-constant-face)
-
-    ;; Fields, function params, local variables with explicit types
     (,(concat "\\(" move-ident-re "\\)\\s-*:[^:]")
      1 font-lock-variable-name-face)
 
-    ;; Let bindings with inferred type
     (,(concat "\\_<let\\s-+\\(" move-ident-re "\\)\\_>")
      1 font-lock-variable-name-face)
 
-    ;; Function declarations
     (,(concat "\\_<fun\\s-+\\(" move-ident-re "\\)\\s-*")
      (1 font-lock-function-name-face)
      ,move-generic-constraint-matcher)
 
-    ;; Struct declarations
     (,(concat "\\_<struct\\s-+\\(" move-ident-re "\\)\\s-*")
      (1 font-lock-type-face)
-
      ("\\_<phantom\\_>"
       ,move-limit-by-<>-form
       (with-syntax-table move-mode-syntax-table+<>
         (up-list) (backward-list))
       (0 font-lock-keyword-face))
-
      ,move-generic-constraint-matcher)
 
     ("\\_<has\\_>"
-
      (,(regexp-opt move-abilities 'symbols)
       (save-excursion
         (re-search-forward "{" (point-at-eol) t +1)
         (point))
-
       nil
-
       (0 font-lock-type-face)))
-
     (eval move--register-builtins)))
 
 ;;; Interactive Functions ================================================== ;;;
@@ -671,8 +671,20 @@ Additionally, it now accounts for #[...] macros and blocks enclosed in curly bra
     ("drop" . "Value can be dropped by the end of scope")
     ("store" . "value can be stored inside global storage")
     ;; Object
+    ("object" . "This defines the Move object model with the following properties:\n
++ Simplified storage interface that supports a heterogeneous collection of resources to be stored together. This enables data types to share a common core data layer (e.g., tokens), while having richer extensions (e.g., concert ticket, sword).
++ Globally accessible data and ownership model that enables creators and developers to dictate the application and lifetime of data.
++ Extensible programming model that supports individualization of user applications that leverage the core framework including tokens.
++ Support emitting events directly, thus improving discoverability of events associated with objects.
++ Considerate of the underlying system by leveraging resource groups for gas efficiency, avoiding costly deserialization and serialization costs, and supporting deletability.")
     ("Object" . "A pointer to an object -- these can only provide guarantees based upon the underlying data type, that is the validity of T existing at an address is something that cannot be verified by any other module than the module that defined T. Similarly, the module that defines T can remove it from storage at any point in time")
     ("ConstructorRef" . "This is a one time ability given to the creator to configure the object as necessary")
+    ("create_named_object" . "Create a new named object and return the ConstructorRef. Named objects can be queried globally by knowing the user generated seed used to create them. Named objects cannot be deleted.\n
+public fun create_named_object(creator: &signer, seed: vector<u8>): object::ConstructorRef")
+    ("create_user_derived_object" . "Create a new object whose address is derived based on the creator account address and another object. Derivde objects, similar to named objects, cannot be deleted.\n
+public(friend) fun create_user_derived_object(creator_address: address, derive_ref: &object::DeriveRef): object::ConstructorRef")
+    ("create_object" . "Create a new object by generating a random unique address based on transaction hash. The unique address is computed sha3_256([transaction hash | auid counter | 0xFB]). The created object is deletable as we can guarantee the same unique address can never be regenerated with future txs.\n
+public fun create_object(owner_address: address): object::ConstructorRef")
     ("DeleteRef" . "Used to remove an object from storage")
     ("ExtendRef" . "Used to create events or move additional resources into object storage")
     ("TransferRef" . "Used to create LinearTransferRef, hence ownership transfer.")
@@ -682,9 +694,50 @@ Additionally, it now accounts for #[...] macros and blocks enclosed in curly bra
     ("Transfer" . "Emitted whenever the object's owner field is changed.")
     ("object_from_constructor_ref" . "Returns an Object from within a ConstructorRef\n
 public fun object_from_constructor_ref<T: key>(ref: &object::ConstructorRef): object::Object<T>")
-
     ("address_from_constructor_ref" . "Returns the address associated with the constructor\n
 public fun address_from_constructor_ref(ref: &object::ConstructorRef): address")
+
+    ;; Primary Fungible Store
+    ("primary_fungible_store" . "This module provides a way for creators of fungible assets to enable support for creating primary (deterministic) stores for their users. This is useful for assets that are meant to be used as a currency, as it allows users to easily create a store for their account and deposit/withdraw/transfer fungible assets to/from it.\n
+The transfer flow works as below:\n
+    1. The sender calls transfer on the fungible asset metadata object to transfer amount of fungible asset to recipient.
+    2. The fungible asset metadata object calls ensure_primary_store_exists to ensure that both the sender's and the recipient's primary stores exist. If either doesn't, it will be created.
+    3. The fungible asset metadata object calls withdraw on the sender's primary store to withdraw amount of fungible asset from it. This emits a withdraw event.
+    4. The fungible asset metadata object calls deposit on the recipient's primary store to deposit amount of fungible asset to it. This emits an deposit event.")
+
+    ("create_primary_store_enabled_fungible_asset" . "Create a fungible asset with primary store support. When users transfer fungible assets to each other, their primary stores will be created automatically if they don't exist. Primary stores have deterministic addresses so that users can easily deposit/withdraw/transfer fungible assets.\n
+public fun create_primary_store_enabled_fungible_asset(
+   constructor_ref: &object::ConstructorRef,
+   maximum_supply: option::Option<u128>,
+   name: string::String,
+   symbol: string::String,
+   decimals: u8,
+   icon_uri: string::String,
+   project_uri: string::String
+)\n
+public fun create_primary_store_enabled_fungible_asset(
+    constructor_ref: &ConstructorRef,
+    maximum_supply: Option<u128>,
+    name: String,
+    symbol: String,
+    decimals: u8,
+    icon_uri: String,
+    project_uri: String,
+) {
+    fungible_asset::add_fungibility(
+        constructor_ref,
+        maximum_supply,
+        name,
+        symbol,
+        decimals,
+        icon_uri,
+        project_uri,
+    );
+    let metadata_obj = &object::generate_signer(constructor_ref);
+    move_to(metadata_obj, DeriveRefPod {
+        metadata_derive_ref: object::generate_derive_ref(constructor_ref),
+    });
+}")
     ))
 
 (defun move-get-function-doc (symbol)

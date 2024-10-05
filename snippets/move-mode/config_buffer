@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: config_buffer
+# key: config_buffer
+# --
+config_buffer::${1:$$(yas-choose-value '(
+"initialize"
+"does_exist"
+"upsert"
+"extract"
+))}($0)

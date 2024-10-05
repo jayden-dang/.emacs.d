@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: royalty
+# key: royalty
+# --
+royalty::${1:$$(yas-choose-value '(
+"init"
+"update"
+"create"
+"generate_mutator_ref"
+"exists_at"
+"delete"
+"get"
+"denominator"
+"numerator"
+"payee_address"
+))}($0);

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: randomness_config
+# key: randomness_config
+# --
+randomness_config::${1:$$(yas-choose-value '(
+"ConfigOff"
+"ConfigV1"
+"ConfigV2"
+"initialize"
+"set_for_next_epoch"
+"on_new_epoch"
+"enabled"
+"new_off"
+"new_v1"
+"new_v2"
+"current"
+))}$0

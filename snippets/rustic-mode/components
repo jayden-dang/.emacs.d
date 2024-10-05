@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: components
+# key: com
+# --
+#[component]
+#[allow(non_snake_case)]
+pub fn $1() -> impl IntoView {
+  view! {
+        $0
+  }
+}

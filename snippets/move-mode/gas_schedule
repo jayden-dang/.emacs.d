@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: gas_schedule
+# key: gas_schedule
+# --
+gas_schedule::${1:$$(yas-choose-value '(
+"GasEntry"
+"initialize"
+"set_gas_schedule"
+"set_for_next_epoch"
+"set_for_next_epoch_check_hash"
+"on_new_epoch"
+"set_storage_gas_config"
+"set_storage_gas_config_for_next_epoch"
+))}($0)
