@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: aptos_framework collection
-# key: aptos_framework
+# key: aptos_framework::
 # --
 aptos_framework::${1:$$(yas-choose-value '(
 "account"

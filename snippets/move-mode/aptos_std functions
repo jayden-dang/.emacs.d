@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: aptos_std
-# key: aptos_std::
+# name: aptos_std functions
+# key: as
 # --
 aptos_std::${1:$$(yas-choose-value '(
 "any"
@@ -36,4 +36,4 @@ aptos_std::${1:$$(yas-choose-value '(
 "table"
 "table_with_length"
 "type_info"
-))};$0
+))}($0);

@@ -88,4 +88,4 @@ coin::${1:$$(yas-choose-value '(
 "MintRefReceipt"
 "TransferRefReceipt"
 "BurnRefReceipt"
-))}($0)
+))}$0

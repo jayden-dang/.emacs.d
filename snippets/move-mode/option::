@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# name: option::
+# key: option
+# --
+option::${1:$$(yas-choose-value '(
+"none"
+"some"
+"from_vec"
+"is_none"
+"is_some"
+"contains"
+"borrow"
+"borrow_with_default"
+"get_with_default"
+"fill"
+"extract"
+"borrow_mut"
+"swap"
+"swap_or_fill"
+"destroy_with_default"
+"destroy_some"
+"destroy_none"
+"to_vec"
+"for_each"
+"for_each_ref"
+"for_each_mut"
+"fold"
+"map"
+"map_ref"
+"filter"
+"any"
+"destroy"
+"Option"
+))}$0

@@ -1,5 +1,21 @@
 # -*- mode: snippet -*-
-# name: String
-# key: S
+# name: string
+# key: string
 # --
-String$0
+string::${1:$$(yas-choose-value '(
+"String"
+"utf8"
+"try_utf8"
+"bytes"
+"is_empty"
+"length"
+"append"
+"append_utf8"
+"insert"
+"sub_string"
+"index_of"
+"internal_check_utf8"
+"internal_is_char_boundary"
+"internal_sub_string"
+"internal_index_of"
+))}$0

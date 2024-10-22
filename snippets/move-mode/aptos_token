@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: aptos_token
+# key: aptos_token::
+# --
+aptos_token::${1:$$(yas-choose-value '("property_map" "token" "token_coin_swap" "token_event_store" "token_transfer"))};$0
