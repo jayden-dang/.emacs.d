@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: math128::
+# key: math128
+# --
+math128::${1:$$(yas-choose-value '(
+"max"
+"min"
+"average"
+"gcd"
+"lcm"
+"mul_div"
+"clamp"
+"pow"
+"floor_log2"
+"log2"
+"sqrt"
+"ceil_div"
+))}$0

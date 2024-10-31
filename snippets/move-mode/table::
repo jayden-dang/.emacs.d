@@ -1,5 +1,26 @@
 # -*- mode: snippet -*-
 # name: table::
-# key: tb
+# key: table
 # --
-table::${1:$$(yas-choose-value '("new" "add" "remove" "upsert" "borrow" "borrow_with_default" "borrow_mut" "borrow_mut_with_default"))}<$0>()
+table::${1:$$(yas-choose-value '(
+"new"
+"add"
+"borrow"
+"borrow_with_default"
+"borrow_mut"
+"borrow_mut_with_default"
+"upsert"
+"remove"
+"contains"
+"destroy"
+"new_table_handle"
+"add_box"
+"borrow_box"
+"borrow_box_mut"
+"contains_box"
+"remove_box"
+"destroy_empty_box"
+"drop_unchecked_box"
+"Table"
+"Box"
+))}$0

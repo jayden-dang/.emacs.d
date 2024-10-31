@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: string_utils::
+# key: string_utils
+# --
+string_utils::${1:$$(yas-choose-value '(
+"to_string"
+"to_string_with_canonical_addresses"
+"to_string_with_integer_types"
+"debug_string"
+"format1"
+"format2"
+"format3"
+"format4"
+"cons"
+"nil"
+"list1"
+"list2"
+"list3"
+"list4"
+"native_format"
+"native_format_list"
+"Cons"
+"NIL"
+"FakeCons"
+))}$0

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: account
-# key: acc
+# key: account
 # --
 account::${1:$$(yas-choose-value '(
 "initialize"
@@ -49,4 +49,4 @@ account::${1:$$(yas-choose-value '(
 "SignerCapabilityOfferProofChallenge"
 "RotationCapabilityOfferProofChallengeV2"
 "SignerCapabilityOfferProofChallengeV2"
-))}($0);
+))}$0

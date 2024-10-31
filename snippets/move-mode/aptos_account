@@ -21,4 +21,4 @@ aptos_account::${1:$$(yas-choose-value '(
 "primary_fungible_store_address"
 "DirectCoinTransferConfigUpdatedEvent"
 "DirectCoinTransferConfigUpdated"
-))}
+))}$0

@@ -62,4 +62,4 @@ aptos_framework::${1:$$(yas-choose-value '(
 "version"
 "vesting"
 "voting"
-))}$0
+))}$0;

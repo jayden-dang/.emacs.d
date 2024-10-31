@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: math64::
+# key: math64
+# --
+math64::${1:$$(yas-choose-value '(
+"max"
+"min"
+"average"
+"gcd"
+"lcm"
+"mul_div"
+"clamp"
+"pow"
+"floor_log2"
+"log2"
+"sqrt"
+"ceil_div"
+))}$0

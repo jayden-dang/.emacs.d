@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: simple_map::
+# key: simple_map
+# --
+simple_map::${1:$$(yas-choose-value '(
+"new"
+"new_from"
+"create"
+"borrow"
+"borrow_mut"
+"contains_key"
+"destroy_empty"
+"add"
+"add_all"
+"upsert"
+"keys"
+"values"
+"to_vec_pair"
+"destroy"
+"remove"
+"find"
+"length"
+"SimpleMap"
+"Element"
+))}$0
