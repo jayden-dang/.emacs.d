@@ -3,6 +3,7 @@
 # key: aptos_coin
 # --
 aptos_coin::${1:$$(yas-choose-value '(
+"AptosCoin"
 "initialize"
 "has_mint_capability"
 "destroy_mint_cap"

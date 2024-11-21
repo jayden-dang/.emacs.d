@@ -95,11 +95,12 @@ We finally come to the ~use-package~ installation. This is done like so:
   (add-to-list 'load-path "~/.emacs.d/lisp/solidity/solidity-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/move-mode/move-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/move-mode")
+  (add-to-list 'load-path "~/.emacs.d/lisp/func-mode")
+  (add-to-list 'load-path "~/.emacs.d/lisp/func-mode/func-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
   (add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
 
   (require 'cadence-mode)
-  (require 'move-mode)
   (require 'solidity-mode)
   (require 'oauth2)
   (require 'screenshot)
@@ -5308,15 +5309,20 @@ It is not rare to encounter a dotenv file, that is, a file with either the ~.env
 
 **** Move-languages
 #+begin_src emacs-lisp
+;; (use-package move-mode
+;;   :straight t)
+
+(require 'move-mode)
+
 (defun jd/move-lsp-project-root (dir)
   (and-let* (((boundp 'eglot-lsp-context))
              (eglot-lsp-context)
              (override (locate-dominating-file dir "Move.toml")))
     (cons 'Move.toml override)))
 
-(add-hook 'project-find-functions #'jd/move-lsp-project-root)
 (cl-defmethod project-root ((project (head Move.toml)))
   (cdr project))
+(add-hook 'project-find-functions #'jd/move-lsp-project-root)
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
@@ -5331,8 +5337,26 @@ It is not rare to encounter a dotenv file, that is, a file with either the ~.env
   :config
   (add-to-list 'eglot-server-programs '(move-mode "aptos-move-analyzer"))
   (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer"))
-  (add-to-list 'eglot-server-programs '(move-mode "move-analyzer"))
-)
+  (add-to-list 'eglot-server-programs '(move-mode "move-analyzer")))
+
+#+end_src
+
+#+begin_src emacs-lisp
+;; (use-package lsp-bridge
+;;   :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+;;                          :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+;;                          :build (:not compile))
+;;   :init
+;;   (setq lsp-bridge-default-mode-hooks
+;;         (seq-remove (lambda (hook)
+;;                       (eq hook 'move-mode))
+;;                     lsp-bridge-default-mode-hooks))
+;;   (global-lsp-bridge-mode))
+#+end_src
+
+**** Func Language
+#+begin_src emacs-lisp
+(require 'func-mode)
 #+end_src
 
 * Keybindings
@@ -5707,70 +5731,70 @@ yabai -m rule --add app="^Warp$" manage=off
 #+begin_src emacs-lisp :mkdirp yes :tangle ~/.config/skhd/skhdrc :export code :results silent :lexical t
 # Changing Window Focus
 
-# Change Window FOcus Within Space
-ctrl + alt + cmd - j : yabai -m window --focus south
-ctrl + alt + cmd - k : yabai -m window --focus north
-ctrl + alt + cmd - h : yabai -m window --focus west
-ctrl + alt + cmd - l : yabai -m window --focus east
+# Change Window Focus Within Space
+ctrl + cmd - j : yabai -m window --focus south
+ctrl + cmd - k : yabai -m window --focus north
+ctrl + cmd - h : yabai -m window --focus west
+ctrl + cmd - l : yabai -m window --focus east
 
 # Change focus between external displays (left and right)
-ctrl + alt + cmd - u : yabai -m display --focus west
-ctrl + alt + cmd - i : yabai -m display --focus east
+hyper - h : yabai -m display --focus west
+hyper - l : yabai -m display --focus east
 
 # Modifying the layout
 # Rotate layout clockwise
-ctrl + alt + cmd - r : yabai -m space --rotate 270
+ctrl + cmd - r : yabai -m space --rotate 270
 
 # Flip along y-axis
-ctrl + alt + cmd - y : yabai -m space --mirror y-axis
-ctrl + alt + cmd - s : yabai -m space --mirror y-axis
+ctrl + cmd - y : yabai -m space --mirror y-axis
+ctrl + cmd - s : yabai -m space --mirror y-axis
 
 # Flip along x-axis
-ctrl + alt + cmd - x : yabai -m space --mirror x-axis
+ctrl + cmd - x : yabai -m space --mirror x-axis
 
 # Toggle window float
-ctrl + alt + cmd - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+ctrl + cmd - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # Maximize a window
-ctrl + alt + cmd - m : yabai -m window --toggle zoom-fullscreen
+hyper - m : yabai -m window --toggle zoom-fullscreen
 
 # balance out tree of windows (resize to occupy same area)
-ctrl + alt + cmd - b : yabai -m space --balance
+hyper - b : yabai -m space --balance
 
 # swap windows
-shift + alt - j : yabai -m window --swap south
-shift + alt - k : yabai -m window --swap north
-shift + alt - h : yabai -m window --swap west
-shift + alt - l : yabai -m window --swap east
+# hyper - j : yabai -m window --swap south
+# hyper - k : yabai -m window --swap north
+# hyper - h : yabai -m window --swap west
+# hyper - l : yabai -m window --swap east
 
 # Move window and split
-ctrl + alt - j : yabai -m window --warp south
-ctrl + alt - k : yabai -m window --warp north
-ctrl + alt - h : yabai -m window --warp west
-ctrl + alt - l : yabai -m window --warp east
+ctrl + shift - j : yabai -m window --warp south
+ctrl + shift - k : yabai -m window --warp north
+ctrl + shift - h : yabai -m window --warp west
+ctrl + shift - l : yabai -m window --warp east
 
 # move window to display left and right
-shift + alt - s : yabai -m window --display west; yabai -m display --focus west;
-shift + alt - g : yabai -m window --display east; yabai -m display --focus east;
+shift + cmd - s : yabai -m window --display west; yabai -m display --focus west;
+shift + cmd - g : yabai -m window --display east; yabai -m display --focus east;
 
 # Move window to prev and next space
-shift + alt - p : yabai -m window --space prev;
-shift + alt - n : yabai -m window --space next;
+hyper - p : yabai -m window --space prev;
+hyper - n : yabai -m window --space next;
 
 # Move window to space #
-ctrl + alt + cmd - 1 : yabai -m window --space 1 --focus;
-ctrl + alt + cmd - 2 : yabai -m window --space 2 --focus;
-ctrl + alt + cmd - 3 : yabai -m window --space 3 --focus;
-ctrl + alt + cmd - 4 : yabai -m window --space 4 --focus;
-ctrl + alt + cmd - 5 : yabai -m window --space 5 --focus;
-ctrl + alt + cmd - 6 : yabai -m window --space 6 --focus;
-ctrl + alt + cmd - 7 : yabai -m window --space 7 --focus;
-ctrl + alt + cmd - 8 : yabai -m window --space 8 --focus;
-ctrl + alt + cmd - 9 : yabai -m window --space 9 --focus;
+hyper - 1 : yabai -m window --space 1 --focus;
+hyper - 2 : yabai -m window --space 2 --focus;
+hyper - 3 : yabai -m window --space 3 --focus;
+hyper - 4 : yabai -m window --space 4 --focus;
+hyper - 5 : yabai -m window --space 5 --focus;
+hyper - 6 : yabai -m window --space 6 --focus;
+hyper - 7 : yabai -m window --space 7 --focus;
+hyper - 8 : yabai -m window --space 8 --focus;
+hyper - 9 : yabai -m window --space 9 --focus;
 
 # Start/Stop yabai
-ctrl + alt - q : yabai --stop-service;
-ctrl + alt - s : yabai --start-service;
+ctrl + cmd - q : yabai --stop-service;
+ctrl + cmd - s : yabai --start-service;
 #+end_src
 
 ** Zsh
@@ -5851,6 +5875,11 @@ alias cdev='ssh -i "~/.ssh/openedu.pem" ubuntu@ec2-13-251-137-136.ap-southeast-1
 alias cstag='ssh -i "~/.ssh/openedu.pem" ubuntu@ec2-13-212-32-218.ap-southeast-1.compute.amazonaws.com'
 alias ck3n2='ssh -i "~/.ssh/jayden-edu.pem" ubuntu@ec2-47-128-219-236.ap-southeast-1.compute.amazonaws.com'
 alias e='emacs'
+alias movement='aptos'
+alias am='aptos move'
+alias ac='aptos account'
+alias ab='aptos balance'
+alias a='aptos'
 
 # >>>> Alias for Algoran
 alias ak='algokit'
@@ -5896,8 +5925,8 @@ fi
 # pnpm
 export PNPM_HOME="/Users/dangeamon/Library/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  ,*":$PNPM_HOME:"*) ;;
+  ,*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 #+end_src

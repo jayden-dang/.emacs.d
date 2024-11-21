@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: #[resource_group_member]
-# key: #rg
+# key: #r
 # --
-#[resource_group_member(group = aptop_framework::object::ObjectGroup)]$0
+#[resource_group_member(group = aptos_framework::object::ObjectGroup)]$0

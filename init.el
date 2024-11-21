@@ -54,11 +54,12 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/solidity/solidity-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/move-mode/move-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/move-mode")
+  (add-to-list 'load-path "~/.emacs.d/lisp/func-mode")
+  (add-to-list 'load-path "~/.emacs.d/lisp/func-mode/func-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
   (add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
 
   (require 'cadence-mode)
-  (require 'move-mode)
   (require 'solidity-mode)
   (require 'oauth2)
   (require 'screenshot)
@@ -3817,15 +3818,20 @@ Spell Commands^^           Add To Dictionary^^              Other
   :mode "\\.yml\\'"
   :mode "\\.yaml\\'")
 
+;; (use-package move-mode
+;;   :straight t)
+
+(require 'move-mode)
+
 (defun jd/move-lsp-project-root (dir)
   (and-let* (((boundp 'eglot-lsp-context))
              (eglot-lsp-context)
              (override (locate-dominating-file dir "Move.toml")))
     (cons 'Move.toml override)))
 
-(add-hook 'project-find-functions #'jd/move-lsp-project-root)
 (cl-defmethod project-root ((project (head Move.toml)))
   (cdr project))
+(add-hook 'project-find-functions #'jd/move-lsp-project-root)
 
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
@@ -3840,8 +3846,20 @@ Spell Commands^^           Add To Dictionary^^              Other
   :config
   (add-to-list 'eglot-server-programs '(move-mode "aptos-move-analyzer"))
   (add-to-list 'eglot-server-programs '(move-mode "sui-move-analyzer"))
-  (add-to-list 'eglot-server-programs '(move-mode "move-analyzer"))
-)
+  (add-to-list 'eglot-server-programs '(move-mode "move-analyzer")))
+
+;; (use-package lsp-bridge
+;;   :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+;;                          :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+;;                          :build (:not compile))
+;;   :init
+;;   (setq lsp-bridge-default-mode-hooks
+;;         (seq-remove (lambda (hook)
+;;                       (eq hook 'move-mode))
+;;                     lsp-bridge-default-mode-hooks))
+;;   (global-lsp-bridge-mode))
+
+(require 'func-mode)
 
 (dqv/evil
   ;;:packages '(counsel)
