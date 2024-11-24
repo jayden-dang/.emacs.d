@@ -56,6 +56,8 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/move-mode")
   (add-to-list 'load-path "~/.emacs.d/lisp/func-mode")
   (add-to-list 'load-path "~/.emacs.d/lisp/func-mode/func-mode.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/tolk-mode")
+  (add-to-list 'load-path "~/.emacs.d/lisp/tolk-mode/tolk-mode.el")
   (add-to-list 'load-path "~/.emacs.d/lisp/maple-iedit")
   (add-to-list 'load-path "~/.emacs.d/lisp/protobuf-mode/")
 
@@ -3860,6 +3862,7 @@ Spell Commands^^           Add To Dictionary^^              Other
 ;;   (global-lsp-bridge-mode))
 
 (require 'func-mode)
+(require 'tolk-mode)
 
 (dqv/evil
   ;;:packages '(counsel)

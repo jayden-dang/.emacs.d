@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: timestamp fn
+# key: timestamp
+# --
+timestamp::${1:$$(yas-choose-value '(
+"now_seconds"
+"now_microseconds"
+"update_global_time"
+"set_time_has_started"
+"CurrentTimeMicroseconds"
+))}$0

@@ -609,7 +609,113 @@ Additionally, it now accounts for #[...] macros and blocks enclosed in curly bra
 ;;; func-mode eldocs <<<
 
 (defvar func-function-docs
-  '(("aptos_framework" . "This is the reference documentation of the Aptos framework.")
+  '(("begin_parse" . "slice begin_parse(cell c) asm \"CTOS\"; \nConverts cell into slice. Notice that c must be either an ordinary cell or an exotic cell (see TVM.pdf, 3.1.2) which is automatically loaded to yield an ordinary cell c'converted into slice afterwards.")
+
+    ("end_parse" . "() end_parse(slice s) impure asm \"ENDS\"; \nChecks if s is empty. If not, throws an exception.")
+
+    ("load_ref" . "(slice, cell) load_ref(slice s) asm( -> 1 0) \"LDREF\"; \nLoads the first reference from a slice.")
+
+    ("preload_ref" . "cell preload_ref(slice s) asm \"PLDREF\"; \nPreloads the first reference from a slice.")
+
+    ("load_bits" . "(slice, slice) load_bits(slice s, int len) asm(s len -> 1 0) \"LDSLICEX\"; \nLoads the first 0 ≤ len ≤ 1023 bits from slice s into a separate slice s''.")
+
+    ("preload_bits" . "slice preload_bits(slice s, int len) asm \"PLDSLICEX\"; \nPreloads the first 0 ≤ len ≤ 1023 bits from slice s into a separate slice s''.")
+
+    ("load_uint" . "(slice, int) ~load_uint(slice s, int len) asm( -> 1 0) \"LDUX\"; \nLoads an unsigned len-bit integer from a slice.")
+
+    ("preload_uint" . "int preload_uint(slice s, int len) asm \"PLDUX\"; \nPreloads an unsigned len-bit integer from a slice.")
+
+    ("load_int" . "(slice, int) ~load_int(slice s, int len) asm(s len -> 1 0) \"LDIX\"; \nLoads a signed len-bit integer from a slice.")
+
+    ("preload_int" . "int preload_int(slice s, int len) asm \"PLDIX\"; \nPreloads a signed len-bit integer from a slice.")
+
+    ("load_coins" . "(slice, int) load_coins(slice s) asm( -> 1 0) \"LDGRAMS\"; \nLoads serialized amount of Toncoins (any unsigned integer up to 2^120 - 1).")
+
+    ("skip_bits" . "slice skip_bits(slice s, int len) asm \"SDSKIPFIRST\"; \nReturns all but the first 0 ≤ len ≤ 1023 bits of s.")
+
+    ("first_bits" . "slice first_bits(slice s, int len) asm \"SDCUTFIRST\"; \nReturns the first 0 ≤ len ≤ 1023 bits of s.")
+
+    ("skip_last_bits" . "slice skip_last_bits(slice s, int len) asm \"SDSKIPLAST\"; \nReturns all but the last 0 ≤ len ≤ 1023 bits of s.")
+
+    ("slice_last" . "slice slice_last(slice s, int len) asm \"SDCUTLAST\"; \nReturns the last 0 ≤ len ≤ 1023 bits of s.")
+
+    ("load_dict" . "(slice, cell) load_dict(slice s) asm( -> 1 0) \"LDDICT\"; \nLoads a dictionary D from slice s. May be applied to dictionaries or to values of arbitrary Maybe ^Y types.")
+
+    ("preload_dict" . "cell preload_dict(slice s) asm \"PLDDICT\"; \nPreloads a dictionary D from slice s.")
+
+    ("skip_dict" . "slice skip_dict(slice s) asm \"SKIPDICT\"; \nLoads a dictionary as load_dict but returns only the remainder of the slice.")
+
+    ("slice_refs" . "int slice_refs(slice s) asm \"SREFS\"; \nReturns the number of references in slice s.")
+
+    ("slice_bits" . "int slice_bits(slice s) asm \"SBITS\"; \nReturns the number of data bits in slice s.")
+
+    ("slice_bits_refs" . "(int, int) slice_bits_refs(slice s) asm \"SBITREFS\"; \nReturns both the number of data bits and the number of references in s.")
+
+    ("slice_empty?" . "int slice_empty?(slice s) asm \"SEMPTY\"; \nChecks whether slice s is empty (i.e., contains no bits of data and no cell references).")
+
+    ("slice_data_empty?" . "int slice_data_empty?(slice s) asm \"SDEMPTY\"; \nChecks whether slice s has no bits of data.")
+
+    ("slice_refs_empty?" . "int slice_refs_empty?(slice s) asm \"SREMPTY\"; \nChecks whether slice s has no references.")
+
+    ("slice_depth" . "int slice_depth(slice s) asm \"SDEPTH\"; \nReturns the depth of slice s. If s has no references, returns 0; otherwise returns one plus the maximum depths of cells referred to from s.")
+
+    ("begin_cell" . "builder begin_cell() asm \"NEWC\"; \nCreates a new empty builder.")
+
+    ("end_cell" . "cell end_cell(builder b) asm \"ENDC\"; \nConverts builder into an ordinary cell.")
+
+    ("store_ref" . "builder store_ref(builder b, cell c) asm(c b) \"STREF\"; \nStores a reference to cell c into builder b.")
+
+    ("store_uint" . "builder store_uint(builder b, int x, int len) asm(x b len) \"STUX\"; \nStores an unsigned len-bit integer x into b for 0 ≤ len ≤ 256.")
+
+    ("store_int" . "builder store_int(builder b, int x, int len) asm(x b len) \"STIX\"; \nStores a signed len-bit integer x into b for 0 ≤ len ≤ 257.")
+
+    ("store_slice" . "builder store_slice(builder b, slice s) asm \"STSLICER\"; \nStores slice s into builder b.")
+
+    ("store_grams" . "builder store_grams(builder b, int x) asm \"STGRAMS\"; \nStores (serializes) an integer x in the range 0..2^120 − 1 into builder b.")
+
+    ("store_dict" . "builder store_dict(builder b, cell c) asm(c b) \"STDICT\"; \nStores dictionary D represented by cell c or null into builder b.")
+
+    ("store_maybe_ref" . "builder store_maybe_ref(builder b, cell c) asm(c b) \"STOPTREF\"; \nEquivalent to store_dict.")
+
+    ("builder_refs" . "int builder_refs(builder b) asm \"BREFS\"; \nReturns the number of cell references already stored in builder b.")
+
+    ("builder_bits" . "int builder_bits(builder b) asm \"BBITS\"; \nReturns the number of data bits already stored in builder b.")
+
+    ("builder_depth" . "int builder_depth(builder b) asm \"BDEPTH\"; \nReturns the depth of builder b. If no cell references are stored in b, returns 0; otherwise returns one plus the maximum depths of cells referred to from b.")
+
+    ("cell_depth" . "int cell_depth(cell c) asm \"CDEPTH\"; \nReturns the depth of cell c. If c has no references, returns 0; otherwise returns one plus the maximum depths of cells referred to from c. If c is null, returns zero.")
+
+    ("cell_null?" . "int cell_null?(cell c) asm \"ISNULL\"; \nChecks whether c is a null. Usually a null-cell represents an empty dictionary.")
+
+    ("slice_hash" . "int slice_hash(slice s) asm \"HASHSU\"; \nComputes the hash of slice s and returns it as a 256-bit unsigned integer x.")
+
+    ("cell_hash" . "int cell_hash(cell c) asm \"HASHCU\"; \nComputes the representation hash of cell c and returns it as a 256-bit unsigned integer x.")
+
+    ("string_hash" . "int string_hash(slice s) asm \"SHA256U\"; \nComputes sha256 of the data bits of slice s. Returns hash as 256-bit unsigned integer.")
+
+    ("check_signature" . "int check_signature(int hash, slice signature, int public_key) asm \"CHKSIGNU\"; \nChecks the Ed25519 signature of hash using public_key. Returns -1 if valid, 0 if invalid.")
+
+    ("check_data_signature" . "int check_data_signature(slice data, slice signature, int public_key) asm \"CHKSIGNS\"; \nChecks whether signature is a valid Ed25519 signature of the data portion using public_key.")
+
+    ("now" . "int now() asm \"NOW\"; \nReturns the current Unix time as an Integer")
+
+    ("my_address" . "slice my_address() asm \"MYADDR\"; \nReturns the internal address of the current smart contract as a Slice with MsgAddressInt.")
+
+    ("get_balance" . "[int, cell] get_balance() asm \"BALANCE\"; \nReturns the remaining balance of the smart contract as tuple with int (balance in nanotoncoins) and cell (extra currencies dictionary).")
+
+    ("min" . "int min(int x, int y) asm \"MIN\"; \nComputes the minimum of two integers x and y.")
+
+    ("max" . "int max(int x, int y) asm \"MAX\"; \nComputes the maximum of two integers x and y.")
+
+    ("minmax" . "(int, int) minmax(int x, int y) asm \"MINMAX\"; \nSorts two integers.")
+
+    ("abs" . "int abs(int x) asm \"ABS\"; \nComputes the absolute value of the integer x.")
+
+    ("null" . "forall X -> X null() asm \"PUSHNULL\"; \nReturns null value that can have any atomic type.")
+
+    ("random" . "int random() impure asm \"RANDU256\"; \nGenerates a new pseudo-random unsigned 256-bit integer.")
+
+    ("rand" . "int rand(int range) impure asm \"RAND\"; \nGenerates a new pseudo-random integer in range 0..range−1 (or range..−1 if range < 0).")
     ))
 
 (defun func-get-function-doc (symbol)
