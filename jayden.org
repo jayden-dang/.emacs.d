@@ -108,6 +108,9 @@ We finally come to the ~use-package~ installation. This is done like so:
   (require 'screenshot)
 #+end_src
 
+#+RESULTS:
+: screenshot
+
 * Basic Configuration
 ** Early Init
 The early init file is the file loaded before anything else in Emacs. This is where I put some options in order to disable as quickly as possible some built-in features of Emacs before they can be even loaded, speeding Emacs up a bit.
@@ -4139,6 +4142,8 @@ Spell Commands^^           Add To Dictionary^^              Other
          (toml-ts-mode        . lsp-deferred)
          (python-ts-mode      . lsp-deferred)
          (sql-mode            . lsp-deferred)
+         (java-mode           . lsp-deferred)
+         (java-ts-mode           . lsp-deferred)
          (json-mode           . lsp-deferred)
          (solidity-mode       . lsp-deferred)
          (json-ts-mode        . lsp-deferred)
@@ -5362,6 +5367,19 @@ It is not rare to encounter a dotenv file, that is, a file with either the ~.env
 (require 'tolk-mode)
 #+end_src
 
+**** Java
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
+(use-package lsp-java
+  :ensure t
+  :after (lsp-mode)
+  :straight (:build t)
+  :config
+  (add-hook 'java-mode-hook #'lsp-java-lens-mode))
+
+;; (setq lsp-java-server-install-dir "/opt/homebrew/bin/jdtls")
+#+end_src
+
 * Keybindings
 Undefining some stuff to make keybind prefixes work correctly.
 #+begin_src emacs-lisp
@@ -6039,4 +6057,16 @@ focus the new window immediately.
       (delete-file temp-file)
       (kill-new hash)
       (message "Cleaned function signature: %s\nKeccak-256 hash of function ID: %s" cleaned-signature hash))))
+#+end_src
+
+** GPTel
+#+begin_src emacs-lisp
+(use-package gptel
+  :straight (:build t))
+
+(setq
+ gptel-model 'gemini-pro
+ gptel-backend (gptel-make-gemini "Gemini"
+                 :key "AIzaSyC1p8zt6ZFYK8DD7FPzKaKRLLfM_ls7Ie0"
+                 :stream t))
 #+end_src

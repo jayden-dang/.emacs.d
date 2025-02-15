@@ -2868,6 +2868,8 @@ Spell Commands^^           Add To Dictionary^^              Other
          (toml-ts-mode        . lsp-deferred)
          (python-ts-mode      . lsp-deferred)
          (sql-mode            . lsp-deferred)
+         (java-mode           . lsp-deferred)
+         (java-ts-mode           . lsp-deferred)
          (json-mode           . lsp-deferred)
          (solidity-mode       . lsp-deferred)
          (json-ts-mode        . lsp-deferred)
@@ -3864,6 +3866,16 @@ Spell Commands^^           Add To Dictionary^^              Other
 (require 'func-mode)
 (require 'tolk-mode)
 
+(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
+(use-package lsp-java
+  :ensure t
+  :after (lsp-mode)
+  :straight (:build t)
+  :config
+  (add-hook 'java-mode-hook #'lsp-java-lens-mode))
+
+;; (setq lsp-java-server-install-dir "/opt/homebrew/bin/jdtls")
+
 (dqv/evil
   ;;:packages '(counsel)
   "s" '(window-configuration-to-register :wk "Register Window")
@@ -4264,3 +4276,12 @@ Spell Commands^^           Add To Dictionary^^              Other
       (delete-file temp-file)
       (kill-new hash)
       (message "Cleaned function signature: %s\nKeccak-256 hash of function ID: %s" cleaned-signature hash))))
+
+(use-package gptel
+  :straight (:build t))
+
+(setq
+ gptel-model 'gemini-pro
+ gptel-backend (gptel-make-gemini "Gemini"
+                 :key "AIzaSyC1p8zt6ZFYK8DD7FPzKaKRLLfM_ls7Ie0"
+                 :stream t))
