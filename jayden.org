@@ -1341,21 +1341,6 @@ Org is the main reason I am using Emacs. It is an extremely powerfu tool when yo
         "k" #'org-edit-src-abort))
 #+end_src
 
-#+begin_src emacs-lisp
-(defun dqv/my-open-urls-in-region (beg end)
-  "Open URLs between BEG and END.
-        TODO: Get better at detecting and opening all URLs"
-  (interactive "r")
-  (save-excursion
-    (save-restriction
-      (narrow-to-region beg end)
-      (goto-char (point-min))
-      (while (re-search-forward org-any-link-re nil t)
-        (save-excursion
-          (backward-char)
-          (org-open-at-point))))))
-#+end_src
-
 *** Evil Org
 The main feature from ~evil-org~ that I love is how easy it is to modify some keybindings for keyboards layouts that do not have ~hjkl~, such as the jd layout (or Dvorak or Colemak if you are into that). But it also adds a ton of default keybindings which are just much more comfortable than the default ones you get with evil and org naked.
 #+begin_src emacs-lisp
