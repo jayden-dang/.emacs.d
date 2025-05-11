@@ -988,19 +988,6 @@ With a prefix argument, TRASH is nil."
         "'" #'org-edit-src-exit
         "k" #'org-edit-src-abort))
 
-(defun dqv/my-open-urls-in-region (beg end)
-  "Open URLs between BEG and END.
-        TODO: Get better at detecting and opening all URLs"
-  (interactive "r")
-  (save-excursion
-    (save-restriction
-      (narrow-to-region beg end)
-      (goto-char (point-min))
-      (while (re-search-forward org-any-link-re nil t)
-        (save-excursion
-          (backward-char)
-          (org-open-at-point))))))
-
 (use-package evil-org
   :straight (:build t)
   :after (org)
@@ -1857,8 +1844,8 @@ the value `split-window-right', then it will be changed to
   (with-eval-after-load 'magit
     (defun my/magit-todos-if-not-yadm ()
       "Deactivate magit-todos if in yadm Tramp connection.
-If `magit--default-directory' points to a yadm Tramp directory,
-deactivate `magit-todos-mode', otherwise enable it."
+If magit--default-directory' points to a yadm Tramp directory,
+deactivate magit-todos-mode', otherwise enable it."
       (if (string-prefix-p "/yadm:" magit--default-directory)
           (magit-todos-mode -1)
         (magit-todos-mode +1)))

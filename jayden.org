@@ -2895,8 +2895,8 @@ We can now configure properly ~magit-todos~. Notice my custom function hooked to
   (with-eval-after-load 'magit
     (defun my/magit-todos-if-not-yadm ()
       "Deactivate magit-todos if in yadm Tramp connection.
-If `magit--default-directory' points to a yadm Tramp directory,
-deactivate `magit-todos-mode', otherwise enable it."
+If magit--default-directory' points to a yadm Tramp directory,
+deactivate magit-todos-mode', otherwise enable it."
       (if (string-prefix-p "/yadm:" magit--default-directory)
           (magit-todos-mode -1)
         (magit-todos-mode +1)))
