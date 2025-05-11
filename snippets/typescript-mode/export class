@@ -1,5 +1,7 @@
 # -*- mode: snippet -*-
 # name: export class
-# key: excl
+# key: exclass
 # --
-export class ${1:Name} {$0}
+export class ${1:name} {
+       $0
+}

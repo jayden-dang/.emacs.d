@@ -66,6 +66,26 @@
   (require 'oauth2)
   (require 'screenshot)
 
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1)
+
+  ;; Tốc độ cuộn (1.0 là mặc định)
+  (setq pixel-scroll-precision-interpolation-factor 1.0)
+
+  ;; Độ trễ (đơn vị giây, mặc định là 0.01)
+  (setq pixel-scroll-precision-interpolation-between-scroll 0.01)
+
+  ;; Làm mượt cuộn chuột
+  (setq pixel-scroll-precision-use-momentum t)
+
+  ;; Tốc độ giảm dần sau khi cuộn
+  (setq pixel-scroll-precision-momentum-min-velocity 5.0)
+
+  ;; Các thiết lập khác tùy theo sở thích
+  (setq pixel-scroll-precision-momentum-seconds 0.9)
+  (setq pixel-scroll-precision-momentum-tick 0.01)
+)
+
 ;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
 (setq user-emacs-directory (expand-file-name "~/.emacs.d/")
       url-history-file (expand-file-name "url/history" user-emacs-directory))
@@ -1953,6 +1973,8 @@ deactivate `magit-todos-mode', otherwise enable it."
   (projectile-mode)
   (add-to-list 'projectile-ignored-projects "~/")
   (add-to-list 'projectile-ignored-projects "^/.algokit")
+  (add-to-list 'projectile-ignored-projects "~/.emacs.d")
+  (add-to-list 'projectile-ignored-projects "~/Dropbox")
   (add-to-list 'projectile-globally-ignored-directories "^node_modules$")
   (add-to-list 'projectile-globally-ignored-directories "^/.algokit")
   (add-to-list 'projectile-globally-ignored-directories "~/.rustup")
@@ -1972,20 +1994,41 @@ deactivate `magit-todos-mode', otherwise enable it."
   :straight (:build t :type built-in)
   :custom ((recentf-max-saved-items 2000))
   :config
-  ;; no Elfeed or native-comp files
-  (add-all-to-list 'recentf-exclude
-                   `(,(rx (* any)
-                          (or "elfeed-db"
-                              "eln-cache"
-                              "conlanging/content"
-                              "org/config"
-                              "/Mail/Sent"
-                              ".cache/")
-                          (* any)
-                          (? (or "html" "pdf" "tex" "epub")))
-                     ,(rx "/"
-                          (or "rsync" "ssh" "tmp" "yadm" "sudoedit" "sudo")
-                          (* any)))))
+  (setq recentf-exclude
+        '(
+          ;; Các pattern như bạn đã cấu hình
+          "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$"
+          "^/tmp/"
+          "^/ssh:"
+          "^/sudo:"
+          "~/Dropbox/Roam"  ; Thêm pattern cụ thể này
+          "~/Dropbox/Org"  ; Thêm pattern cụ thể này
+          "~/.emacs.d/snippets/"
+          "~/.emacs.d/bookmarks"
+          "~/.config/"
+          "\\(^\\|/\\)\\.cache/"
+          "\\(^\\|/\\)\\.git/"
+          "\\(^\\|/\\)node_modules/"
+          "\\(^\\|/\\)logs/"))
+
+
+  ;; Thêm hook để xóa các mục khỏi recentf-list
+  (defun remove-unwanted-recentf-entries ()
+    "Remove entries from recentf-list based on custom patterns."
+    (setq recentf-list
+          (cl-remove-if
+           (lambda (file)
+             (or (string-match-p "~/Dropbox/" file)
+                 (string-match-p "~/Areas/Obsidian/" file)))
+           recentf-list)))
+
+  ;; Chạy mỗi khi recentf-list được cập nhật
+  (add-hook 'recentf-dialog-mode-hook 'remove-unwanted-recentf-entries)
+  (advice-add 'recentf-save-list :before #'remove-unwanted-recentf-entries)
+
+  ;; Xóa danh sách hiện tại
+  (setq recentf-list nil)
+ )
 
 (use-package shell-pop
   :defer t
@@ -2702,25 +2745,6 @@ deactivate `magit-todos-mode', otherwise enable it."
   :straight (:build t)
   :init (winum-mode))
 
-(use-package copilot
-  :straight (:build t :host github :repo "jayden-dang/copilot.el" :files ("dist" "*.el"))
-  :ensure t)
-
-;; you can utilize :map :hook and :config to customize copilot
-(add-hook 'prog-mode-hook 'copilot-mode)
-
-(with-eval-after-load 'company
-  ;; disable inline previews
-  (delq 'company-preview-if-just-one-frontend company-frontends))
-
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "C-s-k") 'copilot-previous-completion)
-(define-key copilot-completion-map (kbd "C-s-j") 'copilot-next-completion)
-
-(dqv/leader-key
-  "C" '(copilot-mode :which-key "Copilot"))
-
 (defun beautify-json ()
   (interactive)
   (let ((b (if mark-active (min (point) (mark)) (point-min)))
@@ -2730,20 +2754,6 @@ deactivate `magit-todos-mode', otherwise enable it."
 
 (use-package protobuf-mode
   :mode "\\.proto3")
-
-(defun writeroom--calculate-width ()
-  "Calculate the width of the writing area."
-  (if (floatp writeroom-width)
-      (progn
-        (message "%s" (window-total-width))
-        (truncate (* (window-total-width) writeroom-width)))
-    writeroom-width))
-
-(use-package writeroom-mode
-  :straight (:build t)
-  :config
-  (setq writeroom-width 0.95)
-  (setq writeroom-mode-line t))
 
 (use-package tsc
   :straight (:build t))
@@ -2999,10 +3009,6 @@ Spell Commands^^           Add To Dictionary^^              Other
                                      :target nil
                                      :cwd nil)))
 (setq dap-auto-configure-features '(sessions locals controls breakpoints expressions repl tooltip))
-
-(use-package exec-path-from-shell
-  :ensure
-  :init (exec-path-from-shell-initialize))
 
 (use-package cc-mode
   :straight (:type built-in)
@@ -4190,11 +4196,11 @@ Spell Commands^^           Add To Dictionary^^              Other
   )
 
 (use-package lsp-grammarly
-  :straight (:build t))
-;; :ensure nil
-;; :hook (text-mode . (lambda ()
-;;                      (require 'lsp-grammarly)
-;;                      (lsp-deferred))))  ; or lsp-deferred
+  :straight (:build t)
+  :ensure nil
+  :hook (text-mode . (lambda ()
+                       (require 'lsp-grammarly)
+                       (lsp-deferred))))  ; or lsp-deferred
 
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 

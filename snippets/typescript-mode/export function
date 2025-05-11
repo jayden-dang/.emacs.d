@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: export function
+# key: exfn
+# --
+interface I$1Props
+
+export function ${1:Name}(props: I${1:Name}Props) {
+       return ($0)
+}

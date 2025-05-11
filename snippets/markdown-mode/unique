@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: unique
+# key: tags
+# --
+---
+tags:
+  - $0
+---

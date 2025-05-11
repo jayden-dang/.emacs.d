@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: init_module
+# key: init
+# --
+fun init_module(caller: &signer) {
+    $0
+}

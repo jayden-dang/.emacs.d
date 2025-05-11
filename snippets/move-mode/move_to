@@ -2,4 +2,4 @@
 # name: move_to
 # key: mt
 # --
-move_to<$0>(${1:&address})
+move_to($0)

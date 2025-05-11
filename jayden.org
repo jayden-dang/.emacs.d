@@ -272,6 +272,29 @@ The early init file is the file loaded before anything else in Emacs. This is wh
 (add-to-list 'default-frame-alist '(alpha . (100 . 100)))
 #+end_src
 
+** Scroll
+#+begin_src emacs-lisp
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1)
+
+  ;; Tốc độ cuộn (1.0 là mặc định)
+  (setq pixel-scroll-precision-interpolation-factor 1.0)
+
+  ;; Độ trễ (đơn vị giây, mặc định là 0.01)
+  (setq pixel-scroll-precision-interpolation-between-scroll 0.01)
+
+  ;; Làm mượt cuộn chuột
+  (setq pixel-scroll-precision-use-momentum t)
+
+  ;; Tốc độ giảm dần sau khi cuộn
+  (setq pixel-scroll-precision-momentum-min-velocity 5.0)
+
+  ;; Các thiết lập khác tùy theo sở thích
+  (setq pixel-scroll-precision-momentum-seconds 0.9)
+  (setq pixel-scroll-precision-momentum-tick 0.01)
+)
+#+end_src
+
 ** Emacs Behavior
 *** Editing Text in Emacs
 #+begin_src emacs-lisp
@@ -3033,6 +3056,8 @@ Now, I can use projectile, which is sort of the /de facto/ standard project mana
   (projectile-mode)
   (add-to-list 'projectile-ignored-projects "~/")
   (add-to-list 'projectile-ignored-projects "^/.algokit")
+  (add-to-list 'projectile-ignored-projects "~/.emacs.d")
+  (add-to-list 'projectile-ignored-projects "~/Dropbox")
   (add-to-list 'projectile-globally-ignored-directories "^node_modules$")
   (add-to-list 'projectile-globally-ignored-directories "^/.algokit")
   (add-to-list 'projectile-globally-ignored-directories "~/.rustup")
@@ -3059,20 +3084,41 @@ The built-in package ~recentf~ keeps track of recently opened files. But by defa
   :straight (:build t :type built-in)
   :custom ((recentf-max-saved-items 2000))
   :config
-  ;; no Elfeed or native-comp files
-  (add-all-to-list 'recentf-exclude
-                   `(,(rx (* any)
-                          (or "elfeed-db"
-                              "eln-cache"
-                              "conlanging/content"
-                              "org/config"
-                              "/Mail/Sent"
-                              ".cache/")
-                          (* any)
-                          (? (or "html" "pdf" "tex" "epub")))
-                     ,(rx "/"
-                          (or "rsync" "ssh" "tmp" "yadm" "sudoedit" "sudo")
-                          (* any)))))
+  (setq recentf-exclude
+        '(
+          ;; Các pattern như bạn đã cấu hình
+          "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$"
+          "^/tmp/"
+          "^/ssh:"
+          "^/sudo:"
+          "~/Dropbox/Roam"  ; Thêm pattern cụ thể này
+          "~/Dropbox/Org"  ; Thêm pattern cụ thể này
+          "~/.emacs.d/snippets/"
+          "~/.emacs.d/bookmarks"
+          "~/.config/"
+          "\\(^\\|/\\)\\.cache/"
+          "\\(^\\|/\\)\\.git/"
+          "\\(^\\|/\\)node_modules/"
+          "\\(^\\|/\\)logs/"))
+
+
+  ;; Thêm hook để xóa các mục khỏi recentf-list
+  (defun remove-unwanted-recentf-entries ()
+    "Remove entries from recentf-list based on custom patterns."
+    (setq recentf-list
+          (cl-remove-if
+           (lambda (file)
+             (or (string-match-p "~/Dropbox/" file)
+                 (string-match-p "~/Areas/Obsidian/" file)))
+           recentf-list)))
+
+  ;; Chạy mỗi khi recentf-list được cập nhật
+  (add-hook 'recentf-dialog-mode-hook 'remove-unwanted-recentf-entries)
+  (advice-add 'recentf-save-list :before #'remove-unwanted-recentf-entries)
+
+  ;; Xóa danh sách hiện tại
+  (setq recentf-list nil)
+ )
 #+end_src
 
 *** Shells
@@ -3943,28 +3989,6 @@ In case I am sharing my screen with people and I want to show which functions ar
 #+end_src
 
 * Other
-** Github Copilot
-#+begin_src emacs-lisp
-(use-package copilot
-  :straight (:build t :host github :repo "jayden-dang/copilot.el" :files ("dist" "*.el"))
-  :ensure t)
-
-;; you can utilize :map :hook and :config to customize copilot
-(add-hook 'prog-mode-hook 'copilot-mode)
-
-(with-eval-after-load 'company
-  ;; disable inline previews
-  (delq 'company-preview-if-just-one-frontend company-frontends))
-
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "C-s-k") 'copilot-previous-completion)
-(define-key copilot-completion-map (kbd "C-s-j") 'copilot-next-completion)
-
-(dqv/leader-key
-  "C" '(copilot-mode :which-key "Copilot"))
-#+end_src
-
 ** Beauty Json
 #+begin_src emacs-lisp
 (defun beautify-json ()
@@ -3979,23 +4003,6 @@ In case I am sharing my screen with people and I want to show which functions ar
 #+begin_src emacs-lisp
 (use-package protobuf-mode
   :mode "\\.proto3")
-#+end_src
-
-** Writeroom
-#+begin_src emacs-lisp
-(defun writeroom--calculate-width ()
-  "Calculate the width of the writing area."
-  (if (floatp writeroom-width)
-      (progn
-        (message "%s" (window-total-width))
-        (truncate (* (window-total-width) writeroom-width)))
-    writeroom-width))
-
-(use-package writeroom-mode
-  :straight (:build t)
-  :config
-  (setq writeroom-width 0.95)
-  (setq writeroom-mode-line t))
 #+end_src
 
 * Programming
@@ -4298,12 +4305,6 @@ And let’s enable some intergration with ~ivy~.
                                      :target nil
                                      :cwd nil)))
 (setq dap-auto-configure-features '(sessions locals controls breakpoints expressions repl tooltip))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package exec-path-from-shell
-  :ensure
-  :init (exec-path-from-shell-initialize))
 #+end_src
 
 *** General Programming Languages
@@ -5735,8 +5736,9 @@ yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
-yabai -m rule --add app="^Telegram$" manage=off
-yabai -m rule --add app="^iTerm2$" manage=off
+# yabai -m rule --add app="^Telegram$" manage=off
+# yabai -m rule --add app="^IINA$" manage=off
+# yabai -m rule --add app="^iTerm2$" manage=off
 yabai -m rule --add app="^Warp$" manage=off
 #+end_src
 
@@ -5783,10 +5785,10 @@ hyper - m : yabai -m window --toggle zoom-fullscreen
 hyper - b : yabai -m space --balance
 
 # swap windows
-# hyper - j : yabai -m window --swap south
-# hyper - k : yabai -m window --swap north
-# hyper - h : yabai -m window --swap west
-# hyper - l : yabai -m window --swap east
+hyper - j : yabai -m window --swap south
+hyper - k : yabai -m window --swap north
+hyper - h : yabai -m window --swap west
+hyper - l : yabai -m window --swap east
 
 # Move window and split
 ctrl + shift - j : yabai -m window --warp south
@@ -5812,6 +5814,11 @@ hyper - 6 : yabai -m window --space 6 --focus;
 hyper - 7 : yabai -m window --space 7 --focus;
 hyper - 8 : yabai -m window --space 8 --focus;
 hyper - 9 : yabai -m window --space 9 --focus;
+hyper - q : yabai -m window --space 10 --focus;
+hyper - w : yabai -m window --space 11 --focus;
+hyper - e : yabai -m window --space 12 --focus;
+hyper - r : yabai -m window --space 13 --focus;
+hyper - t : yabai -m window --space 14 --focus;
 
 # Start/Stop yabai
 ctrl + cmd - q : yabai --stop-service;
@@ -5917,6 +5924,11 @@ alias ab='anchor build'
 alias at='anchor test'
 # <<<< Alias for Anchor Solana
 
+# >>>> Alias for Func
+alias ton='pnpm blueprint'
+alias tonnew='pnpm create ton@latest'
+# <<<< Alias for Func
+
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
 
@@ -5950,16 +5962,17 @@ case ":$PATH:" in
   ,*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 #+end_src
 
 ** Grammarly
 #+begin_src emacs-lisp
 (use-package lsp-grammarly
-  :straight (:build t))
-;; :ensure nil
-;; :hook (text-mode . (lambda ()
-;;                      (require 'lsp-grammarly)
-;;                      (lsp-deferred))))  ; or lsp-deferred
+  :straight (:build t)
+  :ensure nil
+  :hook (text-mode . (lambda ()
+                       (require 'lsp-grammarly)
+                       (lsp-deferred))))  ; or lsp-deferred
 #+end_src
 
 ** MarkdownX
