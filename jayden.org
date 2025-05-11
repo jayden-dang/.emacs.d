@@ -415,14 +415,14 @@ It is also very impolite to keep a certain version of a file in its buffer when 
 
 *** Fill Column
 #+begin_src emacs-lisp
-;; (defun dqv/org-mode-visual-fill ()
-;;   (setq visual-fill-column-width 150
-;;         visual-fill-column-center-text t)
-;;   (visual-fill-column-mode 1))
+(defun dqv/org-mode-visual-fill ()
+  (setq visual-fill-column-width 150
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
-;; (use-package visual-fill-column
-;;   :straight (:build t)
-;;   :hook (org-mode . dqv/org-mode-visual-fill))
+(use-package visual-fill-column
+  :straight (:build t)
+  :hook (org-mode . dqv/org-mode-visual-fill))
 #+end_src
 
 ** Personal Information
@@ -1162,15 +1162,6 @@ Similarly still, this one allows me to manage the size my Emacs windows.
 #+end_src
 
 * Org-mode
-*** Citeproc
-Since recently, in order to make ~org-cite~ compile properly, we need the ~citeproc~ package, a citation processor.
-#+begin_src emacs-lisp
-(use-package citeproc
-  :after (org)
-  :defer t
-  :straight (:build t))
-#+end_src
-
 *** Org
 Org is the main reason I am using Emacs. It is an extremely powerfu tool when you want to write anything that is not necessarily primarily programming-related, though it absolutely can be! Org can be a replacement for anything similar to LibreOffice Writer, LibreOffice Calc, and LibreOffice Impress. It is a much more powerful (and older) version of Markdown which can be exported to LaTeX and HTML at least, rendering writing web pages and technical, scientific documents much simpler than writing manually HTML and LaTeX code, especially when a single document source is meant to be exported for both formats. And since org is an Emacs package, that also means it can be greatly extended however we like!
 #+begin_src emacs-lisp
@@ -1359,22 +1350,16 @@ The main feature from ~evil-org~ that I love is how easy it is to modify some ke
   (evil-org-agenda-set-keys))
 #+end_src
 
-*** Contrib
-Since very recently, the ~contrib/lisp/~ directory of org moved out of the main repository to [[https://git.sr.ht/~bzg/org-contrib][this repository]]. On the other hand, ~contrib/scripts/~ moved to [[https://code.orgmode.org/bzg/worg/src/master/code][the worg repository]], but I don’t need it. The main reason I want ~org-contrib~ is due to ~ox-extra~ that allow the usage of the ~:ignore:~ tag in org.
-#+begin_src emacs-lisp
-(use-package org-contrib
-  :after (org)
-  :defer t
-  :straight (:build t)
-  :init
-  (require 'ox-extra)
-  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
-#+end_src
-
 *** Agenda
 #+name: org-agenda-files
 #+begin_src emacs-lisp :tangle no :exports code :results silent
-(setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
+(setq org-agenda-files (list
+                        "~/Dropbox/Org/"
+                        "~/Dropbox/Roam/"
+                        "~/Dropbox/Roam/blockchain/"
+                        "~/Dropbox/Roam/daily"
+                        ))
+
 #+end_src
 
 *** Babel
@@ -1686,14 +1671,6 @@ A backend for exporting files through org I like is ~ox-epub~ which, as you can 
   :straight (:build t))
 #+end_src
 
-**** Gemini
-#+begin_src emacs-lisp
-(use-package ox-gemini
-  :defer t
-  :straight (:build t)
-  :after (ox org))
-#+end_src
-
 **** HTML
 On HTML exports, Org-mode tries to include a validation link for the exported HTML. Let’s disable that since I never use it.
 #+NAME: org-html-validation
@@ -1701,16 +1678,7 @@ On HTML exports, Org-mode tries to include a validation link for the exported HT
 (setq org-html-validation-link nil)
 #+END_SRC
 
-#+begin_src emacs-lisp
-;; (use-package htmlize
-;;   :defer t
-;;   :straight (:build t))
-#+end_src
-
-This package allows for live-previewing the HTML export of an org
-buffer in an XWidget Webkit browser window. But when testing it, it’s
-not great for large org files, I should keep its usage for smaller org
-files.
+This package allows for live-previewing the HTML export of an org buffer in an XWidget Webkit browser window. But when testing it, it’s not great for large org files, I should keep its usage for smaller org files.
 #+begin_src emacs-lisp
 (use-package preview-org-html-mode
   :defer t
@@ -2024,85 +1992,6 @@ Another great features of Org-mode is the Org projects that allow the user to ea
         <<org-proj-lang>>))
 #+END_SRC
 
-*** Org-ref and Bibtex configuration
-#+begin_src emacs-lisp
-(use-package reftex
-  :commands turn-on-reftex
-  :config (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
-                reftex-plug-into-AUCTeX     t))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package org-ref
-  ;; :after (org ox-bibtex pdf-tools)
-  :after org
-  :defer t
-  :straight (:build t)
-  :custom-face
-  (org-ref-cite-face ((t (:weight bold))))
-  :init
-  (setq org-ref-completion-library    'org-ref-ivy-cite
-        org-latex-logfiles-extensions '("lof" "lot" "aux" "idx" "out" "log" "fbd_latexmk"
-                                        "toc" "nav" "snm" "vrb" "dvi" "blg" "brf" "bflsb"
-                                        "entoc" "ps" "spl" "bbl" "pygtex" "pygstyle"))
-  (add-hook 'org-mode-hook (lambda () (require 'org-ref)))
-  :config
-  (setq bibtex-completion-pdf-field    "file"
-        bibtex-completion-notes-path   "~/Dropbox/Org/bibliography/notes/"
-        bibtex-completion-bibliography "~/Dropbox/Org/bibliography/references.bib"
-        bibtex-completion-library-path "~/Dropbox/Org/bibliography/bibtex-pdfs/"
-        bibtex-completion-pdf-symbol   "⌘"
-        bibtex-completion-notes-symbol "✎")
-  :general
-  (dqv/evil
-    :keymaps 'bibtex-mode-map
-    :packages 'org-ref
-    "C-j" #'org-ref-bibtex-next-entry
-    "C-k" #'org-ref-bibtex-previous-entry
-    "gj"  #'org-ref-bibtex-next-entry
-    "gk"  #'org-ref-bibtex-previous-entry)
-  (dqv/major-leader-key
-    :keymaps '(bibtex-mode-map)
-    :packages 'org-ref
-    ;; Navigation
-    "j" #'org-ref-bibtex-next-entry
-    "k" #'org-ref-bibtex-previous-entry
-
-    ;; Open
-    "b" #'org-ref-open-in-browser
-    "n" #'org-ref-open-bibtex-notes
-    "p" #'org-ref-open-bibtex-pdf
-
-    ;; Misc
-    "h" #'org-ref-bibtex-hydra/body
-    "i" #'org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
-    "s" #'org-ref-sort-bibtex-entry
-
-    "l" '(:ignore t :which-key "lookup")
-    "la" #'arxiv-add-bibtex-entry
-    "lA" #'arxiv-get-pdf-add-bibtex-entry
-    "ld" #'doi-utils-add-bibtex-entry-from-doi
-    "li" #'isbn-to-bibtex
-    "lp" #'pubmed-insert-bibtex-from-pmid)
-  (dqv/major-leader-key
-    :keymaps 'org-mode-map
-    :pakages 'org-ref
-    "ic" #'org-ref-insert-link))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package ivy-bibtex
-  :defer t
-  :straight (:build t)
-  :config
-  (setq bibtex-completion-pdf-open-function #'find-file)
-  :general
-  (dqv/leader-key
-    :keymaps '(bibtex-mode-map)
-    :packages 'ivy-bibtex
-    "m" #'ivy-bibtex))
-#+end_src
-
 *** TODOs
 #+begin_src emacs-lisp
 (setq org-return-follows-link t
@@ -2276,74 +2165,6 @@ Org-modern modernizes a bit the appearance of org buffers, including tables, sou
  "⭠ now ─────────────────────────────────────────────────")
 
 (global-org-modern-mode)
-#+end_src
-
-*** Misc
-~org-tree-slide~ is a presentation tool for org-mode.
-#+begin_src emacs-lisp
-(use-package org-tree-slide
-  :defer t
-  :after org
-  :straight (:build t)
-  :config
-  (setq org-tree-slide-skip-done nil)
-  :general
-  (dqv/major-leader-key
-    :keymaps 'org-mode-map
-    :packages 'org-mode
-    "P" #'org-tree-slide-mode
-    "wj" #'org-tree-slide-move-next-tree
-    "wk" #'org-tree-slide-move-previous-tree
-    "wu" #'org-tree-slide-content))
-#+end_src
-
-~org-roll~ is a simple package for tabletop RPGs for rolling dice.
-#+begin_src emacs-lisp
-(use-package org-roll
-  :defer t
-  :after org
-  :straight (:build t :type git :host github :repo "zaeph/org-roll"))
-#+end_src
-
-*** Gcal
-#+begin_src emacs-lisp
-(setq plstore-cache-passphrase-for-symmetric-encryption t)
-
-(setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
-      org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
-                                  ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
-                                  ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
-                                  ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
-                                  ("6daac2cc37c1b859926fd72ccef0595968465a0cce36fa820a2b84ed4428b59d@group.calendar.google.com" .  "~/Dropbox/Org/Work.org")))
-
-(use-package org-gcal
-  :straight t
-  :config
-  (org-gcal-reload-client-id-secret)
-  (setq org-gcal-remove-api-cancelled-events t))
-
-#+end_src
-
-+ Customizing the contents of event entries
-#+begin_src emacs-lisp
-(defun my-org-gcal-set-effort (_calendar-id event _update-mode)
-  "Set Effort property based on EVENT if not already set."
-  (when-let* ((stime (plist-get (plist-get event :start)
-                                :dateTime))
-              (etime (plist-get (plist-get event :end)
-                                :dateTime))
-              (diff (float-time
-                     (time-subtract (org-gcal--parse-calendar-time-string etime)
-                                    (org-gcal--parse-calendar-time-string stime))))
-              (minutes (floor (/ diff 60))))
-    (let ((effort (org-entry-get (point) org-effort-property)))
-      (unless effort
-        (message "need to set effort - minutes %S" minutes)
-        (org-entry-put (point)
-                       org-effort-property
-                       (apply #'format "%d:%02d" (cl-floor minutes 60)))))))
-(add-hook 'org-gcal-after-update-entry-functions #'my-org-gcal-set-effort)
 #+end_src
 
 *** Roam
@@ -2906,19 +2727,6 @@ deactivate magit-todos-mode', otherwise enable it."
   (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:"))
 #+end_src
 
-***** Gitflow
-Finally, it is also possible to use Gitflow’s framework with Magit with ~magit-gitflow~:
-#+begin_src emacs-lisp
-(use-package magit-gitflow
-  :defer t
-  :after magit
-  :straight (magit-gitflow :build t
-                           :type git
-                           :host github
-                           :repo "jtatarik/magit-gitflow")
-  :hook (magit-mode . turn-on-magit-gitflow))
-#+end_src
-
 ***** Forge
 Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot of possibilities are present, you can read issues and pull requests, create them, and fork projects among other things.
 *NOTE*: Make sure to configure a GitHub token before using this package!
@@ -2946,22 +2754,6 @@ Forge acts as an interface for Github, Gitlab, and Bitbucket inside Magit. A lot
     "er" #'forge-edit-topic-review-requests
     "es" #'forge-edit-topic-state
     "et" #'forge-edit-topic-title))
-#+end_src
-
-***** Code Review
-#+begin_src emacs-lisp
-(use-package code-review
-  :after magit
-  :bind (:map forge-topic-mode-map ("C-c r" . #'code-review-forge-pr-at-point))
-  :bind (:map code-review-mode-map (("C-c n" . #'code-review-comment-jump-next)
-                                    ("C-c p" . #'code-review-comment-jump-previous))))
-#+end_src
-
-***** Git message
-#+begin_src emacs-lisp
-(use-package git-messenger
-  :straight (:build t)
-  :bind (("C-x v m" . git-messenger:popup-message)))
 #+end_src
 
 ***** Add Issue Number To Commit Message
@@ -3184,17 +2976,6 @@ One annoying think with vterm is it only can create one buffer, you can’t have
     "k" #'multi-vterm-prev))
 #+end_src
 
-*** Leetcode
-#+begin_src emacs-lisp
-(use-package leetcode
-  :ensure t
-  :straight (:build t))
-(setq leetcode-prefer-language "rust"
-      leetcode-prefer-sql "mysql"
-      leetcode-save-solutions t
-      leetcode-directory "~/Development/leetcode-solution")
-#+end_src
-
 ** Editing
 *** Editorconfig
 Editorconfig is a unified way of passing to your text editor settings everyone working in a repo need to follow. ~.editorconfig~ files work for VSCode users, vim users, Atom users, Sublime users, and of course Emacs users.
@@ -3397,11 +3178,11 @@ Don’t let the name of the package fool you! ~parinfer-rust-mode~ is not a ~par
   (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
 
   ;; keys binding
-  :bind (("C-M-s-x" . bm-toggle)
-         ("C-M-s-w" . bm-lifo-next)
-         ("C-M-s-q" . bm-lifo-previous)
-         ("C-M-s-z" . bm-show-all))
-  )
+  :bind (("C-M-s-a" . bm-toggle)
+         ("C-M-s-d" . bm-lifo-next)
+         ("C-M-s-f" . bm-lifo-previous)
+         ("C-M-s-s" . bm-show-all)
+))
 #+end_src
 
 *** Move Text
@@ -3455,7 +3236,7 @@ Don’t let the name of the package fool you! ~parinfer-rust-mode~ is not a ~par
     (_ (hs-hide-all))))
 #+end_src
 
-*** Eyebrown
+*** Eyebrown :window:
 #+begin_src emacs-lisp
 (use-package eyebrowse
   :straight (:build t)
@@ -3667,31 +3448,6 @@ I won’t modify much for ~image-mode~ (the mode used to display images) aside f
                           "*Special*"))))
           ;; Group remaining buffers by major mode.
           (auto-mode))))
-#+end_src
-
-*** Helpful
-As the name tells, ~helpful~ is a really helpful package which greatly enhances a couple of built-in functions from Emacs, namely:
-| Vanilla Emacs Function | Helpful Function | Comment                                       |
-|------------------------+------------------+-----------------------------------------------|
-| ~describe-function~      | ~helpful-callable~ | Only interactive functions                    |
-| ~describe-function~      | ~helpful-function~ | Only actual functions (including interactive) |
-| ~describe-function~      | ~helpful-macro~    |                                               |
-| ~describe-command~       | ~helpful-command~  |                                               |
-| ~describe-key~           | ~helpful-key~      |                                               |
-| ~describe-variable~      | ~helpful-variable~ |                                               |
-
-#+begin_src emacs-lisp
-(use-package helpful
-  :straight (:build t)
-  :after (counsel ivy)
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command]  . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key]      . helpful-key))
 #+end_src
 
 ** LaTeX
@@ -3947,30 +3703,6 @@ From Doom Emacs’ configuration:
     "A" '(:ignore t :which-key "avy")
     "Ar" #'avy-org-refile-as-child
     "Ah" #'avy-org-goto-heading-timer))
-#+end_src
-
-*** Keycast
-In case I am sharing my screen with people and I want to show which functions are called on my keystrokes since I don’t exactly use standard keybindings.
-#+begin_src emacs-lisp
-(use-package keycast
-  :defer t
-  :straight (:build t)
-  :config
-  (define-minor-mode keycast-mode
-    "Show current command and its key binding in the mode line."
-    :global t
-    (if keycast-mode
-        (add-hook 'pre-command-hook 'keycast--update t)
-      (remove-hook 'pre-command-hook 'keycast--update)))
-  (add-to-list 'global-mode-string '("" mode-line-keycast " ")))
-#+end_src
-
-*** Winum
-+ allows Emacs to associate windows with a specific number and navigate through these windows by directly refering to their associated number! This allows for faster window configuration than just going to the frame above, then left, left, and up.
-#+begin_src emacs-lisp
-(use-package winum
-  :straight (:build t)
-  :init (winum-mode))
 #+end_src
 
 * Other
@@ -5383,8 +5115,9 @@ Undefining some stuff to make keybind prefixes work correctly.
   "C-y" #'yank
   "C-M-s-p"    #'scroll-half-page-up
   "C-M-s-n"    #'scroll-half-page-down
-  "M-y" #'counsel-yank-pop)
-#+end_src
+  "M-y" #'counsel-yank-pop
+)
+#+END_src
 
 #+begin_src emacs-lisp
 (dqv/leader-key
@@ -5433,8 +5166,13 @@ Undefining some stuff to make keybind prefixes work correctly.
   "bk" '(kill-this-buffer :which-key "Kill This Buffer")
   "bD" '(kill-buffer :which-key "Kill Buffer")
   "bh" '(dashboard-refresh-buffer :which-key "Dashboard Refresh Buffer")
-  "bm" '(switch-to-message-buffer :which-key "Switch to message buffer")
+  "s" '(:ignore t :wk "Bookmarks")
+  "st" '(bm-toggle :which-key "Bookmarks Toggle")
+  "sj" '(bm-lifo-next :which-key "Bookmarks Next")
+  "sk" '(bm-lifo-previous :which-key "Bookmarks Previous")
+  "ss" '(bm-show-all :which-key "Bookmarks Show All")
   "bn" '(next-buffer :which-key "Next Buffer")
+  "bn" '(ibuffer :which-key "IBuffer")
   "bp" '(previous-buffer :which-key "Next Buffer")
   "bs" '(switch-to-scratch-buffer :which-key "Scratch Buffer"))
 
@@ -6055,16 +5793,4 @@ focus the new window immediately.
       (delete-file temp-file)
       (kill-new hash)
       (message "Cleaned function signature: %s\nKeccak-256 hash of function ID: %s" cleaned-signature hash))))
-#+end_src
-
-** GPTel
-#+begin_src emacs-lisp
-(use-package gptel
-  :straight (:build t))
-
-(setq
- gptel-model 'gemini-pro
- gptel-backend (gptel-make-gemini "Gemini"
-                 :key "AIzaSyC1p8zt6ZFYK8DD7FPzKaKRLLfM_ls7Ie0"
-                 :stream t))
 #+end_src

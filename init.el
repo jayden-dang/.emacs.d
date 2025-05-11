@@ -138,14 +138,14 @@
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
 (load custom-file t)
 
-;; (defun dqv/org-mode-visual-fill ()
-;;   (setq visual-fill-column-width 150
-;;         visual-fill-column-center-text t)
-;;   (visual-fill-column-mode 1))
+(defun dqv/org-mode-visual-fill ()
+  (setq visual-fill-column-width 150
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
-;; (use-package visual-fill-column
-;;   :straight (:build t)
-;;   :hook (org-mode . dqv/org-mode-visual-fill))
+(use-package visual-fill-column
+  :straight (:build t)
+  :hook (org-mode . dqv/org-mode-visual-fill))
 
 (setq user-full-name       "Dang Quang Vu"
       user-real-login-name "Dang Quang Vu"
@@ -698,11 +698,6 @@ With a prefix argument, TRASH is nil."
   ("k" shrink-window)
   ("h" enlarge-window-horizontally))
 
-(use-package citeproc
-  :after (org)
-  :defer t
-  :straight (:build t))
-
   (use-package org
       :straight t
       :defer t
@@ -757,7 +752,13 @@ With a prefix argument, TRASH is nil."
             org-default-notes-file             (expand-file-name "notes.org" org-directory))
       (with-eval-after-load 'oc
         (setq org-cite-global-bibliography '("~/Dropbox/Org/bibliography/references.bib")))
-      (setq org-agenda-files (list "~/Dropbox/Org/" "~/Dropbox/Roam/" "~/Dropbox/Roam/blockchain/" "~/Dropbox/Roam/daily"))
+      (setq org-agenda-files (list
+                              "~/Dropbox/Org/"
+                              "~/Dropbox/Roam/"
+                              "~/Dropbox/Roam/blockchain/"
+                              "~/Dropbox/Roam/daily"
+                              ))
+      
       (add-hook 'org-mode-hook (lambda ()
                                  (interactive)
                                  (electric-indent-local-mode -1)))
@@ -1002,14 +1003,6 @@ With a prefix argument, TRASH is nil."
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-(use-package org-contrib
-  :after (org)
-  :defer t
-  :straight (:build t)
-  :init
-  (require 'ox-extra)
-  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
-
 (setq ob-mermaid-cli-path "/Users/dangeamon/.nvm/versions/node/v22.5.1/bin/mmdc")
 (use-package ob-async
   :straight (:build t)
@@ -1059,15 +1052,6 @@ the value `split-window-right', then it will be changed to
 (use-package ox-epub
   :after (org ox)
   :straight (:build t))
-
-(use-package ox-gemini
-  :defer t
-  :straight (:build t)
-  :after (ox org))
-
-;; (use-package htmlize
-;;   :defer t
-;;   :straight (:build t))
 
 (use-package preview-org-html-mode
   :defer t
@@ -1151,78 +1135,6 @@ the value `split-window-right', then it will be changed to
         
         
         ))
-
-(use-package reftex
-  :commands turn-on-reftex
-  :config (setq reftex-default-bibliography "~/Dropbox/Org/bibliography/references.bib"
-                reftex-plug-into-AUCTeX     t))
-
-(use-package org-ref
-  ;; :after (org ox-bibtex pdf-tools)
-  :after org
-  :defer t
-  :straight (:build t)
-  :custom-face
-  (org-ref-cite-face ((t (:weight bold))))
-  :init
-  (setq org-ref-completion-library    'org-ref-ivy-cite
-        org-latex-logfiles-extensions '("lof" "lot" "aux" "idx" "out" "log" "fbd_latexmk"
-                                        "toc" "nav" "snm" "vrb" "dvi" "blg" "brf" "bflsb"
-                                        "entoc" "ps" "spl" "bbl" "pygtex" "pygstyle"))
-  (add-hook 'org-mode-hook (lambda () (require 'org-ref)))
-  :config
-  (setq bibtex-completion-pdf-field    "file"
-        bibtex-completion-notes-path   "~/Dropbox/Org/bibliography/notes/"
-        bibtex-completion-bibliography "~/Dropbox/Org/bibliography/references.bib"
-        bibtex-completion-library-path "~/Dropbox/Org/bibliography/bibtex-pdfs/"
-        bibtex-completion-pdf-symbol   "⌘"
-        bibtex-completion-notes-symbol "✎")
-  :general
-  (dqv/evil
-    :keymaps 'bibtex-mode-map
-    :packages 'org-ref
-    "C-j" #'org-ref-bibtex-next-entry
-    "C-k" #'org-ref-bibtex-previous-entry
-    "gj"  #'org-ref-bibtex-next-entry
-    "gk"  #'org-ref-bibtex-previous-entry)
-  (dqv/major-leader-key
-    :keymaps '(bibtex-mode-map)
-    :packages 'org-ref
-    ;; Navigation
-    "j" #'org-ref-bibtex-next-entry
-    "k" #'org-ref-bibtex-previous-entry
-
-    ;; Open
-    "b" #'org-ref-open-in-browser
-    "n" #'org-ref-open-bibtex-notes
-    "p" #'org-ref-open-bibtex-pdf
-
-    ;; Misc
-    "h" #'org-ref-bibtex-hydra/body
-    "i" #'org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
-    "s" #'org-ref-sort-bibtex-entry
-
-    "l" '(:ignore t :which-key "lookup")
-    "la" #'arxiv-add-bibtex-entry
-    "lA" #'arxiv-get-pdf-add-bibtex-entry
-    "ld" #'doi-utils-add-bibtex-entry-from-doi
-    "li" #'isbn-to-bibtex
-    "lp" #'pubmed-insert-bibtex-from-pmid)
-  (dqv/major-leader-key
-    :keymaps 'org-mode-map
-    :pakages 'org-ref
-    "ic" #'org-ref-insert-link))
-
-(use-package ivy-bibtex
-  :defer t
-  :straight (:build t)
-  :config
-  (setq bibtex-completion-pdf-open-function #'find-file)
-  :general
-  (dqv/leader-key
-    :keymaps '(bibtex-mode-map)
-    :packages 'ivy-bibtex
-    "m" #'ivy-bibtex))
 
 (setq org-return-follows-link t
       org-use-speed-commands t
@@ -1379,60 +1291,6 @@ the value `split-window-right', then it will be changed to
  "⭠ now ─────────────────────────────────────────────────")
 
 (global-org-modern-mode)
-
-(use-package org-tree-slide
-  :defer t
-  :after org
-  :straight (:build t)
-  :config
-  (setq org-tree-slide-skip-done nil)
-  :general
-  (dqv/major-leader-key
-    :keymaps 'org-mode-map
-    :packages 'org-mode
-    "P" #'org-tree-slide-mode
-    "wj" #'org-tree-slide-move-next-tree
-    "wk" #'org-tree-slide-move-previous-tree
-    "wu" #'org-tree-slide-content))
-
-(use-package org-roll
-  :defer t
-  :after org
-  :straight (:build t :type git :host github :repo "zaeph/org-roll"))
-
-(setq plstore-cache-passphrase-for-symmetric-encryption t)
-
-(setq org-gcal-client-id "173861024396-9pjbm2u9afoof7f3126rvj66lcin3p5v.apps.googleusercontent.com"
-      org-gcal-client-secret "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"
-      org-gcal-fetch-file-alist '(("jayden.dangvu@gmail.com" .  "~/Dropbox/Org/Personal.org")
-                                  ("afcb1caf732361737371b195bc1215ef240e1d905d269bcd08deb2c9a75a091d@group.calendar.google.com" .  "~/Dropbox/Org/Near.org")
-                                  ("87dfe7295cad2f0a87b54892de422e657fec4ec38cc8f0c36ea9796525930cb5@group.calendar.google.com" .  "~/Dropbox/Org/Rust.org")
-                                  ("693a349513817913e9e6576b6b9dae59668214e00d08f1318c05ece5cdf6d867@group.calendar.google.com" .  "~/Dropbox/Org/Move.org")
-                                  ("6daac2cc37c1b859926fd72ccef0595968465a0cce36fa820a2b84ed4428b59d@group.calendar.google.com" .  "~/Dropbox/Org/Work.org")))
-
-(use-package org-gcal
-  :straight t
-  :config
-  (org-gcal-reload-client-id-secret)
-  (setq org-gcal-remove-api-cancelled-events t))
-
-(defun my-org-gcal-set-effort (_calendar-id event _update-mode)
-  "Set Effort property based on EVENT if not already set."
-  (when-let* ((stime (plist-get (plist-get event :start)
-                                :dateTime))
-              (etime (plist-get (plist-get event :end)
-                                :dateTime))
-              (diff (float-time
-                     (time-subtract (org-gcal--parse-calendar-time-string etime)
-                                    (org-gcal--parse-calendar-time-string stime))))
-              (minutes (floor (/ diff 60))))
-    (let ((effort (org-entry-get (point) org-effort-property)))
-      (unless effort
-        (message "need to set effort - minutes %S" minutes)
-        (org-entry-put (point)
-                       org-effort-property
-                       (apply #'format "%d:%02d" (cl-floor minutes 60)))))))
-(add-hook 'org-gcal-after-update-entry-functions #'my-org-gcal-set-effort)
 
 (use-package org-roam
   :ensure t
@@ -1854,15 +1712,6 @@ deactivate magit-todos-mode', otherwise enable it."
   (csetq magit-todos-ignore-case t)
   (setq magit-todos-keyword-suffix "\\(?:([^)]+)\\)?:"))
 
-(use-package magit-gitflow
-  :defer t
-  :after magit
-  :straight (magit-gitflow :build t
-                           :type git
-                           :host github
-                           :repo "jtatarik/magit-gitflow")
-  :hook (magit-mode . turn-on-magit-gitflow))
-
 (use-package forge
   :ensure t
   :after magit
@@ -1884,16 +1733,6 @@ deactivate magit-todos-mode', otherwise enable it."
     "er" #'forge-edit-topic-review-requests
     "es" #'forge-edit-topic-state
     "et" #'forge-edit-topic-title))
-
-(use-package code-review
-  :after magit
-  :bind (:map forge-topic-mode-map ("C-c r" . #'code-review-forge-pr-at-point))
-  :bind (:map code-review-mode-map (("C-c n" . #'code-review-comment-jump-next)
-                                    ("C-c p" . #'code-review-comment-jump-previous))))
-
-(use-package git-messenger
-  :straight (:build t)
-  :bind (("C-x v m" . git-messenger:popup-message)))
 
 (defun buffer-insert-at-end (string)
   "Insert STRING at the maximal point in a buffer."
@@ -2083,14 +1922,6 @@ deactivate magit-todos-mode', otherwise enable it."
     "j" #'multi-vterm-next
     "k" #'multi-vterm-prev))
 
-(use-package leetcode
-  :ensure t
-  :straight (:build t))
-(setq leetcode-prefer-language "rust"
-      leetcode-prefer-sql "mysql"
-      leetcode-save-solutions t
-      leetcode-directory "~/Development/leetcode-solution")
-
 (use-package editorconfig
   :defer t
   :straight (:build t)
@@ -2261,11 +2092,11 @@ deactivate magit-todos-mode', otherwise enable it."
   (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
 
   ;; keys binding
-  :bind (("C-M-s-x" . bm-toggle)
-         ("C-M-s-w" . bm-lifo-next)
-         ("C-M-s-q" . bm-lifo-previous)
-         ("C-M-s-z" . bm-show-all))
-  )
+  :bind (("C-M-s-a" . bm-toggle)
+         ("C-M-s-d" . bm-lifo-next)
+         ("C-M-s-f" . bm-lifo-previous)
+         ("C-M-s-s" . bm-show-all)
+))
 
 (use-package move-text
   :straight (:build t))
@@ -2476,18 +2307,6 @@ deactivate magit-todos-mode', otherwise enable it."
                           "*Special*"))))
           ;; Group remaining buffers by major mode.
           (auto-mode))))
-
-(use-package helpful
-  :straight (:build t)
-  :after (counsel ivy)
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command]  . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key]      . helpful-key))
 
 (use-package auctex
   :defer t
@@ -2715,22 +2534,6 @@ deactivate magit-todos-mode', otherwise enable it."
     "A" '(:ignore t :which-key "avy")
     "Ar" #'avy-org-refile-as-child
     "Ah" #'avy-org-goto-heading-timer))
-
-(use-package keycast
-  :defer t
-  :straight (:build t)
-  :config
-  (define-minor-mode keycast-mode
-    "Show current command and its key binding in the mode line."
-    :global t
-    (if keycast-mode
-        (add-hook 'pre-command-hook 'keycast--update t)
-      (remove-hook 'pre-command-hook 'keycast--update)))
-  (add-to-list 'global-mode-string '("" mode-line-keycast " ")))
-
-(use-package winum
-  :straight (:build t)
-  :init (winum-mode))
 
 (defun beautify-json ()
   (interactive)
@@ -3883,7 +3686,8 @@ Spell Commands^^           Add To Dictionary^^              Other
   "C-y" #'yank
   "C-M-s-p"    #'scroll-half-page-up
   "C-M-s-n"    #'scroll-half-page-down
-  "M-y" #'counsel-yank-pop)
+  "M-y" #'counsel-yank-pop
+)
 
 (dqv/leader-key
   "SPC" '(counsel-M-x :which-key "M-x")
@@ -3931,8 +3735,13 @@ Spell Commands^^           Add To Dictionary^^              Other
   "bk" '(kill-this-buffer :which-key "Kill This Buffer")
   "bD" '(kill-buffer :which-key "Kill Buffer")
   "bh" '(dashboard-refresh-buffer :which-key "Dashboard Refresh Buffer")
-  "bm" '(switch-to-message-buffer :which-key "Switch to message buffer")
+  "s" '(:ignore t :wk "Bookmarks")
+  "st" '(bm-toggle :which-key "Bookmarks Toggle")
+  "sj" '(bm-lifo-next :which-key "Bookmarks Next")
+  "sk" '(bm-lifo-previous :which-key "Bookmarks Previous")
+  "ss" '(bm-show-all :which-key "Bookmarks Show All")
   "bn" '(next-buffer :which-key "Next Buffer")
+  "bn" '(ibuffer :which-key "IBuffer")
   "bp" '(previous-buffer :which-key "Next Buffer")
   "bs" '(switch-to-scratch-buffer :which-key "Scratch Buffer"))
 
@@ -4269,12 +4078,3 @@ Spell Commands^^           Add To Dictionary^^              Other
       (delete-file temp-file)
       (kill-new hash)
       (message "Cleaned function signature: %s\nKeccak-256 hash of function ID: %s" cleaned-signature hash))))
-
-(use-package gptel
-  :straight (:build t))
-
-(setq
- gptel-model 'gemini-pro
- gptel-backend (gptel-make-gemini "Gemini"
-                 :key "AIzaSyC1p8zt6ZFYK8DD7FPzKaKRLLfM_ls7Ie0"
-                 :stream t))
